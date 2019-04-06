@@ -6,29 +6,43 @@ import FormControl from 'react-bootstrap/FormControl'
 import Button from 'react-bootstrap/Button'
 import { Link, NavLink } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
+import { FirebaseContext } from '../Firebase';
+import { withFirebase } from '../Firebase';
+import { compose } from 'recompose';
 
-class Navigation extends Component {
+import './Navigation.css';
+import * as ROUTES from '../../constants/routes';
+
+class NavigationBase extends Component {
   constructor(props) {
     super(props);
-    this.handleLoginClick = this.handleLoginClick.bind(this);
-    this.handleLogoutClick = this.handleLogoutClick.bind(this);
-    this.state = {isLoggedIn: false};
+    this.handleSignout = this.handleSignout.bind(this);
+    this.state = { user: null };
   }
 
-  handleLoginClick() {
-    this.setState({isLoggedIn: true});
+  componentDidMount() {
+    const component = this;
+    this.props.firebase.auth.onAuthStateChanged(function(user) {
+      if (user) {
+        component.setState({ user: user });
+      }
+    });
   }
 
-  handleLogoutClick() {
-    this.setState({isLoggedIn: false});
+  handleSignout() {
+    this.props.firebase
+      .doSignOut()
+      .then(() => {
+        alert("sign out")
+        this.forceUpdate();
+      });
   }
 
   render() {
-    const isLoggedIn = this.state.isLoggedIn;
-
+    const user = this.state.user;
     return (
       <Navbar bg="light" expand="lg">
-        <LinkContainer to="/">
+        <LinkContainer to={ROUTES.HOME}>
           <Navbar.Brand>One V. One</Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -36,21 +50,28 @@ class Navigation extends Component {
           <Nav className="mr-auto">
             <Form inline>
               <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-              <Button variant="outline-success">Search</Button>
+              <LinkContainer to="/search">
+                <Button variant="outline-success">Search</Button>
+              </LinkContainer>
             </Form>
           </Nav>
-          {!isLoggedIn ? (
-            <LinkContainer to="/login" onClick={this.handleLoginClick}>
-              <Nav.Link>Login</Nav.Link>
-            </LinkContainer>
+          {!user ? (
+            <div className="flex">
+              <LinkContainer to={ROUTES.SIGNUP}>
+                <Nav.Link>Signup</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to={ROUTES.SIGNIN}>
+                <Nav.Link>Signin</Nav.Link>
+              </LinkContainer>
+            </div>
+              
           ) : (
             <div className="flex">
-              <LinkContainer to="/settings">
+              <div className="v-align">Hi, {user.email}</div>
+              <LinkContainer to={ROUTES.SETTINGS}>
                  <Nav.Link>Settings</Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/" onClick={this.handleLogoutClick}>
-                 <Nav.Link>Logout</Nav.Link>
-              </LinkContainer>
+              <Nav.Link onClick={this.props.firebase.doSignOut}>Signout</Nav.Link>
             </div>
           )}
         </Navbar.Collapse>
@@ -58,5 +79,9 @@ class Navigation extends Component {
     );
   }
 }
+
+const Navigation = compose(
+  withFirebase,
+)(NavigationBase);
 
 export default Navigation;

@@ -3,11 +3,15 @@ import Home from './Home';
 import Battle from './Battle';
 import Settings from './Settings';
 import Search from './Search';
+import Signup from './Signup';
+import Signin from './Signin';
 
 export {
   Navigation,
   Home,
   Battle,
   Settings,
-  Search
+  Search,
+  Signup,
+  Signin
 };
