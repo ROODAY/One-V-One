@@ -1,11 +1,19 @@
-.App {
+#root {
   text-align: center;
 }
 
-.App nav.nav-tabs {
+#root nav.nav-tabs {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     padding: 10px;
+}
+
+.flex {
+  display: flex;
+}
+
+.unstyled {
+
 }

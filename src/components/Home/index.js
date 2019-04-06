@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
 
-class AppContent extends Component {
+class Home extends Component {
   render() {
     return (
       <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
@@ -20,4 +20,4 @@ class AppContent extends Component {
   }
 }
 
-export default AppContent;
+export default Home;
