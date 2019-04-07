@@ -22,6 +22,7 @@ class SearchForm extends Component {
 
   onSubmit = event => {
     const { search } = this.state;
+    this.setState({ ...INITIAL_STATE });
     this.props.history.push(`${ROUTES.SEARCH}?q=${encodeURI(search)}`);
     event.preventDefault();
   };

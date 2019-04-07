@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import queryString from 'query-string';
+import { withRouter } from 'react-router-dom';
 
 class Search extends Component {
   constructor(props) {
@@ -9,8 +10,12 @@ class Search extends Component {
   }
 
   componentDidMount() {
-    let search = queryString.parse(this.props.location.search).q
+    let search = queryString.parse(this.props.history.location.search).q
     this.setState({searchTerm: decodeURI(search)})
+  }
+
+  componentWillReceiveProps(nProps){
+    this.setState({searchTerm: decodeURI(queryString.parse(this.props.history.location.search).q)})
   }
 
   render() {
