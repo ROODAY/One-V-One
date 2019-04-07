@@ -44,7 +44,7 @@ class SignupBase extends Component {
         this.props.history.push(ROUTES.HOME);
       })
       .catch(error => {
-        this.setState({ error });
+        this.setState({ error, showLoader: false });
       });
 
     event.preventDefault();

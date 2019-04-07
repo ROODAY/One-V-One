@@ -13,7 +13,8 @@ import {
   Search,
   Settings,
   Signup,
-  Signin
+  Signin,
+  ForgotPassword
 } from './components'
 import * as ROUTES from './constants/routes';
 import { withAuthentication } from './components/Session';
@@ -30,6 +31,7 @@ class App extends Component {
         <Route path={ROUTES.SEARCH} component={Search} />
         <Route path={ROUTES.SIGNUP} component={Signup} />
         <Route path={ROUTES.SIGNIN} component={Signin} />
+        <Route path={ROUTES.FORGOTPW} component={ForgotPassword} />
       </Router>
     );
   }

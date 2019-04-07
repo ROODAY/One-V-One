@@ -6,6 +6,7 @@ import Search from './Search';
 import Loader from './Loader';
 import Signup from './Signup';
 import Signin from './Signin';
+import ForgotPassword from './ForgotPassword';
 
 export {
   Navigation,
@@ -15,5 +16,6 @@ export {
   Search,
   Signup,
   Signin,
-  Loader
+  Loader,
+  ForgotPassword
 };

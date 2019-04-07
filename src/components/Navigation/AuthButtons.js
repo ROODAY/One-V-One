@@ -15,7 +15,9 @@ class AuthButtons extends Component {
             <LinkContainer to={ROUTES.SETTINGS}>
                <Nav.Link>Settings</Nav.Link>
             </LinkContainer>
-            <Nav.Link onClick={this.props.firebase.doSignOut}>Sign out</Nav.Link>
+            <LinkContainer to={ROUTES.HOME}>
+              <Nav.Link onClick={this.props.firebase.doSignOut}>Sign out</Nav.Link>
+            </LinkContainer>
           </div>
         }
       </AuthUserContext.Consumer>

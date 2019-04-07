@@ -5,10 +5,13 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Loader from '../Loader'
+import Nav from 'react-bootstrap/Nav'
+import { LinkContainer } from 'react-router-bootstrap';
 import { withRouter } from 'react-router-dom';
 import { withFirebase } from '../Firebase';
 import { compose } from 'recompose';
 
+import './Signin.css'
 import * as ROUTES from '../../constants/routes';
 
 const INITIAL_STATE = {
@@ -36,7 +39,7 @@ class SigninBase extends Component {
         this.props.history.push(ROUTES.HOME);
       })
       .catch(error => {
-        this.setState({ error });
+        this.setState({ error, showLoader: false });
       });
 
     event.preventDefault();
@@ -77,6 +80,10 @@ class SigninBase extends Component {
                 onChange={this.onChange}
                 type="password"
                 placeholder="Password"/>
+                <LinkContainer to={ROUTES.FORGOTPW}>
+                  <Nav.Link className="link-sm">Forgot your password?</Nav.Link>
+                </LinkContainer>
+                  
               </Form.Group>
 
               <Button variant="primary" type="submit" disabled={isInvalid}>
