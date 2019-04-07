@@ -14,15 +14,43 @@ import {
   Search,
   Settings,
   Signup,
-  Signin
+  Signin,
+  Loader
 } from './components'
 import * as ROUTES from './constants/routes';
+import { withFirebase } from './components/Firebase';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      authUser: null,
+      showLoader: true
+    };
+  }
+
+  componentDidMount() {
+    this.listener = this.props.firebase.auth.onAuthStateChanged(
+      authUser => {
+        authUser
+          ? this.setState({ authUser })
+          : this.setState({ authUser: null });
+        this.setState({ showLoader: false });
+      },
+    );
+  }
+
+  componentWillUnmount() {
+    this.listener();
+  }
+
   render() {
     return (
       <Router>
-        <Navigation/>
+        <Navigation authUser={this.state.authUser}/>
+
+        <Loader visible={this.state.showLoader} />
 
         <Route exact path={ROUTES.HOME} component={Home} />
         <Route path={ROUTES.BATTLE} component={Battle} />
@@ -35,4 +63,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withFirebase(App);

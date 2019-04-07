@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import Loader from '../Loader'
 import { withRouter } from 'react-router-dom';
 import { withFirebase } from '../Firebase';
 import { compose } from 'recompose';
@@ -14,6 +15,7 @@ const INITIAL_STATE = {
   email: '',
   password: '',
   error: null,
+  showLoader: false,
 };
 
 class SigninBase extends Component {
@@ -24,6 +26,7 @@ class SigninBase extends Component {
   }
 
   onSubmit = event => {
+    this.setState({ showLoader: true });
     const { email, password } = this.state;
 
     this.props.firebase
@@ -50,10 +53,11 @@ class SigninBase extends Component {
 
     return (
       <Container>
+        <Loader visible={this.state.showLoader} />
         <Row className="justify-content-md-center">
           <Col md="auto">
             <Form onSubmit={this.onSubmit}>
-              <h1>Signin</h1>
+              <h1>Sign in</h1>
 
               <Form.Group controlId="email">
                 <Form.Label>Email Address</Form.Label>
@@ -76,7 +80,7 @@ class SigninBase extends Component {
               </Form.Group>
 
               <Button variant="primary" type="submit" disabled={isInvalid}>
-                Signin
+                Sign in
               </Button>
 
               {error && <p className="error">{error.message}</p>}

@@ -8,25 +8,14 @@ import { Link, NavLink } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { FirebaseContext } from '../Firebase';
 import { withFirebase } from '../Firebase';
-import { compose } from 'recompose';
 
 import './Navigation.css';
 import * as ROUTES from '../../constants/routes';
 
-class NavigationBase extends Component {
+class Navigation extends Component {
   constructor(props) {
     super(props);
     this.handleSignout = this.handleSignout.bind(this);
-    this.state = { user: null };
-  }
-
-  componentDidMount() {
-    const component = this;
-    this.props.firebase.auth.onAuthStateChanged(function(user) {
-      if (user) {
-        component.setState({ user: user });
-      }
-    });
   }
 
   handleSignout() {
@@ -39,7 +28,6 @@ class NavigationBase extends Component {
   }
 
   render() {
-    const user = this.state.user;
     return (
       <Navbar bg="light" expand="lg">
         <LinkContainer to={ROUTES.HOME}>
@@ -55,23 +43,23 @@ class NavigationBase extends Component {
               </LinkContainer>
             </Form>
           </Nav>
-          {!user ? (
+          {!this.props.authUser ? (
             <div className="flex">
               <LinkContainer to={ROUTES.SIGNUP}>
-                <Nav.Link>Signup</Nav.Link>
+                <Nav.Link>Sign up</Nav.Link>
               </LinkContainer>
               <LinkContainer to={ROUTES.SIGNIN}>
-                <Nav.Link>Signin</Nav.Link>
+                <Nav.Link>Sign in</Nav.Link>
               </LinkContainer>
             </div>
               
           ) : (
             <div className="flex">
-              <div className="v-align">Hi, {user.email}</div>
+              <div className="v-align">Hi, {this.props.authUser.displayName}</div>
               <LinkContainer to={ROUTES.SETTINGS}>
                  <Nav.Link>Settings</Nav.Link>
               </LinkContainer>
-              <Nav.Link onClick={this.props.firebase.doSignOut}>Signout</Nav.Link>
+              <Nav.Link onClick={this.props.firebase.doSignOut}>Sign out</Nav.Link>
             </div>
           )}
         </Navbar.Collapse>
@@ -80,8 +68,4 @@ class NavigationBase extends Component {
   }
 }
 
-const Navigation = compose(
-  withFirebase,
-)(NavigationBase);
-
-export default Navigation;
+export default withFirebase(Navigation);

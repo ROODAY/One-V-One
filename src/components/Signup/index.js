@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import Loader from '../Loader'
 import { withRouter } from 'react-router-dom';
 import { withFirebase } from '../Firebase';
 import { compose } from 'recompose';
@@ -17,6 +18,7 @@ const INITIAL_STATE = {
   passwordOne: '',
   passwordTwo: '',
   error: null,
+  showLoader: false,
 };
 
 class SignupBase extends Component {
@@ -27,11 +29,17 @@ class SignupBase extends Component {
   }
 
   onSubmit = event => {
+    this.setState({ showLoader: true });
     const { username, email, passwordOne } = this.state;
 
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
-      .then(authUser => {
+      .then(userCredential => {
+        return userCredential.user.updateProfile({
+          displayName: username
+        });
+      })
+      .then(user => {
         this.setState({ ...INITIAL_STATE });
         this.props.history.push(ROUTES.HOME);
       })
@@ -63,10 +71,11 @@ class SignupBase extends Component {
 
     return (
       <Container>
+        <Loader visible={this.state.showLoader} />
         <Row className="justify-content-md-center">
           <Col md="auto">
             <Form onSubmit={this.onSubmit}>
-              <h1>Signup</h1>
+              <h1>Sign up</h1>
 
               <Form.Group controlId="username">
                 <Form.Label>Full Name</Form.Label>
@@ -112,7 +121,7 @@ class SignupBase extends Component {
               </Form.Group>
 
               <Button variant="primary" type="submit" disabled={isInvalid}>
-                Signup
+                Sign up
               </Button>
 
               {error && <p className="error">{error.message}</p>}
