@@ -29,25 +29,41 @@ class SignupBase extends Component {
   }
 
   onSubmit = event => {
+    event.preventDefault();
     this.setState({ showLoader: true });
     const { username, email, passwordOne } = this.state;
 
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
-      .then(userCredential => {
-        return userCredential.user.updateProfile({
+      .then(authUser => {
+        return authUser.user.updateProfile({
           displayName: username
+        })
+        .then(() => {
+          return authUser;
         });
       })
-      .then(user => {
+      .then(authUser => {
+        return this.props.firebase
+          .user(authUser.user.uid)
+          .set({
+            username,
+            email,
+          })
+      })
+      .then(() => {
+        return this.props.firebase.doSignOut()
+      })
+      .then(() => {
+        return this.props.firebase.doSignInWithEmailAndPassword(email, passwordOne)
+      })  
+      .then(() => {
         this.setState({ ...INITIAL_STATE });
         this.props.history.push(ROUTES.HOME);
       })
       .catch(error => {
         this.setState({ error, showLoader: false });
       });
-
-    event.preventDefault();
   };
 
   onChange = event => {

@@ -3,8 +3,6 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { LinkContainer } from 'react-router-bootstrap';
 
-import * as ROUTES from '../../constants/routes';
-
 class BattleCard extends Component {
   render() {
     return (
