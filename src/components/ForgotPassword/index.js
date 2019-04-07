@@ -6,7 +6,6 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
 import { withFirebase } from '../Firebase';
-import * as ROUTES from '../../constants/routes';
 
 const INITIAL_STATE = {
   email: '',

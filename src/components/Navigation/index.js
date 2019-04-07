@@ -8,6 +8,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { AuthUserContext } from '../Session';
 import AuthButtons from './AuthButtons'
 import NonAuthButtons from './NonAuthButtons'
+import SearchForm from './SearchForm'
 
 import './Navigation.css';
 import * as ROUTES from '../../constants/routes';
@@ -22,16 +23,10 @@ class Navigation extends Component {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Form inline>
-              <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-              <LinkContainer to="/search">
-                <Button variant="outline-success">Search</Button>
-              </LinkContainer>
-            </Form>
+            <SearchForm />
           </Nav>
           <AuthUserContext.Consumer>
             {authUser =>
-              //console.log(authUser)
               authUser ? <AuthButtons /> : <NonAuthButtons />
             }
           </AuthUserContext.Consumer>
