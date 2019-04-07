@@ -4,29 +4,15 @@ import Nav from 'react-bootstrap/Nav'
 import Form from 'react-bootstrap/Form'
 import FormControl from 'react-bootstrap/FormControl'
 import Button from 'react-bootstrap/Button'
-import { Link, NavLink } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
-import { FirebaseContext } from '../Firebase';
-import { withFirebase } from '../Firebase';
+import { AuthUserContext } from '../Session';
+import AuthButtons from './AuthButtons'
+import NonAuthButtons from './NonAuthButtons'
 
 import './Navigation.css';
 import * as ROUTES from '../../constants/routes';
 
 class Navigation extends Component {
-  constructor(props) {
-    super(props);
-    this.handleSignout = this.handleSignout.bind(this);
-  }
-
-  handleSignout() {
-    this.props.firebase
-      .doSignOut()
-      .then(() => {
-        alert("sign out")
-        this.forceUpdate();
-      });
-  }
-
   render() {
     return (
       <Navbar bg="light" expand="lg">
@@ -43,29 +29,16 @@ class Navigation extends Component {
               </LinkContainer>
             </Form>
           </Nav>
-          {!this.props.authUser ? (
-            <div className="flex">
-              <LinkContainer to={ROUTES.SIGNUP}>
-                <Nav.Link>Sign up</Nav.Link>
-              </LinkContainer>
-              <LinkContainer to={ROUTES.SIGNIN}>
-                <Nav.Link>Sign in</Nav.Link>
-              </LinkContainer>
-            </div>
-              
-          ) : (
-            <div className="flex">
-              <div className="v-align">Hi, {this.props.authUser.displayName}</div>
-              <LinkContainer to={ROUTES.SETTINGS}>
-                 <Nav.Link>Settings</Nav.Link>
-              </LinkContainer>
-              <Nav.Link onClick={this.props.firebase.doSignOut}>Sign out</Nav.Link>
-            </div>
-          )}
+          <AuthUserContext.Consumer>
+            {authUser =>
+              //console.log(authUser)
+              authUser ? <AuthButtons /> : <NonAuthButtons />
+            }
+          </AuthUserContext.Consumer>
         </Navbar.Collapse>
       </Navbar>
     );
   }
 }
 
-export default withFirebase(Navigation);
+export default Navigation;
