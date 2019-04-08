@@ -63,7 +63,6 @@ class ProfileForm extends Component {
     return (
       <Form onSubmit={this.onSubmit}>
         <Loader visible={this.state.showLoader}/>
-        <h3>Profile</h3>
         <Form.Group controlId="bio">
           <Form.Label>Bio</Form.Label>
           <Form.Control 

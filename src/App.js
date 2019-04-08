@@ -4,6 +4,7 @@ import './App.css';
 
 import { 
   BrowserRouter as Router, 
+  Switch,
   Route 
 } from 'react-router-dom';
 import {
@@ -11,10 +12,11 @@ import {
   Home,
   Battle,
   Search,
-  Settings,
+  Profile,
   Signup,
   Signin,
-  ForgotPassword
+  ForgotPassword,
+  NotFound
 } from './components'
 import * as ROUTES from './constants/routes';
 import { withAuthentication } from './components/Session';
@@ -25,13 +27,16 @@ class App extends Component {
       <Router>
         <Navigation />
 
-        <Route exact path={ROUTES.HOME} component={Home} />
-        <Route path={ROUTES.BATTLE} component={Battle} />
-        <Route path={ROUTES.SETTINGS} component={Settings} />
-        <Route path={ROUTES.SEARCH} component={Search} />
-        <Route path={ROUTES.SIGNUP} component={Signup} />
-        <Route path={ROUTES.SIGNIN} component={Signin} />
-        <Route path={ROUTES.FORGOTPW} component={ForgotPassword} />
+        <Switch>
+          <Route exact path={ROUTES.HOME} component={Home} />
+          <Route path={ROUTES.BATTLE} component={Battle} />
+          <Route path={ROUTES.PROFILE} component={Profile} />
+          <Route path={ROUTES.SEARCH} component={Search} />
+          <Route path={ROUTES.SIGNUP} component={Signup} />
+          <Route path={ROUTES.SIGNIN} component={Signin} />
+          <Route path={ROUTES.FORGOTPW} component={ForgotPassword} />
+          <Route component={NotFound} />
+        </Switch>
       </Router>
     );
   }

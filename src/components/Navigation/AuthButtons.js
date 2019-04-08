@@ -12,8 +12,8 @@ class AuthButtons extends Component {
         {authUser =>
           <div className="flex">
             <div className="v-align">Hi, {authUser.displayName}</div>
-            <LinkContainer to={ROUTES.SETTINGS}>
-               <Nav.Link>Settings</Nav.Link>
+            <LinkContainer to={ROUTES.PROFILE}>
+               <Nav.Link>Profile</Nav.Link>
             </LinkContainer>
             <LinkContainer to={ROUTES.HOME}>
               <Nav.Link onClick={this.props.firebase.doSignOut}>Sign out</Nav.Link>

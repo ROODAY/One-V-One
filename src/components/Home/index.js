@@ -9,14 +9,14 @@ import './Home.css'
 class Home extends Component {
   render() {
     return (
-      <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
-        <Tab eventKey="home" title="Upcoming">
+      <Tabs defaultActiveKey="live" id="uncontrolled-tab-example">
+        <Tab eventKey="upcoming" title="Upcoming">
           <BattleScroller />
         </Tab>
-        <Tab eventKey="profile" title="Live">
+        <Tab eventKey="live" title="Live">
           <BattleScroller />
         </Tab>
-        <Tab eventKey="contact" title="Archive">
+        <Tab eventKey="archive" title="Archive">
           <BattleScroller />
         </Tab>
       </Tabs>
