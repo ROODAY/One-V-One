@@ -33,6 +33,12 @@ class SignupBase extends Component {
     this.setState({ showLoader: true });
     const { username, email, passwordOne } = this.state;
 
+    const userFields = {
+      bio: '',
+      artists: [],
+      genres: []
+    }
+
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
@@ -47,6 +53,7 @@ class SignupBase extends Component {
         return this.props.firebase
           .user(authUser.user.uid)
           .set({
+            ...userFields,
             username,
             email,
           })

@@ -7,6 +7,7 @@ import { withFirebase } from '../Firebase';
 const INITIAL_STATE = {
   passwordOne: '',
   passwordTwo: '',
+  passwordOld: '',
   error: null,
   success: false,
 };
@@ -19,19 +20,25 @@ class ChangePasswordForm extends Component {
   }
 
   onSubmit = event => {
+    event.preventDefault();
     this.setState({ error: null, success: false });
-    const { passwordOne } = this.state;
+    const { passwordOld, passwordOne } = this.state;
 
-    this.props.firebase
-      .doPasswordUpdate(passwordOne)
+    var cred = this.props.firebase.EmailAuthProvider.credential(
+        this.props.email,
+        passwordOld
+    );
+
+    this.props.firebase.auth.currentUser.reauthenticateAndRetrieveDataWithCredential(cred)
+      .then(() => {
+        return this.props.firebase.doPasswordUpdate(passwordOne)
+      })
       .then(() => {
         this.setState({ ...INITIAL_STATE, success: true });
       })
       .catch(error => {
         this.setState({ error });
       });
-
-    event.preventDefault();
   };
 
   onChange = event => {
@@ -39,16 +46,26 @@ class ChangePasswordForm extends Component {
   };
 
   render() {
-    const { passwordOne, passwordTwo, error, success } = this.state;
+    const { passwordOld, passwordOne, passwordTwo, error, success } = this.state;
     const isInvalid =
-      passwordOne !== passwordTwo || passwordOne === '';
+      passwordOne !== passwordTwo || passwordOne === '' || passwordOld === '';
 
     return (
       <Form onSubmit={this.onSubmit}>
-        <h1>Change Password</h1>
+        <h3>Change Password</h3>
+
+        <Form.Group controlId="passwordCurrent">
+          <Form.Label>Current Password</Form.Label>
+          <Form.Control
+            name="passwordOld"
+            value={passwordOld}
+            onChange={this.onChange}
+            type="password"
+            placeholder="Current Password"/>
+        </Form.Group>
 
         <Form.Group controlId="password">
-          <Form.Label>Password</Form.Label>
+          <Form.Label>New Password</Form.Label>
           <Form.Control
             name="passwordOne"
             value={passwordOne}
@@ -58,7 +75,7 @@ class ChangePasswordForm extends Component {
         </Form.Group>
 
         <Form.Group controlId="passwordConfirm">
-          <Form.Label>Confirm Password</Form.Label>
+          <Form.Label>Confirm New Password</Form.Label>
           <Form.Control
             name="passwordTwo"
             value={passwordTwo}
@@ -68,7 +85,7 @@ class ChangePasswordForm extends Component {
         </Form.Group>
 
         <Button variant="primary" type="submit" disabled={isInvalid}>
-          Change Password
+          Save
         </Button>
 
         {error && <p className="error">{error.message}</p>}
