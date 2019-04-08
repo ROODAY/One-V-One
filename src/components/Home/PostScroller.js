@@ -19,8 +19,10 @@ class PostScroller extends Component {
 
   loadItems(page) {
     this.props.firebase.posts().on('value', snapshot => {
-      var posts = Object.values(snapshot.val());
-      this.setState({ posts, hasMoreItems: false});
+      if (snapshot.val()) {
+        var posts = Object.values(snapshot.val());
+        this.setState({ posts, hasMoreItems: false});
+      }
     });
   }
 
@@ -37,7 +39,7 @@ class PostScroller extends Component {
                 loader={loader}>
                 <div className="posts">
                   {this.state.posts.map((post, i) => {
-                    return <PostCard key={i} user={post.username} title={post.title} description={post.description} audioURL={post.audioPath}/>
+                    return <PostCard key={i} listens={post.listens} rating={post.rating} id={post.id} user={post.username} title={post.title} description={post.description} audioURL={post.audioPath}/>
                   })}
                 </div>
             </InfiniteScroll>

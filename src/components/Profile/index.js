@@ -28,9 +28,9 @@ class Profile extends Component {
               <Tab eventKey="settings" title="Settings">
                 <Settings />
               </Tab>
-              <Tab eventKey="notifications" title="Notifications">
+              {false && <Tab eventKey="notifications" title="Notifications">
                 <div>Coming soon</div>
-              </Tab>
+              </Tab>}
             </Tabs>
           )}
       </AuthUserContext.Consumer>

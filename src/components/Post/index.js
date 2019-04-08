@@ -66,7 +66,7 @@ class Post extends Component {
 
       this.countdown.current.date = Date.now() + 3000;
       this.countdown.current.getApi().start();
-      this.setState({recording: true})
+      this.setState({recording: true, success: null})
 
       const audioChunks = [];
 
@@ -90,7 +90,7 @@ class Post extends Component {
   onSubmit = event => {
     event.preventDefault();
     this.setState({showLoader: true});
-    const {title, description} = this.state;
+    const {title, description, transcript} = this.state;
     const username = this.props.firebase.auth.currentUser.displayName;
     const id = uuidv4();
 
@@ -103,7 +103,9 @@ class Post extends Component {
         username,
         title,
         description,
-        audioPath
+        audioPath,
+        transcript,
+        id
       });
     })
     .then(() => {

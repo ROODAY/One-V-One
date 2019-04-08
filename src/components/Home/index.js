@@ -25,9 +25,9 @@ class Home extends Component {
             
           <PostScroller />
         </Tab>
-        <Tab eventKey="battles" title="Battles">
+        {false && <Tab eventKey="battles" title="Battles">
           <BattleScroller />
-        </Tab>
+        </Tab>}
       </Tabs>
     );
   }

@@ -1,5 +1,17 @@
-.battles {
+.battles,.posts {
   text-align: left;
+}
+
+.posts .btn-toolbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.posts .btn-toolbar .listens {
+  align-self: flex-end;
+  position: absolute;
 }
 
 .card {
