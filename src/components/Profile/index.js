@@ -17,13 +17,13 @@ class Profile extends Component {
             <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
               <Tab eventKey="profile" title="Profile">
                 <Container className="settings-container">
-                <Row className="justify-content-md-center">
-                  <Col md="auto">
-                    <h1>Profile</h1>
-                    <ProfileForm uid={authUser.uid}/>
-                  </Col>
-                </Row>
-              </Container>
+                  <Row className="justify-content-md-center">
+                    <Col md="auto">
+                      <h1>Profile</h1>
+                      <ProfileForm uid={authUser.uid}/>
+                    </Col>
+                  </Row>
+                </Container>
               </Tab>
               <Tab eventKey="settings" title="Settings">
                 <Settings />

@@ -1,6 +1,7 @@
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+import 'firebase/storage';
 
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -17,6 +18,7 @@ class Firebase {
 
     this.auth = app.auth();
     this.db = app.database();
+    this.storage = app.storage();
     this.EmailAuthProvider = app.auth.EmailAuthProvider;
   }
 
@@ -36,8 +38,13 @@ class Firebase {
 
   // DB
   user = uid => this.db.ref(`users/${uid}`);
-
   users = () => this.db.ref('users');
+
+  post = uid => this.db.ref(`posts/${uid}`);
+  posts = () => this.db.ref('posts');
+
+  song = uid => this.storage.ref().child(`audio/${uid}`);
+  songs = () => this.storage.ref().child('audio');
 }
 
 export default Firebase;

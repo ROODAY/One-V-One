@@ -4,31 +4,24 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import InfiniteScroll from 'react-infinite-scroller'
 import PostCard from './PostCard'
+import { withFirebase } from '../Firebase';
 
 class PostScroller extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      battles: ["first"],
+      posts: [],
       hasMoreItems: true,
       nextHref: null
     };
   }
 
   loadItems(page) {
-    const self = this;
-    var battles = this.state.battles;
-    for (var i = 0; i < 10; i++) {
-      battles.push(1)
-    }
-    setTimeout(function(){
-      if (battles.length < 100) {
-        self.setState({ battles });
-      } else {
-        self.setState({ battles, hasMoreItems: false});
-      }
-    }, 750);
+    this.props.firebase.posts().on('value', snapshot => {
+      var posts = Object.values(snapshot.val());
+      this.setState({ posts, hasMoreItems: false});
+    });
   }
 
   render() {
@@ -42,8 +35,10 @@ class PostScroller extends Component {
                 loadMore={this.loadItems.bind(this)}
                 hasMore={this.state.hasMoreItems}
                 loader={loader}>
-                <div className="battles">
-                    {this.state.battles.map((battle, i) => <PostCard key={i} battleId={battle}/>)}
+                <div className="posts">
+                  {this.state.posts.map((post, i) => {
+                    return <PostCard key={i} user={post.username} title={post.title} description={post.description} audioURL={post.audioPath}/>
+                  })}
                 </div>
             </InfiniteScroll>
           </Col>
@@ -53,4 +48,4 @@ class PostScroller extends Component {
   }
 }
 
-export default PostScroller;
+export default withFirebase(PostScroller);

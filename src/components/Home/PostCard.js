@@ -8,14 +8,14 @@ class PostCard extends Component {
     return (
       <Card style={{ width: 'fit-content' }}>
         <Card.Body>
-          <Card.Title>Rapper A's song</Card.Title>
+          <Card.Title>{this.props.title}</Card.Title>
+          <Card.Subtitle className="mb-2 text-muted">{this.props.user}</Card.Subtitle>
           <Card.Text>
-            Listen here sonny
+            {this.props.description}
           </Card.Text>
-          <audio controls></audio><br/>
-            <Button variant="primary">Listen</Button>
-            <Button variant="primary">Like</Button>
-            <Button variant="primary">Dislike</Button>
+          <audio src={this.props.audioURL} controls></audio><br/>
+          <Button variant="primary">Like</Button>
+          <Button variant="primary">Dislike</Button>
         </Card.Body>
       </Card>
     );
