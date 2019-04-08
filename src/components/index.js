@@ -8,6 +8,8 @@ import Signup from './Signup';
 import Signin from './Signin';
 import NotFound from './NotFound';
 import ForgotPassword from './ForgotPassword';
+import Landing from './Landing';
+import Post from './Post';
 
 export {
   Navigation,
@@ -19,5 +21,7 @@ export {
   Signin,
   Loader,
   NotFound,
-  ForgotPassword
+  ForgotPassword,
+  Landing,
+  Post
 };

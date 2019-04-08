@@ -3,19 +3,9 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import InfiniteScroll from 'react-infinite-scroller'
-import BattleCard from './BattleCard'
+import PostCard from './PostCard'
 
-function makeid(length) {
-  var text = "";
-  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-  for (var i = 0; i < length; i++)
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-  return text;
-}
-
-class BattleScroller extends Component {
+class PostScroller extends Component {
   constructor(props) {
     super(props);
 
@@ -30,7 +20,7 @@ class BattleScroller extends Component {
     const self = this;
     var battles = this.state.battles;
     for (var i = 0; i < 10; i++) {
-      battles.push(makeid(6))
+      battles.push(1)
     }
     setTimeout(function(){
       if (battles.length < 100) {
@@ -53,7 +43,7 @@ class BattleScroller extends Component {
                 hasMore={this.state.hasMoreItems}
                 loader={loader}>
                 <div className="battles">
-                    {this.state.battles.map((battle, i) => <BattleCard key={i} battleId={battle}/>)}
+                    {this.state.battles.map((battle, i) => <PostCard key={i} battleId={battle}/>)}
                 </div>
             </InfiniteScroll>
           </Col>
@@ -63,4 +53,4 @@ class BattleScroller extends Component {
   }
 }
 
-export default BattleScroller;
+export default PostScroller;

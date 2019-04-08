@@ -11,3 +11,7 @@
 .bordered {
   border: 1px black solid;
 }
+
+.battle-video {
+  flex-grow: 1;
+}

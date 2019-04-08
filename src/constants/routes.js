@@ -1,4 +1,5 @@
-export const HOME = '/';
+export const LANDING = '/'
+export const HOME = '/home';
 export const SIGNUP = '/signup';
 export const SIGNIN = '/signin';
 export const SIGNOUT = '/signout';
@@ -6,3 +7,4 @@ export const PROFILE = '/profile';
 export const SEARCH = '/search'
 export const BATTLE = '/battle/:battleid';
 export const FORGOTPW = '/forgot';
+export const POST = '/post';
