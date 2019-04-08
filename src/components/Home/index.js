@@ -17,7 +17,7 @@ class Home extends Component {
       <Tabs defaultActiveKey="posts" id="uncontrolled-tab-example">
         <Tab eventKey="posts" title="Posts">
           <div>
-            <p>Want to upload a song?</p>
+            <p>Want to upload a song?</p>  {/*make this look better*/}
             <LinkContainer to={ROUTES.POST}>
                <Button variant="primary">Upload</Button>
             </LinkContainer>
@@ -28,6 +28,8 @@ class Home extends Component {
         {false && <Tab eventKey="battles" title="Battles">
           <BattleScroller />
         </Tab>}
+
+        {/*add tabs for each genre*/}
       </Tabs>
     );
   }

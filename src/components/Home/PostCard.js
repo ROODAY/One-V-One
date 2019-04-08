@@ -7,6 +7,8 @@ import {
 } from 'react-bootstrap';
 import { withFirebase } from '../Firebase';
 
+// add rank and genre to cards
+
 class PostCard extends Component {
   constructor(props, context) {
     super(props, context);

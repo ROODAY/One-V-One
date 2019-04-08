@@ -11,6 +11,8 @@ import './Post.css'
 import { withFirebase } from '../Firebase';
 import { withAuthorization } from '../Session';
 
+// fix countdown, perhaps use better speech to text
+
 const timer = 6 * 1000;
 
 const INITIAL_STATE = {
