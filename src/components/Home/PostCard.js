@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import {
   Card,
-  Button,
   ButtonToolbar,
   ToggleButtonGroup,
   ToggleButton
 } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
 import { withFirebase } from '../Firebase';
 
 class PostCard extends Component {
@@ -63,11 +61,11 @@ class PostCard extends Component {
               onChange={this.handleChange}
               type="checkbox" 
               name="options">
-              <ToggleButton value={1}>👍</ToggleButton>
-              <ToggleButton value={2}>👎</ToggleButton>
+              <ToggleButton value={1}><span role="img" aria-label="like">👍</span></ToggleButton>
+              <ToggleButton value={2}><span role="img" aria-label="dislike">👎</span></ToggleButton>
             </ToggleButtonGroup>
 
-            <span className="listens">🎶: {this.state.listens}</span>
+            <span className="listens" role="img" aria-label="listens">🎶: {this.state.listens}</span>
           </ButtonToolbar>
         </Card.Body>
       </Card>

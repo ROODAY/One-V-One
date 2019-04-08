@@ -7,18 +7,16 @@ import './Battle.css';
 
 class Battle extends Component {
   componentDidMount () {
-        const test = document.createElement("script");
-        test.src = "/test.js";
-        test.async = true;
+    /*const test = document.createElement("script");
+    test.src = "/test.js";
+    test.async = true;
 
-        document.body.appendChild(test);
-        const RTCMultiConnection = window.RTCMultiConnection;
-        const conn = new RTCMultiConnection()
-        //console.log(conn)
-    }
+    document.body.appendChild(test);
+    const RTCMultiConnection = window.RTCMultiConnection;
+    const conn = new RTCMultiConnection()
+    console.log(conn)*/
+  }
    
-
-
   render() {
     return (
       <Container fluid={true} className="flex-grow-column">
