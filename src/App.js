@@ -39,6 +39,7 @@ class App extends Component {
           <Route path={ROUTES.SIGNIN} component={Signin} />
           <Route path={ROUTES.FORGOTPW} component={ForgotPassword} />
           <Route path={ROUTES.POST} component={Post} />
+          <Route path={ROUTES.NOTFOUND} component={NotFound} />
           <Route component={NotFound} />
         </Switch>
       </Router>

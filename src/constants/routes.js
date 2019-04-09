@@ -8,3 +8,4 @@ export const SEARCH = '/search'
 export const BATTLE = '/battle/:battleid';
 export const FORGOTPW = '/forgot';
 export const POST = '/post';
+export const NOTFOUND = '/404'

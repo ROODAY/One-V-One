@@ -9,14 +9,12 @@ import {
 } from 'rebass'
 import {
   Hero, 
-  CallToAction, 
   ScrollDownIndicator, 
   Feature, 
   Testimony,
   Contributor
 } from 'react-landing-page'
 
-import * as ROUTES from '../../constants/routes';
 import './Landing.css';
 import jingPhoto from './jing.jpg';
 import rudyPhoto from './rudy.jpg';

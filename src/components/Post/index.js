@@ -6,6 +6,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Loader from '../Loader';
+import axios from 'axios';
 
 import './Post.css'
 import { withFirebase } from '../Firebase';
@@ -53,9 +54,9 @@ class Post extends Component {
     navigator.mediaDevices.getUserMedia({ audio: true })
     .then(stream => {
       const mediaRecorder = new MediaRecorder(stream);
-      const recognition = new window.webkitSpeechRecognition();
+      //const recognition = new window.webkitSpeechRecognition();
       mediaRecorder.start();
-      recognition.start();
+      /*recognition.start();
       
       recognition.onresult = (event) => {
         const speechToText = event.results[0][0].transcript;
@@ -64,7 +65,7 @@ class Post extends Component {
 
       recognition.onnomatch = (event) => {
         this.setState({transcript: "Could not transcribe", showForm: true});
-      }
+      }*/
 
       this.countdown.current.date = Date.now() + 3000;
       this.countdown.current.getApi().start();
@@ -79,18 +80,12 @@ class Post extends Component {
       mediaRecorder.addEventListener("stop", () => {
         const audioBlob = new Blob(audioChunks);
         const audioUrl = URL.createObjectURL(audioBlob);
-        this.setState({audioUrl, audioBlob, recording: false});
-
-        var reader = new FileReader();
-        reader.readAsDataURL(audioBlob); 
-        reader.onloadend = function() {
-          var base64data = reader.result;
-        }
+        this.setState({audioUrl, audioBlob, recording: false, showForm: true});
       });
 
       setTimeout(() => {
         mediaRecorder.stop();
-        recognition.stop();
+        //recognition.stop();
       }, timer);
     });
   }
@@ -114,6 +109,15 @@ class Post extends Component {
         audioPath,
         transcript,
         id
+      })
+      .then(() => {
+        return audioPath;
+      });
+    })
+    .then(audioPath => {
+      return axios.post('/api/getTranscript', { audioPath })
+      .then(res => {
+        console.log(res);
       });
     })
     .then(() => {
