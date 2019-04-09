@@ -15,7 +15,6 @@ import {
   Testimony,
   Contributor
 } from 'react-landing-page'
-import { LinkContainer } from 'react-router-bootstrap';
 
 import * as ROUTES from '../../constants/routes';
 import './Landing.css';
@@ -34,9 +33,6 @@ class Landing extends Component {
         >
             <Heading>Name of your app</Heading>
             <Subhead>a couple more words</Subhead>
-            <LinkContainer to={ROUTES.SIGNUP}>
-              <CallToAction mt={3}>Sign Up!</CallToAction>
-            </LinkContainer>
             <ScrollDownIndicator/>
         </Hero>
         <Heading className="margin-heading" textAlign="center">Features</Heading>
