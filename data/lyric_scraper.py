@@ -21,6 +21,7 @@ def get_lyrics(artist, song_title):
     
     # Formatting for azlyrics url
     url = "http://azlyrics.com/lyrics/"+artist+"/"+song_title+".html"
+    print(url)
     
     try:
         content = urllib.request.urlopen(url).read()
