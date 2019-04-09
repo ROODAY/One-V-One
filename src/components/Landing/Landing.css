@@ -1,0 +1,17 @@
+.landing-wrapper {
+  position: absolute;
+  width: 100%;
+}
+
+.padded-testimony {
+  padding: 15px;
+}
+
+.margin-heading {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.grow-card {
+  flex-grow: 1;
+}

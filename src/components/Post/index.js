@@ -7,6 +7,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Loader from '../Loader';
 
+//import speech from '@google-cloud/speech';
+
 import './Post.css'
 import { withFirebase } from '../Firebase';
 import { withAuthorization } from '../Session';
@@ -55,8 +57,7 @@ class Post extends Component {
       const mediaRecorder = new MediaRecorder(stream);
       const recognition = new window.webkitSpeechRecognition();
       mediaRecorder.start();
-      recognition.start();
-
+      /*recognition.start();
       
       recognition.onresult = (event) => {
         const speechToText = event.results[0][0].transcript;
@@ -65,7 +66,7 @@ class Post extends Component {
 
       recognition.onnomatch = (event) => {
         this.setState({transcript: "Could not transcribe", showForm: true});
-      }
+      }*/
 
       this.countdown.current.date = Date.now() + 3000;
       this.countdown.current.getApi().start();
@@ -81,11 +82,17 @@ class Post extends Component {
         const audioBlob = new Blob(audioChunks);
         const audioUrl = URL.createObjectURL(audioBlob);
         this.setState({audioUrl, audioBlob, recording: false});
+
+        var reader = new FileReader();
+        reader.readAsDataURL(audioBlob); 
+        reader.onloadend = function() {
+          var base64data = reader.result;
+        }
       });
 
       setTimeout(() => {
         mediaRecorder.stop();
-        recognition.stop();
+        //recognition.stop();
       }, timer);
     });
   }

@@ -13,25 +13,25 @@ import * as ROUTES from '../../constants/routes';
 class Navigation extends Component {
   render() {
     return (
-      <Navbar bg="light" expand="lg">
-        <LinkContainer to={ROUTES.HOME}>
-          <Navbar.Brand>One V. One</Navbar.Brand>
-        </LinkContainer>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto">
-            <LinkContainer to={ROUTES.HOME}>
-               <Nav.Link>Home</Nav.Link>
+      <AuthUserContext.Consumer>
+        {authUser => 
+          <Navbar bg="light" expand="lg" className="app-navbar">
+            <LinkContainer to={ROUTES.LANDING}>
+              <Navbar.Brand>One V. One</Navbar.Brand>
             </LinkContainer>
-            {false && <SearchForm />}
-          </Nav>
-          <AuthUserContext.Consumer>
-            {authUser =>
-              authUser ? <AuthButtons /> : <NonAuthButtons />
-            }
-          </AuthUserContext.Consumer>
-        </Navbar.Collapse>
-      </Navbar>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="mr-auto">
+                {authUser && <LinkContainer to={ROUTES.HOME}>
+                   <Nav.Link>Home</Nav.Link>
+                </LinkContainer>}
+                {false && <SearchForm />}
+              </Nav>
+              {authUser ? <AuthButtons /> : <NonAuthButtons />}
+            </Navbar.Collapse>
+          </Navbar>
+        }
+      </AuthUserContext.Consumer>
     );
   }
 }
