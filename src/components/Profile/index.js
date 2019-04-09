@@ -13,7 +13,7 @@ class Profile extends Component {
   render() {
     return (
       <AuthUserContext.Consumer>
-        {authUser => (
+        {({authUser, updateAuth}) => (
             <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
               <Tab eventKey="profile" title="Profile">
                 <Container className="settings-container">

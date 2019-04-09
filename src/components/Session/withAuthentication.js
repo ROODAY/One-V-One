@@ -13,6 +13,8 @@ const withAuthentication = Component => {
         authUser: null,
         showLoader: true
       };
+
+      this.updateAuth = this.updateAuth.bind(this);
     }
 
     componentDidMount() {
@@ -30,9 +32,15 @@ const withAuthentication = Component => {
       this.listener();
     }
 
+    updateAuth(authUser) {
+      authUser
+        ? this.setState({ authUser })
+        : this.setState({ authUser: null });
+    }
+
     render() {
       return (
-        <AuthUserContext.Provider value={this.state.authUser}>
+        <AuthUserContext.Provider value={{authUser: this.state.authUser, updateAuth: this.updateAuth}}>
           <Loader visible={this.state.showLoader} />
           <Component {...this.props} />
         </AuthUserContext.Provider>

@@ -14,7 +14,7 @@ class Navigation extends Component {
   render() {
     return (
       <AuthUserContext.Consumer>
-        {authUser => 
+        {({authUser, updateAuth}) => 
           <Navbar bg="light" expand="lg" className="app-navbar">
             <LinkContainer to={ROUTES.LANDING}>
               <Navbar.Brand>One V. One</Navbar.Brand>

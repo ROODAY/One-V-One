@@ -3,13 +3,15 @@ import Nav from 'react-bootstrap/Nav'
 import { LinkContainer } from 'react-router-bootstrap';
 import { AuthUserContext } from '../Session';
 import { withFirebase } from '../Firebase';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'recompose';
 import * as ROUTES from '../../constants/routes';
 
 class AuthButtons extends Component {
   render() {
     return (
       <AuthUserContext.Consumer>
-        {authUser =>
+        {({authUser, updateAuth}) =>
           <div className="flex">
             <div className="v-align">Hi, {authUser.displayName}</div>
             <LinkContainer to={ROUTES.PROFILE}>

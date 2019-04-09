@@ -15,9 +15,13 @@ import {
   Testimony,
   Contributor
 } from 'react-landing-page'
+import { LinkContainer } from 'react-router-bootstrap';
 
 import * as ROUTES from '../../constants/routes';
 import './Landing.css';
+import jingPhoto from './jing.jpg';
+import rudyPhoto from './rudy.jpg';
+import background from './landingBackground.jpg'
 
 class Landing extends Component {
   render() {
@@ -26,11 +30,13 @@ class Landing extends Component {
         <Hero
           color="black"
           bg="white"
-          backgroundImage="https://source.unsplash.com/jxaj-UrzQbc/1600x900"
+          backgroundImage={background}
         >
             <Heading>Name of your app</Heading>
             <Subhead>a couple more words</Subhead>
-            <CallToAction href={ROUTES.SIGNUP} mt={3}>Sign Up!</CallToAction>
+            <LinkContainer to={ROUTES.SIGNUP}>
+              <CallToAction mt={3}>Sign Up!</CallToAction>
+            </LinkContainer>
             <ScrollDownIndicator/>
         </Hero>
         <Heading className="margin-heading" textAlign="center">Features</Heading>
@@ -50,7 +56,7 @@ class Landing extends Component {
 
             <Testimony
                 className="padded-testimony grow-card"
-                authorAvatar="/assets/img/jing.jpg"
+                authorAvatar={jingPhoto}
                 authorName="Herman Starikov"
                 authorTitle="developer">
                 Use react-landing-page for your landing page needs. Or do not, I am not a beggar...
@@ -58,7 +64,7 @@ class Landing extends Component {
 
             <Testimony
                 className="padded-testimony grow-card"
-                authorAvatar="/assets/img/jing.jpg"
+                authorAvatar={jingPhoto}
                 authorName="Herman Starikov"
                 authorTitle="developer">
                 Use react-landing-page for your landing page needs. Or do not, I am not a beggar...
@@ -66,7 +72,7 @@ class Landing extends Component {
 
             <Testimony
                 className="padded-testimony grow-card"
-                authorAvatar="/assets/img/jing.jpg"
+                authorAvatar={jingPhoto}
                 authorName="Herman Starikov"
                 authorTitle="developer">
                 Use react-landing-page for your landing page needs. Or do not, I am not a beggar...
@@ -79,7 +85,7 @@ class Landing extends Component {
                 className="grow-card"
                 fullName="Jinghu Lei"
                 title="developer"
-                avatar="/assets/img/jing.jpg"
+                avatar={jingPhoto}
                 >
                 <Flex>
                     <NavLink href='https://github.com/jinghul'>GitHub</NavLink>
@@ -90,7 +96,7 @@ class Landing extends Component {
                 className="grow-card"
                 fullName="Rudhra Raveendran"
                 title="developer"
-                avatar="/assets/img/rudy.jpg"
+                avatar={rudyPhoto}
                 >
                 <Flex>
                     <NavLink href='https://github.com/ROODAY'>GitHub</NavLink>
