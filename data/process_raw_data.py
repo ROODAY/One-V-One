@@ -90,13 +90,15 @@ df = pd.read_csv("./raw/song_data.csv")
 print("3. Filtering songs without available lyrics...")
 print("--- before hotness shape: " + str(df.shape), end="\n")
 print("--- before lyrics size: " + str(len(song_to_lyrics.keys())))
-df = df[get_song_key(df.artist_name, df.song_name) in song_to_lyrics]
 
 filtered_lyrics = {}
 for index, row in df.iterrows():
-    song_key = get_song_key(row.artist_name, row.song_name)
-    filtered_lyrics[song_key] = song_to_lyrics[song_key]
-    del song_to_lyrics[song_key]
+    if (get_song_key(row.artist_name, row.song_name) in song_to_lyrics):
+        song_key = get_song_key(row.artist_name, row.song_name)
+        filtered_lyrics[song_key] = song_to_lyrics[song_key]
+        del song_to_lyrics[song_key]
+    else:
+        df.drop(index, inplace=True)
 
 print("FILTERING complete.")
 print("--- after hotness shape: " + str(df.shape))
