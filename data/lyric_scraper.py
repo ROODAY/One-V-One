@@ -1,6 +1,6 @@
 # Helper Libraries
 import re
-import urllib.request # make requests from python
+from urllib.request import urlopen # make requests from python
 
 # Parse HTML content --- scrape lyrics from site
 from bs4 import BeautifulSoup
@@ -24,7 +24,7 @@ def get_lyrics(artist, song_title):
     print(url)
     
     try:
-        content = urllib.request.urlopen(url).read()
+        content = urlopen(url).read()
         soup = BeautifulSoup(content, 'html.parser')
         lyrics = str(soup)
 
@@ -34,10 +34,8 @@ def get_lyrics(artist, song_title):
 
         lyrics = lyrics.split(up_partition)[1]
         lyrics = lyrics.split(down_partition)[0]
-        lyrics = lyrics.replace('<br>','').replace('</br>','').replace('</div>','').strip()
-        
+        lyrics = re.sub(r"\<.*\>", "", lyrics).replace('\n', " ").strip()
         return lyrics
-    except Exception as err:
-        print(err)
+    except Exception:
         print('---- Found none.')
         return None
