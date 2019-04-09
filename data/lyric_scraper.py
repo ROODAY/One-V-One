@@ -37,4 +37,5 @@ def get_lyrics(artist, song_title):
         
         return lyrics
     except Exception:
+        print('---- Found none.')
         return None
