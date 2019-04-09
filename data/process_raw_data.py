@@ -35,14 +35,10 @@ for file_name in file_list:
 
                 # Write vocab file if it does not exist
                 vocab_list = line.split(',')
-                try:
-                    with open('./raw/vocab.txt', 'r'):
-                        pass
-                except:
-                    with open('./raw/vocab.txt', 'wb') as vocab_f:
+                if not os.path.isfile('./raw/vocab.txt'):
+                    with open('./raw/vocab.txt', 'w') as vocab_f:
                         vocab_f.write('\n'.join(vocab_list))
-                finally:
-                    del vocab_list
+                del vocab_list
             else: 
                 d = {}
                 splitted = line.split(',')
