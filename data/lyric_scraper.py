@@ -37,6 +37,7 @@ def get_lyrics(artist, song_title):
         lyrics = lyrics.replace('<br>','').replace('</br>','').replace('</div>','').strip()
         
         return lyrics
-    except Exception:
+    except Exception as err:
+        print(err)
         print('---- Found none.')
         return None
