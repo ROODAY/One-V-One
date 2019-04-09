@@ -1,4 +1,4 @@
-#*.cred.json
+*.cred.json
 
 # Logs
 logs
