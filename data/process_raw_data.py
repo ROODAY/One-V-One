@@ -55,7 +55,7 @@ with open('./raw/tid_to_lyrics_dict.pkl', 'wb') as f:
 	pickle.dump(tid_to_lyrics, f)
 
 def get_song_key(artist, song_name):
-    return artist + "_" + song_name
+    return str(artist) + "_" + str(song_name)
 
 # Map song name and artist to the track id
 sep = '<SEP>'
