@@ -10,7 +10,7 @@ df = pd.read_csv("./song_data.csv")
 # print head to check values
 print("Loading data...")
 print(df.head(5))
-print("... " + df.shape)
+print("... " + str(df.shape))
 
 lyrics_list = []
 for index, row in df.iterrows():
