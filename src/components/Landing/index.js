@@ -50,7 +50,7 @@ class Landing extends Component {
 
             <Testimony
                 className="padded-testimony grow-card"
-                authorAvatar="https://avatars3.githubusercontent.com/u/28402988?s=460&v=4"
+                authorAvatar="/assets/img/jing.jpg"
                 authorName="Herman Starikov"
                 authorTitle="developer">
                 Use react-landing-page for your landing page needs. Or do not, I am not a beggar...
@@ -58,7 +58,7 @@ class Landing extends Component {
 
             <Testimony
                 className="padded-testimony grow-card"
-                authorAvatar="https://avatars3.githubusercontent.com/u/28402988?s=460&v=4"
+                authorAvatar="/assets/img/jing.jpg"
                 authorName="Herman Starikov"
                 authorTitle="developer">
                 Use react-landing-page for your landing page needs. Or do not, I am not a beggar...
@@ -66,7 +66,7 @@ class Landing extends Component {
 
             <Testimony
                 className="padded-testimony grow-card"
-                authorAvatar="https://avatars3.githubusercontent.com/u/28402988?s=460&v=4"
+                authorAvatar="/assets/img/jing.jpg"
                 authorName="Herman Starikov"
                 authorTitle="developer">
                 Use react-landing-page for your landing page needs. Or do not, I am not a beggar...
@@ -79,7 +79,7 @@ class Landing extends Component {
                 className="grow-card"
                 fullName="Jinghu Lei"
                 title="developer"
-                avatar="https://avatars3.githubusercontent.com/u/28402988?s=460&v=4"
+                avatar="/assets/img/jing.jpg"
                 >
                 <Flex>
                     <NavLink href='https://github.com/jinghul'>GitHub</NavLink>
@@ -90,7 +90,7 @@ class Landing extends Component {
                 className="grow-card"
                 fullName="Rudhra Raveendran"
                 title="developer"
-                avatar="https://media.licdn.com/dms/image/C4D03AQEZ6gHjQklmuw/profile-displayphoto-shrink_200_200/0?e=1560384000&v=beta&t=FdhMQsUsnlJDnLP-LsqymrFGf6IpRGMVoB9HzYTqxPA"
+                avatar="/assets/img/rudy.jpg"
                 >
                 <Flex>
                     <NavLink href='https://github.com/ROODAY'>GitHub</NavLink>

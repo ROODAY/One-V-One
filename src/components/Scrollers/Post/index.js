@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import InfiniteScroll from 'react-infinite-scroller'
 import PostCard from './PostCard'
-import { withFirebase } from '../Firebase';
+import { withFirebase } from '../../Firebase';
 
 class PostScroller extends Component {
   constructor(props) {

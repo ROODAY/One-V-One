@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
 import Button from 'react-bootstrap/Button';
-import BattleScroller from './BattleScroller'
-import PostScroller from './PostScroller'
+import { PostScroller, BattleScroller } from '../Scrollers'
 import { LinkContainer } from 'react-router-bootstrap';
 import * as ROUTES from '../../constants/routes';
 

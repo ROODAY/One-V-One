@@ -5,7 +5,7 @@ import {
   ToggleButtonGroup,
   ToggleButton
 } from 'react-bootstrap';
-import { withFirebase } from '../Firebase';
+import { withFirebase } from '../../Firebase';
 
 // add rank and genre to cards
 
