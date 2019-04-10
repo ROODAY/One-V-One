@@ -13,7 +13,7 @@ def get_lyrics(song_title, artist):
         song = genius.search_song(song_title, artist)
         if song:
             print('---- GENIUS: OK.')
-            return song.lyrics
+            return song.lyrics.replace('\n', " ").strip()
         else:
             print('---- GENIUS: No lyrics found for {} by {}.'.format(song_title, artist))
             return None
@@ -23,3 +23,7 @@ def get_lyrics(song_title, artist):
     except:
         print('---- GENIUS: Exception occured.')
         return None
+    
+if __name__ == '__main__':
+    print('Testing GENIUS api - Venom by Eminem:\n')
+    print(get_lyrics('Venom', 'Eminem'))
