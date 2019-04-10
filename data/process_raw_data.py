@@ -13,16 +13,16 @@ import genius_lyric_scraper as genius_ls
 import az_lyric_scraper as az_ls
 
 # load in song + hotness dataset
-print("1. Loading hotness data...")
+print("Loading hotness data...")
 df = pd.read_csv("./raw/song_data.csv")
 
-print("2. Filtering by songs with available lyrics...")
+print("\nScraping songs with available lyrics...")
 print("--- before data shape: " + str(df.shape), end="\n")
 
 lyrics_list = []
 for index, row in df.iterrows():
 
-    print('{}. {} by {}'.format(index, row.song_name, row.artist_name))
+    print('{}. {} by {}'.format(index+1, row.song_name, row.artist_name))
 
     curr_lyrics = genius_ls.get_lyrics(row.song_name, row.artist_name)
 

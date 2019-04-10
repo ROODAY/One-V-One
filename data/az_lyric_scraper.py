@@ -23,7 +23,6 @@ def get_lyrics(song_title, artist):
     
     # Formatting for azlyrics url
     url = "http://azlyrics.com/lyrics/"+artist+"/"+song_title+".html"
-    print(url)
     
     try:
         content = urlopen(url).read()
