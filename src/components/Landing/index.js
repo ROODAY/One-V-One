@@ -22,6 +22,9 @@ import * as ROUTES from '../../constants/routes';
 import './Landing.css';
 import jingPhoto from './jing.jpg';
 import rudyPhoto from './rudy.jpg';
+import eminemPhoto from './eminem.jpg';
+import billyPhoto from './billy.png';
+import arianaPhoto from './ariana.jpg';
 import background from './landingBackground.jpg'
 
 class Landing extends Component {
@@ -40,20 +43,20 @@ class Landing extends Component {
           color="white"
           backgroundImage={background}
         >
-            <Heading>Name of your app</Heading>
-            <Subhead>a couple more words</Subhead>
+            <Heading>SoundBooth</Heading>
+            <Subhead>the indie vocalist social network</Subhead>
             <ScrollDownIndicator/>
         </Hero>
-        <Heading className="margin-heading" textAlign="center">Features</Heading>
+        <Heading className="margin-heading" textAlign="center">Join the Revolution!</Heading>
         <Flex flexWrap="wrap" justifyContent="center">
-            <Feature icon="🎤" description="What your users see first">
-                Hero
+            <Feature icon="🎤" description="Sing your heart out, all you need is a microphone">
+                Record
             </Feature>
-            <Feature icon="🔥" description="What your app can do">
-                Features
+            <Feature icon="🔥" description="Catch on fire and grow your fanbase">
+                Share
             </Feature>
-            <Feature icon="👥" description="How to keep in touch">
-                Sign Up
+            <Feature icon="👥" description="Connect with other artists and find new music">
+                Network
             </Feature>
         </Flex>
         <Heading className="margin-heading d-none d-sm-block" textAlign="center">What people are saying</Heading>
@@ -61,26 +64,26 @@ class Landing extends Component {
 
             <Testimony
                 className="padded-testimony grow-card"
-                authorAvatar={jingPhoto}
-                authorName="Herman Starikov"
-                authorTitle="developer">
-                Use react-landing-page for your landing page needs. Or do not, I am not a beggar...
+                authorAvatar={eminemPhoto}
+                authorName="Marshall Mathers"
+                authorTitle="rapper">
+                The quality of the lyrics found on this site is inspiring.
             </Testimony>
 
             <Testimony
                 className="padded-testimony grow-card"
-                authorAvatar={jingPhoto}
-                authorName="Herman Starikov"
-                authorTitle="developer">
-                Use react-landing-page for your landing page needs. Or do not, I am not a beggar...
+                authorAvatar={arianaPhoto}
+                authorName="Ariana Grande"
+                authorTitle="pop idol">
+                I wouldn't be where I am today without SoundBooth!
             </Testimony>
 
             <Testimony
                 className="padded-testimony grow-card"
-                authorAvatar={jingPhoto}
-                authorName="Herman Starikov"
-                authorTitle="developer">
-                Use react-landing-page for your landing page needs. Or do not, I am not a beggar...
+                authorAvatar={billyPhoto}
+                authorName="Billy Ray Cyrus"
+                authorTitle="cowboy">
+                Yeehaw! I love SoundBooth!
             </Testimony>
 
         </Flex>

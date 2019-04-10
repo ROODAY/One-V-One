@@ -20,7 +20,7 @@ class Navigation extends Component {
         {({authUser, updateAuth}) => 
           <Navbar bg="light" expand="lg" className="app-navbar">
             <LinkContainer to={ROUTES.LANDING}>
-              <Navbar.Brand>One V. One</Navbar.Brand>
+              <Navbar.Brand>SoundBooth</Navbar.Brand>
             </LinkContainer>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">

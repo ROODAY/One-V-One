@@ -5,6 +5,9 @@
 
 .padded-testimony {
   padding: 15px;
+  max-width: 20em;
+  display: flex;
+  align-items: flex-start;
 }
 
 .margin-heading {
