@@ -16,8 +16,8 @@ import az_lyric_scraper as az_ls
 print("Loading hotness data...")
 df = pd.read_csv("./raw/song_data.csv")
 
-print("\nScraping songs with available lyrics...")
-print("--- before data shape: " + str(df.shape), end="\n")
+print("Scraping songs with available lyrics...")
+print("--- before data shape: " + str(df.shape), end="\n\n")
 
 lyrics_list = []
 for index, row in df.iterrows():
