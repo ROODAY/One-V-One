@@ -10,7 +10,9 @@ import uuid
 import subprocess
 import json
 
-jsonCreds = json.loads(os.environ['GOOGLE_CREDENTIALS'])
+envCreds = os.environ['GOOGLE_CREDENTIALS']
+print(envCreds)
+jsonCreds = json.loads(envCreds)
 credentials = service_account.Credentials.from_service_account_info(jsonCreds)
 speechClient = speech.SpeechClient(credentials=credentials)
 
