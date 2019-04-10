@@ -1,4 +1,6 @@
-# Helper Libraries
+# Lyrics scraper using AZLyrics pages
+# and beautiful soup to parse out lyric body.
+
 import re
 from urllib.request import urlopen # make requests from python
 
@@ -6,7 +8,7 @@ from urllib.request import urlopen # make requests from python
 from bs4 import BeautifulSoup
  
  # API function to get the lyrics for a song and artist
-def get_lyrics(artist, song_title):
+def get_lyrics(song_title, artist):
 
     # Normalize
     artist = artist.lower()
@@ -35,7 +37,10 @@ def get_lyrics(artist, song_title):
         lyrics = lyrics.split(up_partition)[1]
         lyrics = lyrics.split(down_partition)[0]
         lyrics = re.sub(r"\<.*\>", "", lyrics).replace('\n', " ").strip()
+
+        print('---- AZLyrics: OK.')
+        
         return lyrics
     except Exception:
-        print('---- Found none.')
+        print('---- AZLyrics: No lyrics found for {} by {}.'.format(song_title, artist))
         return None

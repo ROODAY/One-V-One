@@ -1,0 +1,4 @@
+lyricsgenius>=1.0
+pandas>=0.24.0
+scikit-learn>=0.20.0
+numpy>=1.16
