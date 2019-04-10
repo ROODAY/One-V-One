@@ -15,8 +15,8 @@ import az_lyric_scraper as az_ls
 
 # load in song + hotness dataset
 print("Loading hotness data...")
-df = pd.read_csv("./raw/song_data.csv")
-df1 = None
+orig_df = pd.read_csv("./raw/song_data.csv")
+df = orig_df
 
 start_index = 0
 end_index = df.shape[0]
@@ -26,12 +26,12 @@ if len(sys.argv) > 1:
     start_index = int(sys.argv[1])
     if len(sys.argv) > 2:
         end_index = int(sys.argv[2])
-        df1 = df[start_index:end_index]
+        df = orig_df[start_index:end_index]
     else:
-        df1 = df[start_index:]
+        df = orig_df[start_index:]
 
 print("Scraping songs[{}:{}] with available lyrics...".format(start_index, end_index))
-print("--- before data shape: " + str(df1.shape), end="\n\n")
+print("--- before data shape: " + str(df.shape), end="\n\n")
 
 # Keep track of last executed index just in case.
 last_index = start_index
@@ -53,7 +53,7 @@ try:
             df.drop(index, inplace=True)
         else:
             last_index += 1
-            lyrics_list.append(curr_lyrics)
+            lyrics_list.append(curr_lyrics + "\n")
     
     # Add the aggregated song lyrics to the csv
     print('\nAdding song lyrics to hotness csv...')
@@ -62,7 +62,7 @@ try:
     df = df.assign(lyrics=pd.Series(np.array(lyrics_list)).values)
 
     print("PROCESSING complete.")
-    print("--- after data shape: " + str(df.shape))
+    print("--- after data shape: " + str(df1.shape))
 
     # Write to disk the list of filtered song hotnesses
     df.to_csv('./song_info.csv')
