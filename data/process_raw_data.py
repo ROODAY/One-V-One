@@ -35,6 +35,10 @@ for index, row in df.iterrows():
         df.drop(index, inplace=True)
     else:
         lyrics_list.append(curr_lyrics)
+
+# Dump artist_song_name -> lyrics dictionary into pickle file
+with open('./raw/song_lyrics.pkl', 'wb') as f: 
+	pickle.dump(lyrics_list, f)
         
 df = df.assign(lyrics=pd.Series(np.array(lyrics_list)).values)
 
@@ -43,11 +47,6 @@ print("--- after data shape: " + str(df.shape))
 
 # Write to disk the list of filtered song hotnesses
 df.to_csv('./song_info.csv')
-
-# Dump artist_song_name -> lyrics dictionary into pickle file
-with open('./raw/song_lyrics.pkl', 'wb') as f: 
-	pickle.dump(lyrics_list, f)
-
 
 
 

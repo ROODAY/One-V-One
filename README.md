@@ -3,6 +3,8 @@
 An online battle rap platform
 
 ### Instructions
+1. 
+    > pip install -r requirements.txt
 
 To extract features yourself:
 1. Download MXM_lyrics_dataset
