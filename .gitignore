@@ -1,5 +1,7 @@
 # Raw data
 data/raw/
+data/__pycache__
+data/raw/__pycache__
 
 # Logs
 logs
