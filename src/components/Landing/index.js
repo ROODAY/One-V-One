@@ -14,13 +14,24 @@ import {
   Testimony,
   Contributor
 } from 'react-landing-page'
+import { withRouter } from 'react-router-dom';
+import { AuthUserContext } from '../Session';
 
 import './Landing.css';
+import * as ROUTES from '../../constants/routes';
 import jingPhoto from './jing.jpg';
 import rudyPhoto from './rudy.jpg';
 import background from './landingBackground.jpg'
 
 class Landing extends Component {
+  static contextType = AuthUserContext;
+
+  componentDidUpdate() {
+    if (this.context.authUser) {
+      this.props.history.push(ROUTES.HOME);
+    }
+  }
+
   render() {
     return (
       <Provider className="landing-wrapper">
@@ -107,4 +118,4 @@ class Landing extends Component {
   }
 }
 
-export default Landing;
+export default withRouter(Landing);

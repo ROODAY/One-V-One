@@ -12,19 +12,19 @@ class Settings extends Component {
   render() {
     return (
       <AuthUserContext.Consumer>
-        {authUser => (
-            <Container className="settings-container">
-              <Row className="justify-content-md-center">
-                <Col md="auto">
-                  <h1>Settings</h1>
-                  <p>Account: {authUser.email}</p>
-                  <DisplayNameForm displayName={authUser.displayName} />
-                  <br/>
-                  <ChangePasswordForm email={authUser.email} />
-                </Col>
-              </Row>
-            </Container>
-          )}
+        {({authUser, updateAuth}) =>
+          <Container className="settings-container">
+            <Row className="justify-content-md-center">
+              <Col md="auto">
+                <h1>Settings</h1>
+                <p>Account: {authUser.email}</p>
+                <DisplayNameForm displayName={authUser.displayName} />
+                <br/>
+                <ChangePasswordForm email={authUser.email} />
+              </Col>
+            </Row>
+          </Container>
+        }
       </AuthUserContext.Consumer>
     );
   }

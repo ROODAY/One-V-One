@@ -1,14 +1,18 @@
 from flask import Flask, render_template, send_from_directory, redirect, request
 from google.cloud import speech
 from google.cloud.speech import enums, types
+from google.oauth2 import service_account
 
 import requests
 import io
 import os
 import uuid
 import subprocess
+import json
 
-speechClient = speech.SpeechClient()
+jsonCreds = json.loads(os.environ['GOOGLE_CREDENTIALS'])
+credentials = service_account.Credentials.from_service_account_info(jsonCreds)
+speechClient = speech.SpeechClient(credentials=credentials)
 
 app = Flask(__name__, static_folder="../build/static", template_folder="../build")
 
