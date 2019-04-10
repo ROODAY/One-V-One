@@ -18,7 +18,8 @@ import {
   ForgotPassword,
   NotFound,
   Landing,
-  Post
+  Post,
+  User
 } from './components'
 import * as ROUTES from './constants/routes';
 import { withAuthentication } from './components/Session';
@@ -39,6 +40,7 @@ class App extends Component {
           <Route path={ROUTES.SIGNIN} component={Signin} />
           <Route path={ROUTES.FORGOTPW} component={ForgotPassword} />
           <Route path={ROUTES.POST} component={Post} />
+          <Route path={ROUTES.USER} component={User} />
           <Route path={ROUTES.NOTFOUND} component={NotFound} />
           <Route component={NotFound} />
         </Switch>

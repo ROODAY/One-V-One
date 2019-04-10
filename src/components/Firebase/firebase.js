@@ -40,7 +40,10 @@ class Firebase {
   user = uid => this.db.ref(`users/${uid}`);
   users = () => this.db.ref('users');
 
+  userPostScore = (uid, pid) => this.db.ref(`users/${uid}/postScores/${pid}`)
+
   post = uid => this.db.ref(`posts/${uid}`);
+  postRating = uid => this.db.ref(`posts/${uid}/rating`);
   posts = () => this.db.ref('posts');
 
   song = uid => this.storage.ref().child(`audio/${uid}`);

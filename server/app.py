@@ -10,9 +10,7 @@ import uuid
 import subprocess
 import json
 
-envCreds = os.environ['GOOGLE_CREDENTIALS']
-print(envCreds)
-jsonCreds = json.loads(envCreds)
+jsonCreds = json.loads(os.environ['GOOGLE_CREDENTIALS'])
 credentials = service_account.Credentials.from_service_account_info(jsonCreds)
 speechClient = speech.SpeechClient(credentials=credentials)
 
@@ -27,6 +25,10 @@ app = Flask(__name__, static_folder="../build/static", template_folder="../build
 @app.route("/post")
 @app.route("/404")
 def root():
+  return render_template('index.html')
+
+@app.route('/user/<userid>/')
+def user(userid):
   return render_template('index.html')
 
 @app.route('/favicon.ico') 

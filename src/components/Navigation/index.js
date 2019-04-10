@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
-import Navbar from 'react-bootstrap/Navbar'
-import Nav from 'react-bootstrap/Nav'
+import {
+  Navbar,
+  Nav
+} from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { AuthUserContext } from '../Session';
-import AuthButtons from './AuthButtons'
-import NonAuthButtons from './NonAuthButtons'
-import SearchForm from './SearchForm'
 
-import './Navigation.css';
+import { AuthUserContext } from '../Session';
 import * as ROUTES from '../../constants/routes';
+
+import AuthButtons from './AuthButtons';
+import NonAuthButtons from './NonAuthButtons';
+import SearchForm from './SearchForm';
+import './Navigation.css';
 
 class Navigation extends Component {
   render() {

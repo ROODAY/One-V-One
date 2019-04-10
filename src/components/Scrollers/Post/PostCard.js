@@ -3,11 +3,13 @@ import {
   Card,
   ButtonToolbar,
   ToggleButtonGroup,
-  ToggleButton
+  ToggleButton,
+  Row,
+  Col
 } from 'react-bootstrap';
-import { withFirebase } from '../../Firebase';
+import { LinkContainer } from 'react-router-bootstrap';
 
-// add rank and genre to cards
+import { withFirebase } from '../../Firebase';
 
 class PostCard extends Component {
   constructor(props, context) {
@@ -18,7 +20,7 @@ class PostCard extends Component {
     this.audioplayer = React.createRef();
 
     this.state = {
-      value: this.props.rating,
+      value: this.props.userRating,
       listens: this.props.listens || 0
     };
   }
@@ -41,9 +43,18 @@ class PostCard extends Component {
     } else {
       value = 0
     }
+
+    const oldValue = this.state.value;
     this.setState({ value });
-    this.props.firebase.post(this.props.id).update({
-      rating: value
+
+    this.props.firebase
+    .userPostScore(this.props.currentUserId, this.props.id)
+    .update({value})
+    .then(() => {
+      this.props.firebase.postRating(this.props.id)
+      .transaction((currentRating) => {
+        return (currentRating || 0) - oldValue + value;
+      });
     });
   }
 
@@ -51,10 +62,23 @@ class PostCard extends Component {
     return (
       <Card style={{ width: 'fit-content' }}>
         <Card.Body>
-          <Card.Title>{this.props.title}</Card.Title>
-          <Card.Subtitle className="mb-2 text-muted">{this.props.user}</Card.Subtitle>
+          <Row>
+            <Col>
+              <Card.Title>{this.props.title}</Card.Title>
+              <LinkContainer to={`user/${this.props.userId}`}>
+                <Card.Subtitle className="mb-2 text-muted">{this.props.user}</Card.Subtitle>
+              </LinkContainer>
+            </Col>
+            <Col style={{textAlign: "right"}}>
+              <Card.Subtitle className="mb-2">{this.props.genre}</Card.Subtitle>
+              <Card.Subtitle className="mb-2">#{this.props.rank} 🔥</Card.Subtitle>
+            </Col>
+          </Row>
           <Card.Text>
             {this.props.description}
+          </Card.Text>
+          <Card.Text className="font-italic">
+            {this.props.timestamp.toLocaleDateString()} {this.props.timestamp.toLocaleTimeString()}
           </Card.Text>
           <audio src={this.props.audioURL} controls ref={this.audioplayer}></audio><br/>
           <ButtonToolbar>
@@ -64,10 +88,13 @@ class PostCard extends Component {
               type="checkbox" 
               name="options">
               <ToggleButton value={1}><span role="img" aria-label="like">👍</span></ToggleButton>
-              <ToggleButton value={2}><span role="img" aria-label="dislike">👎</span></ToggleButton>
+              <ToggleButton value={-1}><span role="img" aria-label="dislike">👎</span></ToggleButton>
             </ToggleButtonGroup>
 
-            <span className="listens" role="img" aria-label="listens">🎶: {this.state.listens}</span>
+            <div className="listens">
+              <span role="img" aria-label="listens">🎶: {this.state.listens}</span> 
+              <span role="img" aria-label="listens">💜: {this.props.rating}</span>
+            </div>
           </ButtonToolbar>
         </Card.Body>
       </Card>

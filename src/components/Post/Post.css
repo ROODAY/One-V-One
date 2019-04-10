@@ -5,3 +5,7 @@
   display: inline-block;
   border-radius: 100%;
 }
+
+.card-subtitle {
+  cursor: pointer;
+}

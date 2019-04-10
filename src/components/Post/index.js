@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Countdown from 'react-countdown-now';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Loader from '../Loader';
+import {
+  Button,
+  Form,
+  Container,
+  Row,
+  Col
+} from 'react-bootstrap';
 import axios from 'axios';
 
-import './Post.css'
+import Loader from '../Loader';
 import { withFirebase } from '../Firebase';
 import { withAuthorization } from '../Session';
 
-// fix countdown, perhaps use better speech to text
+import './Post.css'
 
-const timer = 6 * 1000;
+const timer = 5 * 1000;
 
 const INITIAL_STATE = {
   title: '',
@@ -24,9 +24,9 @@ const INITIAL_STATE = {
   showForm: false,
   recording: false,
   audioBlob: null,
-  transcript: '',
   showLoader: false,
-  countdownDate: Date.now() + timer
+  seconds: timer / 1000,
+  loadingMessage: null
 };
 
 function uuidv4() {
@@ -45,8 +45,6 @@ class Post extends Component {
       audioUrl: null
     }
 
-    this.countdown = React.createRef();
-
     this.startRecording = this.startRecording.bind(this);
   }
 
@@ -54,22 +52,9 @@ class Post extends Component {
     navigator.mediaDevices.getUserMedia({ audio: true })
     .then(stream => {
       const mediaRecorder = new MediaRecorder(stream);
-      //const recognition = new window.webkitSpeechRecognition();
       mediaRecorder.start();
-      /*recognition.start();
-      
-      recognition.onresult = (event) => {
-        const speechToText = event.results[0][0].transcript;
-        this.setState({transcript: speechToText, showForm: true});
-      }
 
-      recognition.onnomatch = (event) => {
-        this.setState({transcript: "Could not transcribe", showForm: true});
-      }*/
-
-      this.countdown.current.date = Date.now() + 3000;
-      this.countdown.current.getApi().start();
-      this.setState({recording: true, success: null})
+      this.setState({recording: true, success: null, seconds: timer / 1000})
 
       const audioChunks = [];
 
@@ -83,9 +68,14 @@ class Post extends Component {
         this.setState({audioUrl, audioBlob, recording: false, showForm: true});
       });
 
+      const countdown = setInterval(() => {
+        const seconds = this.state.seconds - 1;
+        this.setState({seconds});
+      }, 1000);
+
       setTimeout(() => {
         mediaRecorder.stop();
-        //recognition.stop();
+        clearInterval(countdown);
       }, timer);
     });
   }
@@ -93,31 +83,39 @@ class Post extends Component {
   onSubmit = event => {
     event.preventDefault();
     this.setState({showLoader: true});
-    const {title, description, transcript} = this.state;
+    const {title, description} = this.state;
     const username = this.props.firebase.auth.currentUser.displayName;
+    const userId = this.props.firebase.auth.currentUser.uid;
     const id = uuidv4();
 
+    this.setState({loadingMessage: "Uploading audio..."});
     this.props.firebase.song(id).put(this.state.audioBlob)
     .then(snapshot => {
       return this.props.firebase.song(id).getDownloadURL();
     })
     .then(audioPath => {
+      this.setState({loadingMessage: "Running our algorithm..."});
+      return axios.post('/api/getTranscript', { audioPath })
+      .then(res => {
+        return {
+          audioPath,
+          transcript: res.data
+         };
+      });
+    })
+    .then(data => {
+      this.setState({loadingMessage: "Saving metadata..."});
+      const {audioPath, transcript} = data;
+      const timestamp = (new Date()).toISOString();
       return this.props.firebase.post(id).set({
         username,
+        userId,
         title,
         description,
         audioPath,
         transcript,
-        id
-      })
-      .then(() => {
-        return audioPath;
-      });
-    })
-    .then(audioPath => {
-      return axios.post('/api/getTranscript', { audioPath })
-      .then(res => {
-        console.log(res);
+        id,
+        timestamp
       });
     })
     .then(() => {
@@ -131,7 +129,6 @@ class Post extends Component {
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   }
-
 
   render() {
     const { title, description, error, success } = this.state;
@@ -147,22 +144,20 @@ class Post extends Component {
 
     return (
       <Container className="settings-container">
-        <Loader visible={this.state.showLoader} />
-        <Row className="justify-content-md-center">
+        <Loader visible={this.state.showLoader} message={this.state.loadingMessage}/>
+        <Row className="justify-content-center">
           <Col md="auto">
             <h1>Upload a song</h1>
             <p>Press record and sing until the timer is over! <br/>
             If you're satisfied, upload the clip to our servers for processing, <br/>
             or press Start to record again!</p>
             <Button onClick={this.startRecording}>Start Recording</Button> {this.state.recording && <div id="rec">{null}</div>}<br/>
-            <Countdown date={this.state.countdownDate} autoStart={false} ref={this.countdown} renderer={countdownRenderer} />
+            {countdownRenderer({seconds: this.state.seconds})}
 
             {this.state.showForm && 
-              
               <Form onSubmit={this.onSubmit}>
                 <h3>Your Song</h3>
                 <audio src={this.state.audioUrl} controls></audio>
-                <p>{this.state.transcript}</p>
                 <Form.Group controlId="title">
                   <Form.Label>Title</Form.Label>
                   <Form.Control 

@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Tabs from 'react-bootstrap/Tabs';
-import Tab from 'react-bootstrap/Tab';
-import Settings from '../Settings';
-import ProfileForm from './ProfileForm';
+import {
+  Container,
+  Row,
+  Col,
+  Tabs,
+  Tab
+} from 'react-bootstrap';
 
+import Settings from '../Settings';
 import { AuthUserContext, withAuthorization } from '../Session';
+import ProfileForm from './ProfileForm';
 
 class Profile extends Component {
   render() {
@@ -17,7 +19,7 @@ class Profile extends Component {
             <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
               <Tab eventKey="profile" title="Profile">
                 <Container className="settings-container">
-                  <Row className="justify-content-md-center">
+                  <Row className="justify-content-center">
                     <Col md="auto">
                       <h1>Profile</h1>
                       <ProfileForm uid={authUser.uid}/>

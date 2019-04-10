@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import InfiniteScroll from 'react-infinite-scroller'
-import BattleCard from './BattleCard'
+import {
+  Container,
+  Row,
+  Col
+} from 'react-bootstrap';
+import InfiniteScroll from 'react-infinite-scroller';
+
+import BattleCard from './BattleCard';
 
 function makeid(length) {
   var text = "";
@@ -45,7 +48,7 @@ class BattleScroller extends Component {
     const loader = <div key="loader">Loading...</div>;
     return (
       <Container>
-        <Row className="justify-content-md-center">
+        <Row className="justify-content-center">
           <Col md="auto">
             <InfiniteScroll
                 pageStart={0}

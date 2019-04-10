@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import ChangePasswordForm from '../ChangePassword';
-import DisplayNameForm from './DisplayNameForm'
+import {
+  Container,
+  Row,
+  Col
+} from 'react-bootstrap';
 
 import { AuthUserContext } from '../Session';
+import ChangePasswordForm from '../ChangePassword';
+
+import DisplayNameForm from './DisplayNameForm'
 import './Settings.css'
 
 class Settings extends Component {
@@ -14,7 +17,7 @@ class Settings extends Component {
       <AuthUserContext.Consumer>
         {({authUser, updateAuth}) =>
           <Container className="settings-container">
-            <Row className="justify-content-md-center">
+            <Row className="justify-content-center">
               <Col md="auto">
                 <h1>Settings</h1>
                 <p>Account: {authUser.email}</p>

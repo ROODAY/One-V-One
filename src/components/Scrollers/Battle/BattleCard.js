@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
+import {
+  Card,
+  Button
+} from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 class BattleCard extends Component {

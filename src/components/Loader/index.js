@@ -10,6 +10,7 @@ class Loader extends Component {
         {this.props.visible &&
           <div className="loader-container">
             <Spinner animation="border" variant="primary" />
+            {this.props.message && <p className="font-weight-bold font-italic">{this.props.message}</p>}
           </div>
         }
       </div>

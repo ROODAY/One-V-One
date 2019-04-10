@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import {Typeahead} from 'react-bootstrap-typeahead';
 import Loader from '../Loader';
 
+import {GENRES} from '../../constants/genres';
 import { withFirebase } from '../Firebase';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
@@ -95,7 +96,7 @@ class ProfileForm extends Component {
             onChange={(selected) =>{
               this.setState({genres: selected});
             }}
-            options={["john", "elton", "candy", "man", "ooga", "booga"]}
+            options={GENRES}
           />
         </Form.Group>
 

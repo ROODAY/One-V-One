@@ -15,10 +15,11 @@ import {
   Contributor
 } from 'react-landing-page'
 import { withRouter } from 'react-router-dom';
+
 import { AuthUserContext } from '../Session';
+import * as ROUTES from '../../constants/routes';
 
 import './Landing.css';
-import * as ROUTES from '../../constants/routes';
 import jingPhoto from './jing.jpg';
 import rudyPhoto from './rudy.jpg';
 import background from './landingBackground.jpg'
@@ -36,8 +37,7 @@ class Landing extends Component {
     return (
       <Provider className="landing-wrapper">
         <Hero
-          color="black"
-          bg="white"
+          color="white"
           backgroundImage={background}
         >
             <Heading>Name of your app</Heading>
@@ -46,18 +46,18 @@ class Landing extends Component {
         </Hero>
         <Heading className="margin-heading" textAlign="center">Features</Heading>
         <Flex flexWrap="wrap" justifyContent="center">
-            <Feature icon="👋" description="What your users see first">
+            <Feature icon="🎤" description="What your users see first">
                 Hero
             </Feature>
             <Feature icon="🔥" description="What your app can do">
                 Features
             </Feature>
-            <Feature icon="📩" description="How to keep in touch">
+            <Feature icon="👥" description="How to keep in touch">
                 Sign Up
             </Feature>
         </Flex>
-        <Heading className="margin-heading" textAlign="center">What people are saying</Heading>
-        <Flex alignItems="flex-end" justifyContent="space-around">
+        <Heading className="margin-heading d-none d-sm-block" textAlign="center">What people are saying</Heading>
+        <Flex alignItems="flex-end" justifyContent="space-around" className="d-none d-sm-flex">
 
             <Testimony
                 className="padded-testimony grow-card"

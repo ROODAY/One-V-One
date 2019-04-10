@@ -1,35 +1,48 @@
 import React, { Component } from 'react';
-import Tabs from 'react-bootstrap/Tabs'
-import Tab from 'react-bootstrap/Tab'
-import Button from 'react-bootstrap/Button';
-import { PostScroller, BattleScroller } from '../Scrollers'
+import {
+  Tabs,
+  Tab,
+  Container,
+  Button
+} from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import * as ROUTES from '../../constants/routes';
 
-import './Home.css'
+import { PostScroller, BattleScroller } from '../Scrollers'
 import { withAuthorization } from '../Session';
 
+import * as ROUTES from '../../constants/routes';
+import {GENRES} from '../../constants/genres'
+
+import './Home.css'
+import micIcon from './micIcon.png';
 
 class Home extends Component {
   render() {
-    return (
-      <Tabs defaultActiveKey="posts" id="uncontrolled-tab-example">
-        <Tab eventKey="posts" title="Posts">
-          <div>
-            <p>Want to upload a song?</p>  {/*make this look better*/}
-            <LinkContainer to={ROUTES.POST}>
-               <Button variant="primary">Upload</Button>
-            </LinkContainer>
-          </div>
-            
-          <PostScroller />
-        </Tab>
-        {false && <Tab eventKey="battles" title="Battles">
-          <BattleScroller />
-        </Tab>}
+    const GenreTab = (genre, key) => (
+      <Tab key={key} eventKey={genre} title={genre}>
+        <PostScroller genre={genre}/>
+      </Tab>
+    )
 
-        {/*add tabs for each genre*/}
-      </Tabs>
+    return (
+      <div>
+        <Container className="post-wrapper">
+          <img src={micIcon} alt="microphone" height="32px"/>
+          <p className="font-weight-bold">Got your mic handy?</p>
+          <LinkContainer to={ROUTES.POST}>
+             <Button variant="outline-success">Make a Post</Button>
+          </LinkContainer>
+        </Container>
+        <Tabs defaultActiveKey={GENRES[0]}>
+          {GENRES.map((genre, i) => {
+            return GenreTab(genre, i);
+          })}
+
+          {false && <Tab eventKey="battles" title="Battles">
+            <BattleScroller />
+          </Tab>}
+        </Tabs>
+      </div>
     );
   }
 }

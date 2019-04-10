@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import Nav from 'react-bootstrap/Nav'
+import {Nav} from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap';
+
 import { AuthUserContext } from '../Session';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
