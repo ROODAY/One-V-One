@@ -81,7 +81,7 @@ classifier = KernelRidge(alpha=2.0, kernel='rbf')
 
 # Saving model trained on data
 X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.3, random_state=7)
-model = classifier.fit(data[X_train], labels[y_train])
+model = classifier.fit(X_train, y_train)
 
 # Predict
 y_pred = model.predict(X_test)
