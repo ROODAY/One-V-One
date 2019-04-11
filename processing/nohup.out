@@ -1,0 +1,19 @@
+Loading data...
+Traceback (most recent call last):
+  File "train_models.py", line 60, in <module>
+    pickle.dump(tfidf_v, f)
+TypeError: write() argument must be str, not bytes
+Loading data...
+Starting feature extraction...
+Traceback (most recent call last):
+  File "train_models.py", line 61, in <module>
+    pickle.dump(tfidf_v, f)
+TypeError: write() argument must be str, not bytes
+Loading data...
+Starting feature extraction...
+Traceback (most recent call last):
+  File "train_models.py", line 64, in <module>
+    data = data.to_numpy()
+  File "/data/anaconda/envs/py35/lib/python3.5/site-packages/pandas/core/generic.py", line 4372, in __getattr__
+    return object.__getattribute__(self, name)
+AttributeError: 'DataFrame' object has no attribute 'to_numpy'

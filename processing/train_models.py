@@ -61,8 +61,11 @@ with open(os.path.join(trained_dir, 'tf_idfv.pkl'), 'wb') as f:
     pickle.dump(tfidf_v, f)
 
 # Convert to numpy array and shuffle
-data = data.to_numpy()
-data = np.concatenate((data, postprocess_lyrics), axis=1)
+data = data.values.reshape(postprocess_lyrics.shape[0], 5)
+
+print('{} vs. {}'.format(data.shape, postprocess_lyrics.shape))
+
+data = np.column_stack((data, postprocess_lyrics))
 print('---- data shape before: {}'.format(data.shape))
 
 # OPTIONAL additional feature selection...
