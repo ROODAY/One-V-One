@@ -68,7 +68,7 @@ print('---- data shape before: {}'.format(data.shape))
 
 # OPTIONAL additional feature selection...
 print("Starting feature selection...")
-f_selector = SelectPercentile(f_classif, percentile=60)
+f_selector = SelectPercentile(f_classif, percentile=40)
 data = f_selector.fit_transform(data, labels)
 
 print('---- data shape after: {}'.format(data.shape))
@@ -77,7 +77,7 @@ with open(os.path.join(trained_dir, 'selector.pkl'), 'wb') as f:
 
 # Start training
 print("Start training and predict...")
-classifier = KernelRidge(alpha=2.0, kernel='rbf')
+classifier = KernelRidge(alpha=1.5, kernel='rbf')
 
 # Saving model trained on data
 X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.3, random_state=7)
@@ -87,6 +87,10 @@ model = classifier.fit(X_train, y_train)
 y_pred = model.predict(X_test)
 nMSE = mean_squared_error(y_test, y_pred) / np.mean(np.square(y_test))
 print("---- model achieved nMSE of {}".format(nMSE))
+
+with open(os.path.join('../data/raw/', 'results.txt'), 'w') as f:
+    f.writelines(['{} {}'.format(y_test[i], y_pred[i]) for i in range(len(y_test))])
+
 del X_train, X_test, y_train, y_test
 
 with open(os.path.join(trained_dir, 'model.pkl'), 'wb') as f:
@@ -101,6 +105,7 @@ count = 0
 
 for train, test in kf.split(data):
     # train
+    data[train] = np.nan_to_num(data[train])
     model = classifier.fit(data[train], labels[train])
         
     # predict
