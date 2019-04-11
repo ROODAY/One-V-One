@@ -85,7 +85,7 @@ model = classifier.fit(X_train, y_train)
 
 # Predict
 y_pred = model.predict(X_test)
-nMSE = mean_squared_error(X_test.toArray(), y_pred.toArray()) / np.mean(np.square(y_test.toArray()))
+nMSE = mean_squared_error(X_test.toArray(), y_pred) / np.mean(np.square(y_test.toArray()))
 print("---- model achieved nMSE of {}".format(nMSE))
 del X_train, X_test, y_train, y_test
 
