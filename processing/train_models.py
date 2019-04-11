@@ -15,6 +15,9 @@ from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import KFold
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import GridSearchCV
+from sklearn.preprocessing import FunctionTransformer
+from sklearn.pipeline import FeatureUnion
+from sklearn.pipeline import Pipeline
 
 # Model
 from sklearn.kernel_ridge import KernelRidge
@@ -47,24 +50,20 @@ data = data.drop("lyrics", axis=1)
 print("Starting feature extraction...")
 MAX_FEATURES = 5000
 
+def get_song_info(x):
+    return data.values
+
 # count_v = CountVectorizer()
-tfidf_v = TfidfVectorizer(
-    analyzer='word', 
-    sublinear_tf=True,
-    strip_accents='unicode',
-    ngram_range=(1, 1), # unigram vs. bigram
-    max_features=MAX_FEATURES
-)
-postprocess_lyrics = tfidf_v.fit_transform(postprocess_lyrics)
+feats_union = FeatureUnion([ 
+    ('tfidf', TfidfVectorizer(analyzer='word', sublinear_tf=True, strip_accents='unicode', ngram_range=(1, 1), max_features=MAX_FEATURES)),
+    ('info', FunctionTransformer(get_song_info, validate=False))
+])
 
-with open(os.path.join(trained_dir, 'tf_idfv.pkl'), 'wb') as f:
-    pickle.dump(tfidf_v, f)
+postprocess_lyrics = feats_union.fit_transform(postprocess_lyrics)
 
-# Convert to numpy array and shuffle
-data = data.values
-postprocess_lyrics = postprocess_lyrics.toArray()
+with open(os.path.join(trained_dir, 'feats_union.pkl'), 'wb') as f:
+    pickle.dump(feats_union, f)
 
-data = np.concatenate((data, postprocess_lyrics), axis=1)
 print('---- data shape before: {}'.format(data.shape))
 
 # OPTIONAL additional feature selection...
