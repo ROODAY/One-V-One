@@ -31,7 +31,7 @@ data = data.dropna(axis=0, how='any')
 
 # Get ground truth
 labels = copy.deepcopy(data.song_popularity)
-data.drop("song_popularity", axis=1)
+data = data.drop("song_popularity", axis=1)
 
 # Join lyrics as stemmed words list for each song
 postprocess_lyrics = None
@@ -41,7 +41,7 @@ else:
     with open(os.path.join(data_dir, 'lyrics_stats.txt'), 'r', encoding="ISO-8859-1") as f:
         postprocess_lyrics = [line.rstrip() for line in f.readlines()]
 postprocess_lyrics = np.array(postprocess_lyrics)
-data.drop("lyrics", axis=1)
+data = data.drop("lyrics", axis=1)
 
 # Save trained Feature Selector - TFIDF and CountVectorizer
 print("Starting feature extraction...")
@@ -63,7 +63,6 @@ with open(os.path.join(trained_dir, 'tf_idfv.pkl'), 'wb') as f:
 # Convert to numpy array and shuffle
 data = data.values
 postprocess_lyrics.reshape(data.shape[0], postprocess_lyrics.shape[1])
-print(postprocess_lyrics[0,0].shape)
 
 data = np.concatenate((data, postprocess_lyrics), axis=1)
 print('---- data shape before: {}'.format(data.shape))
