@@ -59,7 +59,7 @@ feats_union = FeatureUnion([
     ('info', FunctionTransformer(get_song_info, validate=False))
 ])
 
-postprocess_lyrics = feats_union.fit_transform(postprocess_lyrics)
+data = feats_union.fit_transform(postprocess_lyrics)
 
 with open(os.path.join(trained_dir, 'feats_union.pkl'), 'wb') as f:
     pickle.dump(feats_union, f)
@@ -85,7 +85,7 @@ model = classifier.fit(X_train, y_train)
 
 # Predict
 y_pred = model.predict(X_test)
-nMSE = mean_squared_error(data[X_test], y_pred) / np.mean(np.square(labels[y_test]))
+nMSE = mean_squared_error(X_test, y_pred) / np.mean(np.square(y_test))
 print("---- model achieved nMSE of {}".format(nMSE))
 del X_train, X_test, y_train, y_test
 
