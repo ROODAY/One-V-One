@@ -77,7 +77,7 @@ with open(os.path.join(trained_dir, 'selector.pkl'), 'wb') as f:
 
 # Start training
 print("Start training and predict...")
-classifier = KernelRidge(alpha=1.5, kernel='rbf')
+classifier = KernelRidge(alpha=1, kernel='rbf')
 
 # Saving model trained on data
 X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.3, random_state=7)
@@ -99,16 +99,16 @@ del X_train, X_test, y_train, y_test
 with open(os.path.join(trained_dir, 'model.pkl'), 'wb') as f:
     pickle.dump(model, f)
 
-
 # Start Validation
 print("Starting 10-Fold validation...")
 kf = KFold(n_splits=10)
 nMSEs = []
 count = 0
 
+#???
+data = data.dropna(axis=0, how='any')
 for train, test in kf.split(data):
     # train
-    data[train] = np.nan_to_num(data[train])
     model = classifier.fit(data[train], labels[train])
         
     # predict
