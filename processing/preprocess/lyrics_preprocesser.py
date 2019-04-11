@@ -13,7 +13,7 @@ from os.path import abspath, join, dirname
 
 # Use NLTK tools to preprocess text into tf-idf vectors
 import nltk
-nltk.download()
+# nltk.download()
 
 # Multilingual Stopwords
 stop_words = set(nltk.corpus.stopwords.words('english') + nltk.corpus.stopwords.words('spanish'))
@@ -65,7 +65,7 @@ def preprocess_text(str):
         
     return str
 
-def preprocess_data(x, output_file):
+def preprocess_data(x, output_file=None):
     words_stat = {}  # record statistics of the df and tf for each word; Form: { word:[tf, df,index] }
     lyrics_list = []
 
@@ -86,8 +86,10 @@ def preprocess_data(x, output_file):
         lyrics_list.append(' '.join(postprocess_text))
 
     # save lyrics bag of words in array
-    with open(output_file, 'w') as f:
-        f.writelines([lyrics+"\n" for lyrics in lyrics_list])
+
+    if output_file:
+        with open(output_file, 'w') as f:
+            f.writelines([lyrics+"\n" for lyrics in lyrics_list])
 
     return lyrics_list
 
