@@ -62,12 +62,15 @@ with open(os.path.join(trained_dir, 'tf_idfv.pkl'), 'w') as f:
 # Convert to numpy array and shuffle
 data = data.to_numpy()
 data = np.concatenate((data, postprocess_lyrics), axis=1)
-print('---- data shape: {}'.format(data.shape))
+print('---- data shape before: {}'.format(data.shape))
 
 # OPTIONAL additional feature selection...
-# f_selector = SelectPercentile(f_classif, percentile=40)
-# data = f_selector.fit_transform(data, labels)
-# print('---- data shape after: {}'.format(data.shape))
+f_selector = SelectPercentile(f_classif, percentile=60)
+data = f_selector.fit_transform(data, labels)
+
+print('---- data shape after: {}'.format(data.shape))
+with open(os.path.join(trained_dir, 'selector.pkl'), 'w') as f:
+    pickle.dump(f_selector, f)
 
 # Start training
 print("Start training and predict...")
