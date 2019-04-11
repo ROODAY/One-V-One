@@ -2,8 +2,9 @@ from flask import Flask, render_template, send_from_directory, redirect, request
 from google.cloud import speech
 from google.cloud.speech import enums, types
 from google.oauth2 import service_account
+from dotenv import load_dotenv
 
-from ml import scorePost
+from ml import predictHotness
 
 import requests
 import io
@@ -12,9 +13,22 @@ import uuid
 import subprocess
 import json
 
-jsonCreds = json.loads(os.environ['GOOGLE_CREDENTIALS'])
-credentials = service_account.Credentials.from_service_account_info(jsonCreds)
-speechClient = speech.SpeechClient(credentials=credentials)
+import firebase_admin
+from firebase_admin import credentials, db
+
+load_dotenv(dotenv_path='../.env')
+
+apiKey = os.environ['REACT_APP_SERVER_KEY']
+
+jsonFirebaseCreds = json.loads(os.environ['FIREBASE_CREDENTIALS'])
+firebaseCredentials = credentials.Certificate(jsonFirebaseCreds)
+firebase_admin.initialize_app(firebaseCredentials, {
+    'databaseURL': os.environ['REACT_APP_DATABASE_URL']
+})
+
+jsonSpeechCreds = json.loads(os.environ['GOOGLE_CREDENTIALS'])
+speechCredentials = service_account.Credentials.from_service_account_info(jsonSpeechCreds)
+speechClient = speech.SpeechClient(credentials=speechCredentials)
 
 app = Flask(__name__, static_folder="../build/static", template_folder="../build")
 
@@ -46,19 +60,20 @@ def manifest():
 def page_not_found(e):
     return redirect('/404')
 
-@app.route('/api/predict', methods=['POST'])
-def getTranscript():
-  if request.method == 'POST':
-    audioUrl = request.get_json()['audioPath']
-    audioData = requests.get(audioUrl)
-    fileID = str(uuid.uuid4())
-    open(fileID + '.tmp.webm', 'wb').write(audioData.content)
+#####
+# API
+#####
+def scorePost(audioUrl, transcripts=None):
+  audioData = requests.get(audioUrl)
+  fileID = str(uuid.uuid4())
+  open(fileID + '.tmp.webm', 'wb').write(audioData.content)
 
-    subprocess.call(
-      'ffmpeg -loglevel panic -i {}.tmp.webm {}.tmp.wav'.format(fileID, fileID),
-      shell=True)
+  subprocess.call(
+    'ffmpeg -loglevel panic -i {}.tmp.webm {}.tmp.wav'.format(fileID, fileID),
+    shell=True)
 
-    res = {}
+  res = {}
+  if (transcripts == None):
     with io.open(fileID + '.tmp.wav', 'rb') as audio_file:
       content = audio_file.read()
       audio = types.RecognitionAudio(content=content)
@@ -66,30 +81,41 @@ def getTranscript():
 
       response = speechClient.recognize(config, audio)
       res['transcripts'] = [{'text': alternative.transcript, 'conf': alternative.confidence} for result in response.results for alternative in result.alternatives]
+      transcripts = res['transcripts']
 
-    res['prediction'] = scorePost(fileID + '.tmp.wav', res['transcripts'])
+  res['prediction'] = predictHotness(fileID + '.tmp.wav', transcripts)
 
-    os.remove(fileID + '.tmp.wav')
-    os.remove(fileID + '.tmp.webm')
+  os.remove(fileID + '.tmp.wav')
+  os.remove(fileID + '.tmp.webm')
+  return res
+
+@app.route('/api/predict', methods=['POST'])
+def getPrediction():
+  key = request.args.get('key')
+  if key == apiKey:
+    res = scorePost(request.get_json()['audioPath'])
     return jsonify(res)
   else:
-    raise InvalidUsage('This view is gone', status_code=400)
+    return 'Invalid API key: {}'.format(key),401
 
+@app.route('/api/repredict', methods=['POST'])
+def runPredictions():
+  key = request.args.get('key')
+  if key == apiKey:
+    postsRef = db.reference('posts')
+    posts = postsRef.get()
 
-class InvalidUsage(Exception):
-  status_code = 400
+    for postId, postData in posts.items():
+      res = scorePost(postData['audioPath'], postData['transcripts'])
 
-  def __init__(self, message, status_code=None, payload=None):
-    Exception.__init__(self)
-    self.message = message
-    if status_code is not None:
-        self.status_code = status_code
-    self.payload = payload
+      postRef = postsRef.child(postId)
+      postRef.update({
+          'hotness': res['prediction']['hotness']
+      })
 
-  def to_dict(self):
-    rv = dict(self.payload or ())
-    rv['message'] = self.message
-    return rv
+    return "Posts have been re-scored"
+  else:
+    return 'Invalid API key: {}'.format(key),401
 
 if __name__ == "__main__":
   app.run(host='0.0.0.0')

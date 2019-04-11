@@ -17,6 +17,16 @@ import './Home.css'
 import micIcon from './micIcon.png';
 
 class Home extends Component {
+  constructor(props) {
+    super(props);
+
+    this.saveTab = this.saveTab.bind(this);
+  }
+
+  saveTab(eventKey) {
+    localStorage.setItem('active-tab', eventKey);
+  }
+
   render() {
     const GenreTab = (genre, key) => (
       <Tab key={key} eventKey={genre} title={genre}>
@@ -33,7 +43,7 @@ class Home extends Component {
              <Button variant="outline-success">Make a Post</Button>
           </LinkContainer>
         </Container>
-        <Tabs defaultActiveKey={GENRES[0]}>
+        <Tabs defaultActiveKey={localStorage.getItem('active-tab') || GENRES[0]} onSelect={this.saveTab}>
           {GENRES.map((genre, i) => {
             return GenreTab(genre, i);
           })}

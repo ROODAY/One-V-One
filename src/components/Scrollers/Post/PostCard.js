@@ -66,12 +66,12 @@ class PostCard extends Component {
             <Col>
               <Card.Title>{this.props.title}</Card.Title>
               <LinkContainer to={`user/${this.props.userId}`}>
-                <Card.Subtitle className="mb-2 text-muted">{this.props.user}</Card.Subtitle>
+                <Card.Subtitle className="mb-2 text-muted userlink">{this.props.user}</Card.Subtitle>
               </LinkContainer>
             </Col>
             <Col style={{textAlign: "right"}}>
               <Card.Subtitle className="mb-2">{this.props.genre}</Card.Subtitle>
-              <Card.Subtitle className="mb-2">#{this.props.rank} 🔥</Card.Subtitle>
+              <Card.Subtitle className="mb-2">{this.props.rank} <span role="img" aria-label="hotness">🔥</span></Card.Subtitle>
             </Col>
           </Row>
           <Card.Text>
@@ -93,7 +93,7 @@ class PostCard extends Component {
 
             <div className="listens">
               <span role="img" aria-label="listens">🎶: {this.state.listens}</span> 
-              <span role="img" aria-label="listens">💜: {this.props.rating}</span>
+              <span role="img" aria-label="rating">💜: {this.props.rating}</span>
             </div>
           </ButtonToolbar>
         </Card.Body>

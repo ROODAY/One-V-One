@@ -35,3 +35,7 @@
 .post-wrapper > * {
   margin: 10px;
 }
+
+.userlink {
+  cursor: pointer;
+}

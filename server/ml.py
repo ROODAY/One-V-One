@@ -13,7 +13,7 @@ GENRES = [
   "Pop"
 ]
 
-def scorePost(audioFileName, transcripts):
+def predictHotness(audioFileName, transcripts):
   return {
     'hotness': random.randint(1,101),
     'genre': random.choice(GENRES)

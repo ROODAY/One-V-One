@@ -32,7 +32,11 @@ class PostScroller extends Component {
         if (snapshot.val()) {
           posts = Object.values(snapshot.val())
                   .filter(post => post.genre === this.props.genre)
-                  .sort((a, b) => (a.hotness > b.hotness) ? 1 : -1);
+                  .sort((a, b) => {
+                    const aScore = a.hotness * Math.max(Math.log10(a.rating || 1), 1)
+                    const bScore = b.hotness * Math.max(Math.log10(b.rating || 1), 1)
+                    return (aScore > bScore) ? 1 : -1
+                  });
         }
 
         this.setState({posts});

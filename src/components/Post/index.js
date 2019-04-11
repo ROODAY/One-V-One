@@ -95,7 +95,7 @@ class Post extends Component {
     })
     .then(audioPath => {
       this.setState({loadingMessage: "Running our algorithm..."});
-      return axios.post('/api/predict', { audioPath })
+      return axios.post(`/api/predict?key=${process.env.REACT_APP_SERVER_KEY}`, { audioPath })
       .then(res => {
         return {
           audioPath,
