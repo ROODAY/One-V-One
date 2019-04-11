@@ -106,7 +106,7 @@ for train, test in kf.split(data):
     # predict
     predicts = model.predict(data[test])
 
-    nMSE = mean_squared_error(data[test], predicts) / np.mean(np.square(labels[test]))
+    nMSE = mean_squared_error(labels[test], predicts) / np.mean(np.square(labels[test]))
     nMSEs.append(nMSE)
 
     count += 1
