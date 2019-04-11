@@ -95,17 +95,19 @@ class Post extends Component {
     })
     .then(audioPath => {
       this.setState({loadingMessage: "Running our algorithm..."});
-      return axios.post('/api/getTranscript', { audioPath })
+      return axios.post('/api/predict', { audioPath })
       .then(res => {
         return {
           audioPath,
-          transcript: res.data
+          transcripts: res.data.transcripts,
+          hotness: res.data.prediction.hotness,
+          genre: res.data.prediction.genre
          };
       });
     })
     .then(data => {
       this.setState({loadingMessage: "Saving metadata..."});
-      const {audioPath, transcript} = data;
+      const {audioPath, transcripts, hotness, genre} = data;
       const timestamp = (new Date()).toISOString();
       return this.props.firebase.post(id).set({
         username,
@@ -113,9 +115,11 @@ class Post extends Component {
         title,
         description,
         audioPath,
-        transcript,
+        transcripts,
         id,
-        timestamp
+        timestamp,
+        hotness,
+        genre
       });
     })
     .then(() => {

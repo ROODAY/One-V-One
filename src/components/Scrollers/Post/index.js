@@ -30,8 +30,11 @@ class PostScroller extends Component {
       this.props.firebase.posts().on('value', snapshot => {
         var posts = [];
         if (snapshot.val()) {
-          posts = Object.values(snapshot.val());
+          posts = Object.values(snapshot.val())
+                  .filter(post => post.genre === this.props.genre)
+                  .sort((a, b) => (a.hotness > b.hotness) ? 1 : -1);
         }
+
         this.setState({posts});
       });
     })
@@ -59,7 +62,7 @@ class PostScroller extends Component {
                       title={post.title} 
                       description={post.description} 
                       listens={post.listens} 
-                      rank={post.rank || (i + 1)}
+                      rank={post.hotness || (i + 1)}
                       rating={post.rating || 0} 
                       userRating={this.state.postScores[post.id] ? this.state.postScores[post.id].value : 0}
                       genre={post.genre}

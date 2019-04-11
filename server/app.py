@@ -1,7 +1,9 @@
-from flask import Flask, render_template, send_from_directory, redirect, request
+from flask import Flask, render_template, send_from_directory, redirect, request, jsonify
 from google.cloud import speech
 from google.cloud.speech import enums, types
 from google.oauth2 import service_account
+
+from ml import scorePost
 
 import requests
 import io
@@ -22,6 +24,7 @@ app = Flask(__name__, static_folder="../build/static", template_folder="../build
 @app.route("/signout")
 @app.route("/profile")
 @app.route("/forgot")
+@app.route("/home")
 @app.route("/post")
 @app.route("/404")
 def root():
@@ -43,7 +46,7 @@ def manifest():
 def page_not_found(e):
     return redirect('/404')
 
-@app.route('/api/getTranscript', methods=['POST'])
+@app.route('/api/predict', methods=['POST'])
 def getTranscript():
   if request.method == 'POST':
     audioUrl = request.get_json()['audioPath']
@@ -55,18 +58,20 @@ def getTranscript():
       'ffmpeg -loglevel panic -i {}.tmp.webm {}.tmp.wav'.format(fileID, fileID),
       shell=True)
 
-    res = ""
+    res = {}
     with io.open(fileID + '.tmp.wav', 'rb') as audio_file:
       content = audio_file.read()
       audio = types.RecognitionAudio(content=content)
       config = types.RecognitionConfig(language_code='en-US')
 
-      speechResponse = speechClient.recognize(config, audio)
-      res = speechResponse.results[0].alternatives[0].transcript
+      response = speechClient.recognize(config, audio)
+      res['transcripts'] = [{'text': alternative.transcript, 'conf': alternative.confidence} for result in response.results for alternative in result.alternatives]
+
+    res['prediction'] = scorePost(fileID + '.tmp.wav', res['transcripts'])
 
     os.remove(fileID + '.tmp.wav')
     os.remove(fileID + '.tmp.webm')
-    return res
+    return jsonify(res)
   else:
     raise InvalidUsage('This view is gone', status_code=400)
 
