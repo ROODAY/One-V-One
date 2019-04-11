@@ -89,7 +89,8 @@ nMSE = mean_squared_error(y_test, y_pred) / np.mean(np.square(y_test))
 print("---- model achieved nMSE of {}".format(nMSE))
 
 with open(os.path.join('../data/raw/', 'results.txt'), 'w') as f:
-    f.writelines(['{} {}'.format(y_test[i], y_pred[i]) for i in range(len(y_test))])
+    f.writelines([res+'\n' for res in y_test])
+    f.writelines([res+'\n' for res in y_pred])
 
 del X_train, X_test, y_train, y_test
 
