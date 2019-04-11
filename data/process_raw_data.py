@@ -55,6 +55,9 @@ try:
             last_index += 1
             lyrics_list.append(curr_lyrics + "\n")
     
+    # Save cleaned CSV
+    df.to_csv('./raw/filtered_song_data.csv')
+
     # Add the aggregated song lyrics to the csv
     print('\nAdding song lyrics to hotness csv...')
     print('---- lyrics length ({}) vs. csv length ({})'.format(len(lyrics_list), df.shape[0]))
@@ -62,7 +65,7 @@ try:
     df = df.assign(lyrics=pd.Series(np.array(lyrics_list)).values)
 
     print("PROCESSING complete.")
-    print("--- after data shape: " + str(df1.shape))
+    print("--- after data shape: " + str(df.shape))
 
     # Write to disk the list of filtered song hotnesses
     df.to_csv('./song_info.csv')

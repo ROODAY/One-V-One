@@ -1,7 +1,3 @@
-Loading hotness data...
-Scraping songs[0:14697] with available lyrics...
---- before data shape: (14697, 16)
-
 1. Boulevard of Broken Dreams by Green Day
 ---- GENIUS: OK.
 2. In The End by Linkin Park
@@ -1670,8 +1666,6 @@ Scraping songs[0:14697] with available lyrics...
 804. Rump Shaker by Wreckx-N-Effect
 ---- GENIUS: OK.
 805. Hail Mary by Makaveli
-Timeout raised and caught:
-HTTPSConnectionPool(host='api.genius.com', port=443): Read timed out. (read timeout=5)
 ---- GENIUS: Exception occured.
 ---- AZLyrics: No lyrics found for hailmary by makaveli.
 806. I Got 5 On It by Luniz
@@ -4490,8 +4484,6 @@ HTTPSConnectionPool(host='api.genius.com', port=443): Read timed out. (read time
 2156. Hedonism (Just Because You Feel Good) by Skunk Anansie
 ---- GENIUS: OK.
 2157. If It Makes You Happy by Sheryl Crow
-Timeout raised and caught:
-HTTPSConnectionPool(host='api.genius.com', port=443): Read timed out. (read timeout=5)
 ---- GENIUS: Exception occured.
 ---- AZLyrics: No lyrics found for ifitmakesyouhappy by sherylcrow.
 2158. Save Tonight by Eagle-Eye Cherry
@@ -7226,8 +7218,6 @@ HTTPSConnectionPool(host='api.genius.com', port=443): Read timed out. (read time
 3485. Work to Do by The Main Ingredient
 ---- GENIUS: OK.
 3486. Crystal Closet Queen by Leon Russell
-Timeout raised and caught:
-HTTPSConnectionPool(host='api.genius.com', port=443): Read timed out. (read timeout=5)
 ---- GENIUS: Exception occured.
 ---- AZLyrics: No lyrics found for crystalclosetqueen by leonrussell.
 3487. Soul Connection by Diplomats of Solid Sound
@@ -13058,8 +13048,6 @@ HTTPSConnectionPool(host='api.genius.com', port=443): Read timed out. (read time
 6205. My Girl - Remastered Mono by Otis Redding
 ---- GENIUS: OK.
 6206. Lovely Day by Bill Withers
-Timeout raised and caught:
-HTTPSConnectionPool(host='api.genius.com', port=443): Read timed out. (read timeout=5)
 ---- GENIUS: Exception occured.
 ---- AZLyrics: No lyrics found for lovelyday by billwithers.
 6207. Let's Stay Together by Al Green
@@ -16501,8 +16489,6 @@ HTTPSConnectionPool(host='api.genius.com', port=443): Read timed out. (read time
 7861. Sucker M.C.'s (Krush-Groove 1) by Run–D.M.C.
 ---- GENIUS: OK.
 7862. Top Billin' by Audio Two
-Timeout raised and caught:
-HTTPSConnectionPool(host='api.genius.com', port=443): Read timed out. (read timeout=5)
 ---- GENIUS: Exception occured.
 ---- AZLyrics: No lyrics found for topbillin by audiotwo.
 7863. I Got It Made by Special Ed
@@ -16585,8 +16571,6 @@ HTTPSConnectionPool(host='api.genius.com', port=443): Read timed out. (read time
 ---- GENIUS: No lyrics found for Mo Money Mo Problems (feat. Mase & Puff Daddy) - 2014 Remastered Version by The Notorious B.I.G..
 ---- AZLyrics: No lyrics found for momoneymoproblemsfeatmasepuffdaddy2014remasteredversion by notoriousbig.
 7900. C.R.E.A.M. by Wu-Tang Clan
-Timeout raised and caught:
-HTTPSConnectionPool(host='api.genius.com', port=443): Read timed out. (read timeout=5)
 ---- GENIUS: Exception occured.
 ---- AZLyrics: No lyrics found for cream by wutangclan.
 7901. I'll Be Missing You (feat. Faith Evans & 112) by Diddy
@@ -31024,8 +31008,3 @@ HTTPSConnectionPool(host='api.genius.com', port=443): Read timed out. (read time
 ---- GENIUS: OK.
 14697. Up to Me by Sera Cahoone
 ---- GENIUS: OK.
-
-Adding song lyrics to hotness csv...
----- lyrics length (13081) vs. csv length (13081)
-
-Error occured: 
