@@ -44,6 +44,7 @@ postprocess_lyrics = np.array(postprocess_lyrics)
 data.drop("lyrics", axis=1)
 
 # Save trained Feature Selector - TFIDF and CountVectorizer
+print("Starting feature extraction...")
 MAX_FEATURES = 5000
 
 # count_v = CountVectorizer()
@@ -65,6 +66,7 @@ data = np.concatenate((data, postprocess_lyrics), axis=1)
 print('---- data shape before: {}'.format(data.shape))
 
 # OPTIONAL additional feature selection...
+print("Starting feature selection...")
 f_selector = SelectPercentile(f_classif, percentile=60)
 data = f_selector.fit_transform(data, labels)
 
