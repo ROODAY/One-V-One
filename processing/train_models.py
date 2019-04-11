@@ -68,7 +68,7 @@ print('---- data shape before: {}'.format(data.shape))
 
 # OPTIONAL additional feature selection...
 print("Starting feature selection...")
-f_selector = SelectPercentile(f_classif, percentile=40)
+f_selector = SelectPercentile(f_classif, percentile=20)
 data = f_selector.fit_transform(data, labels)
 
 print('---- data shape after: {}'.format(data.shape))
@@ -105,10 +105,9 @@ kf = KFold(n_splits=10)
 nMSEs = []
 count = 0
 
-#???
-data = data.dropna(axis=0, how='any')
 for train, test in kf.split(data):
     # train
+    print(data[train])
     model = classifier.fit(data[train], labels[train])
         
     # predict
