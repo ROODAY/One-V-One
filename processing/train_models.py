@@ -57,7 +57,7 @@ tfidf_v = TfidfVectorizer(
 )
 postprocess_lyrics = tfidf_v.fit_transform(postprocess_lyrics)
 
-with open(os.path.join(trained_dir, 'tf_idfv.pkl'), 'w') as f:
+with open(os.path.join(trained_dir, 'tf_idfv.pkl'), 'wb') as f:
     pickle.dump(tfidf_v, f)
 
 # Convert to numpy array and shuffle
@@ -71,7 +71,7 @@ f_selector = SelectPercentile(f_classif, percentile=60)
 data = f_selector.fit_transform(data, labels)
 
 print('---- data shape after: {}'.format(data.shape))
-with open(os.path.join(trained_dir, 'selector.pkl'), 'w') as f:
+with open(os.path.join(trained_dir, 'selector.pkl'), 'wb') as f:
     pickle.dump(f_selector, f)
 
 # Start training
@@ -85,10 +85,10 @@ model = classifier.fit(data[X_train], labels[y_train])
 # Predict
 y_pred = model.predict(X_test)
 nMSE = mean_squared_error(data[X_test], y_pred) / np.mean(np.square(labels[y_test]))
-print("achieved nMSE of {}".format(nMSE))
+print("---- model achieved nMSE of {}".format(nMSE))
 del X_train, X_test, y_train, y_test
 
-with open(os.path.join(trained_dir, 'model.pkl'), 'w') as f:
+with open(os.path.join(trained_dir, 'model.pkl'), 'wb') as f:
     pickle.dump(model, f)
 
 
