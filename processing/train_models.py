@@ -55,7 +55,7 @@ def get_song_info(x):
 
 # count_v = CountVectorizer()
 feats_union = FeatureUnion([ 
-    ('tfidf', TfidfVectorizer(analyzer='word', sublinear_tf=True, strip_accents='unicode', ngram_range=(1, 1), max_features=MAX_FEATURES)),
+    ('tfidf', TfidfVectorizer(analyzer='word', sublinear_tf=True, strip_accents='unicode', ngram_range=(1, 2), max_features=MAX_FEATURES)),
     ('info', FunctionTransformer(get_song_info, validate=False))
 ])
 
@@ -94,30 +94,26 @@ with open(os.path.join('../data/raw/', 'results.txt'), 'w') as f:
     f.write('PREDICTS ----------------------------------\n')
     f.writelines([str(res)+'\n' for res in y_pred])
 
-del X_train, X_test, y_train, y_test
-
 with open(os.path.join(trained_dir, 'model.pkl'), 'wb') as f:
     pickle.dump(model, f)
 
 # Start Validation
+# kf = KFold(n_splits=10)
 print("Starting 10-Fold validation...")
-kf = KFold(n_splits=10)
 nMSEs = []
-count = 0
 
-for train, test in kf.split(data):
-    # train
-    print(data[train])
-    model = classifier.fit(data[train], labels[train])
-        
-    # predict
-    predicts = model.predict(data[test])
+# Mimic KFold splits
+for fold in range(10):
+    X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.3)
+    model = classifier.fit(X_train, y_train)
 
-    nMSE = mean_squared_error(labels[test], predicts) / np.mean(np.square(labels[test]))
+    # Predict
+    y_pred = model.predict(X_test)
+    nMSE = mean_squared_error(y_test, y_pred) / np.mean(np.square(y_test))
+    print("---- model achieved nMSE of {}".format(nMSE))
     nMSEs.append(nMSE)
 
-    count += 1
-    print("Round %d/10 of nMSE is: %f" %(count, nMSE))
+    print("Round %d/10 of nMSE is: %f" %(fold, nMSE))
     
 print('Average nMSE is %f' %(np.mean(nMSEs)))
 
