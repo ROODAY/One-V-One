@@ -63,7 +63,9 @@ with open(os.path.join(trained_dir, 'tf_idfv.pkl'), 'wb') as f:
 # Convert to numpy array and shuffle
 data = data.values
 postprocess_lyrics.reshape(data.shape[0], postprocess_lyrics.shape[1])
-data = np.column_stack((data, postprocess_lyrics))
+print(postprocess_lyrics[0,0].shape)
+
+data = np.concatenate((data, postprocess_lyrics), axis=1)
 print('---- data shape before: {}'.format(data.shape))
 
 # OPTIONAL additional feature selection...
