@@ -48,7 +48,7 @@ data = data.drop("lyrics", axis=1)
 
 # Save trained Feature Selector - TFIDF and CountVectorizer
 print("Starting feature extraction...")
-MAX_FEATURES = 5000
+MAX_FEATURES = 10000
 
 def get_song_info(x):
     return data.values
@@ -110,7 +110,6 @@ for fold in range(10):
     # Predict
     y_pred = model.predict(X_test)
     nMSE = mean_squared_error(y_test, y_pred) / np.mean(np.square(y_test))
-    print("---- model achieved nMSE of {}".format(nMSE))
     nMSEs.append(nMSE)
 
     print("Round %d/10 of nMSE is: %f" %(fold, nMSE))
