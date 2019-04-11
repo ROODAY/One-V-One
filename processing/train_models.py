@@ -16,6 +16,9 @@ from sklearn.model_selection import KFold
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import GridSearchCV
 
+# Concatenate features
+from scipy.sparse import hstack
+
 # Model
 from sklearn.kernel_ridge import KernelRidge
 
@@ -62,10 +65,7 @@ with open(os.path.join(trained_dir, 'tf_idfv.pkl'), 'wb') as f:
 
 # Convert to numpy array and shuffle
 data = data.values
-postprocess_lyrics.reshape(data.shape[0], postprocess_lyrics.shape[1])
-print(data[0], postprocess_lyrics[0])
-
-data = np.concatenate((data, postprocess_lyrics), axis=1)
+data = (hstack[data, postprocess_lyrics])
 print('---- data shape before: {}'.format(data.shape))
 
 # OPTIONAL additional feature selection...
