@@ -24,7 +24,7 @@ trained_dir = '../data/trained'
 data_file = 'filtered_song_info.csv'
 
 print('Loading data...')
-data = pd.read_csv(os.path.join(data_dir, data_file))
+data = pd.read_csv(os.path.join(data_dir, data_file), encoding='utf-8')
 
 # Drop missing and unused data
 data = data.dropna(axis=0, how='any')
@@ -38,7 +38,7 @@ postprocess_lyrics = None
 if not os.path.isfile(os.path.join(data_dir, 'lyrics_stats.txt')):
     postprocess_lyrics = lp.preprocess_data(data['lyrics'], os.path.join(data_dir, 'lyrics_stats.txt'))
 else:
-    with open(os.path.join(data_dir, 'lyrics_stats.txt'), 'r') as f:
+    with open(os.path.join(data_dir, 'lyrics_stats.txt'), 'r', encoding='utf-8') as f:
         postprocess_lyrics = [line.rstrip() for line in f.readlines()]
 postprocess_lyrics = np.array(postprocess_lyrics)
 data.drop("lyrics", axis=1)
@@ -82,6 +82,10 @@ y_pred = model.predict(X_test)
 nMSE = mean_squared_error(data[X_test], y_pred) / np.mean(np.square(labels[y_test]))
 print("achieved nMSE of {}".format(nMSE))
 del X_train, X_test, y_train, y_test
+
+with open(os.path.join(trained_dir, 'model.pkl'), 'w') as f:
+    pickle.dump(model, f)
+
 
 # Start Validation
 print("Starting 10-Fold validation...")
