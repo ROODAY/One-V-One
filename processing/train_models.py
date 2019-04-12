@@ -20,7 +20,7 @@ from sklearn.pipeline import FeatureUnion
 from sklearn.pipeline import Pipeline
 
 # Model
-from sklearn.kernel_ridge import KernelRidge
+from sklearn.svm import SVR
 
 data_dir = "../data/"
 trained_dir = '../data/trained'
@@ -77,7 +77,7 @@ with open(os.path.join(trained_dir, 'selector.pkl'), 'wb') as f:
 
 # Start training
 print("Start training and predict...")
-classifier = KernelRidge(alpha=1, kernel='rbf')
+classifier = SVR(C=1, gamma='auto', kernel='rbf')
 
 # Saving model trained on data
 X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.3, random_state=7)
@@ -112,7 +112,7 @@ for fold in range(10):
     nMSE = mean_squared_error(y_test, y_pred) / np.mean(np.square(y_test))
     nMSEs.append(nMSE)
 
-    print("Round %d/10 of nMSE is: %f" %(fold, nMSE))
+    print("Round %d/10 of nMSE is: %f" %(fold+1, nMSE))
     
 print('Average nMSE is %f' %(np.mean(nMSEs)))
 
