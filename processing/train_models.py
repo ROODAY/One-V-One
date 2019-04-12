@@ -20,7 +20,8 @@ from sklearn.pipeline import FeatureUnion
 from sklearn.pipeline import Pipeline
 
 # Model
-from sklearn.svm import SVR
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.ensemble import AdaBoostRegressor
 
 data_dir = "../data/"
 trained_dir = '../data/trained'
@@ -77,14 +78,14 @@ with open(os.path.join(trained_dir, 'selector.pkl'), 'wb') as f:
 
 # Start training
 print("Start training and predict...")
-classifier = SVR(C=1, gamma='auto', kernel='rbf')
+regressor = AdaBoostRegressor(DecisionTreeRegressor(max_depth=4), n_estimators=300, random_state=111)
 
 # Saving model trained on data
 X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.3, random_state=7)
-model = classifier.fit(X_train, y_train)
+model = regressor.fit(X_train, y_train)
 
 # Predict
-y_pred = model.predict(X_test)
+y_pred = regressor.predict(X_test)
 nMSE = mean_squared_error(y_test, y_pred) / np.mean(np.square(y_test))
 print("---- model achieved nMSE of {}".format(nMSE))
 
@@ -105,10 +106,10 @@ nMSEs = []
 # Mimic KFold splits
 for fold in range(10):
     X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.3)
-    model = classifier.fit(X_train, y_train)
+    model = regressor.fit(X_train, y_train)
 
     # Predict
-    y_pred = model.predict(X_test)
+    y_pred = regressor.predict(X_test)
     nMSE = mean_squared_error(y_test, y_pred) / np.mean(np.square(y_test))
     nMSEs.append(nMSE)
 
