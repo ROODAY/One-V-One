@@ -81,7 +81,7 @@ with open(os.path.join(trained_dir, 'popularity_fselector.pkl'), 'wb') as f:
 
 # Start training
 print("Start training and predict...")
-regressor = MLPRegressor(random_state=1998, max_iter=1000, early_stopping=True, learning_rate='constant')
+regressor = MLPRegressor(random_state=1998, max_iter=1000, early_stopping=True, alpha=0.001, learning_rate='constant')
 
 # Saving model trained on data
 X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.3, random_state=2019)
