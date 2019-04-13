@@ -55,3 +55,27 @@ Round 8/10 of nMSE is: 0.152742
 Round 9/10 of nMSE is: 0.155446
 Round 10/10 of nMSE is: 0.154118
 Average nMSE is 0.157458
+Loading data...
+Starting feature extraction...
+---- data shape before: (13081, 10003)
+Starting feature selection...
+---- data shape after: (13081, 1001)
+Start training and predict...
+---- model achieved nMSE of 0.1412204860038545
+Traceback (most recent call last):
+  File "train_popularity_model.py", line 94, in <module>
+    results = np.concatenate((y_test, y_pred), axis=1)
+numpy.AxisError: axis 1 is out of bounds for array of dimension 1
+Loading data...
+Starting feature extraction...
+---- data shape before: (13081, 10003)
+Starting feature selection...
+---- data shape after: (13081, 1001)
+Start training and predict...
+---- model achieved nMSE of 0.1412204860038545
+Traceback (most recent call last):
+  File "train_popularity_model.py", line 94, in <module>
+    results = np.concatenate((y_test.reshape(-1, 1), y_pred.reshape(-1,1)), axis=1)
+  File "/data/anaconda/envs/py35/lib/python3.5/site-packages/pandas/core/generic.py", line 4372, in __getattr__
+    return object.__getattribute__(self, name)
+AttributeError: 'Series' object has no attribute 'reshape'

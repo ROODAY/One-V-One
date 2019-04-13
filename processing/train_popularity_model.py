@@ -82,7 +82,7 @@ with open(os.path.join(trained_dir, 'popularity_fselector.pkl'), 'wb') as f:
 
 # Start training
 print("Start training and predict...")
-regressor = MLPRegressor(random_state=1998, max_iter=1000, early_stopping=True, alpha=0.001, learning_rate='constant')
+regressor = MLPRegressor(random_state=1998, max_iter=1000, early_stopping=True, alpha=0.0001, learning_rate='adaptive')
 
 # Saving model trained on data
 X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.3, random_state=2019)
@@ -93,9 +93,11 @@ y_pred = model.predict(X_test)
 nMSE = mean_squared_error(y_test, y_pred) / np.mean(np.square(y_test))
 print("---- model achieved nMSE of {}".format(nMSE))
 
+y_pred = y_pred.tolist()
+y_test = y_test.tolist()
 with open(os.path.join('../data/raw/', 'results.txt'), 'w') as f:
     f.write('------------TRUTH vs. PREDICTS------------\n')
-    f.writelines(['{} {}'.format(y_test[i], y_pred[i]) for i in range(len(results))])
+    f.writelines(['{} {}\n'.format(y_test[i], y_pred[i]) for i in range(len(y_test))])
 
 with open(os.path.join(trained_dir, 'popularity_model.pkl'), 'wb') as f:
     pickle.dump(model, f)
