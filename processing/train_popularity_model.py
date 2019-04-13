@@ -80,18 +80,18 @@ with open(os.path.join(trained_dir, 'selector.pkl'), 'wb') as f:
 
 # Start training
 print("Start training and predict...")
-mlp_state = {
-    'random_state': 1998,
-    'early_stopping': True,
-    'beta_1': 0.9,
-    'beta_2': 0.999,
-    'activation':'relu',
-    'solver':'adam',
-    'alpha':0.0001, 
-    'max_iter':1000, 
-    'shuffle':True
-}
-regressor = MLPRegressor(mlp_state)
+# mlp_state = {
+#     'random_state': 1998,
+#     'early_stopping': True,
+#     'beta_1': 0.9,
+#     'beta_2': 0.999,
+#     'activation':'relu',
+#     'solver':'adam',
+#     'alpha':0.0001, 
+#     'max_iter':1000, 
+#     'shuffle':True
+# }
+regressor = MLPRegressor(random_state=1998)
 
 # Saving model trained on data
 X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.3, random_state=2019)
