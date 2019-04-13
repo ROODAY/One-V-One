@@ -92,10 +92,9 @@ y_pred = model.predict(X_test)
 nMSE = mean_squared_error(y_test, y_pred) / np.mean(np.square(y_test))
 print("---- model achieved nMSE of {}".format(nMSE))
 
-results = np.concatenate((y_test.reshape(-1, 1), y_pred.reshape(-1,1)), axis=1)
 with open(os.path.join('../data/raw/', 'results.txt'), 'w') as f:
     f.write('------------TRUTH vs. PREDICTS------------\n')
-    f.writelines(['{} {}'.format(results[i,0], results[i,1]) for i in range(len(results))])
+    f.writelines(['{} {}'.format(y_test[i], y_pred[i]) for i in range(len(results))])
 
 with open(os.path.join(trained_dir, 'popularity_model.pkl'), 'wb') as f:
     pickle.dump(model, f)
