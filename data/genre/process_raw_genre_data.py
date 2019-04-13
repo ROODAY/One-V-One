@@ -1,4 +1,7 @@
 # feature extractoring and preprocessing data
+# adapted from https://towardsdatascience.com/music-genre-classification-with-python-c714d032f0d8 by Parul Pandey
+# Author: Jinghu Lei
+
 import os
 import csv
 import pandas as pd
@@ -9,50 +12,66 @@ import pathlib
 # Our Audio processing library
 import librosa
 
-# Graphing
+# Image library
 from PIL import Image
 
+# Image mapping
 cmap = plt.get_cmap('inferno')
-
 plt.figure(figsize=(10,10))
-genres = 'blues classical country disco hiphop jazz metal pop reggae rock'.split()
+
+# Set of classification genres and labels
+genres = ['blues', 'classical', 'country', 'disco', 'hiphop', 'jazz', 'metal', 'pop', 'reggae', 'rock']
+
+# data paths
+img_data_path = './img_data/'
+MIR_genres_path = '../raw/MIR/genres/'
+genre_data_file = 'genre_data.csv'
+
+# Save each file as a image representation
 for g in genres:
-    pathlib.Path(f'img_data/{g}').mkdir(parents=True, exist_ok=True)     
-    for filename in os.listdir(f'../raw/MIR/genres/{g}'):
-        songname = f'../raw/MIR/genres/{g}/{filename}'
-        y, sr = librosa.load(songname, mono=True, duration=5)
-        plt.specgram(y, NFFT=2048, Fs=2, Fc=0, noverlap=128, cmap=cmap, sides='default', mode='default', scale='dB');
-        plt.axis('off');
-        plt.savefig(f'img_data/{g}/{filename[:-3].replace(".", "")}.png')
+    pathlib.Path(os.path.join(img_data_path, g)).mkdir(parents=True, exist_ok=True)     
+    for file_name in os.listdir(os.path.join(MIR_genres_path, g)):
+        song_name = os.path.join(MIR_genres_path, g, file_name)
+        y, sr = librosa.load(song_name, mono=True, duration=5)
+        plt.specgram(y, NFFT=2048, Fs=2, Fc=0, noverlap=128, cmap=cmap, sides='default', mode='default', scale='dB')
+        plt.axis('off')
+        plt.savefig(os.path.join(img_data_path, g, file_name[:-3].replace(".", ""), '.png'))
         plt.clf()
 
+with open(genre_data_file, 'a', newline='') as f:
+    writer = csv.writer(f)
 
-header = 'filename chroma_stft rmse spectral_centroid spectral_bandwidth rolloff zero_crossing_rate'
-for i in range(1, 21):
-    header += f' mfcc{i}'
-header += ' label'
-header = header.split()
+    # Headers for CSV file
+    headers = ['filename', 'chroma_stft', 'rmse', 'spectral_centroid', 'spectral_bandwidth', 'rolloff', 'zero_crossing_rate']
 
-file = open('genre_data.csv', 'w', newline='')
-with file:
-    writer = csv.writer(file)
-    writer.writerow(header)
+    # Set up Mel-frequency cepstral coefficients (MFCC)
+    # 20 Total
+    NUM_MFCC = 20
+    for i in range(1, 1 + NUM_MFCC):
+        headers += [f'mfcc{i}']
+    headers += ['label']
 
-for g in genres:
-    for filename in os.listdir(f'../raw/MIR/genres/{g}'):
-        songname = f'../raw/MIR/genres/{g}/{filename}'
-        y, sr = librosa.load(songname, mono=True, duration=30)
-        chroma_stft = librosa.feature.chroma_stft(y=y, sr=sr)
-        spec_cent = librosa.feature.spectral_centroid(y=y, sr=sr)
-        spec_bw = librosa.feature.spectral_bandwidth(y=y, sr=sr)
-        rolloff = librosa.feature.spectral_rolloff(y=y, sr=sr)
-        zcr = librosa.feature.zero_crossing_rate(y)
-        mfcc = librosa.feature.mfcc(y=y, sr=sr)
-        to_append = f'{filename} {np.mean(chroma_stft)} {np.mean(rmse)} {np.mean(spec_cent)} {np.mean(spec_bw)} {np.mean(rolloff)} {np.mean(zcr)}'    
-        for e in mfcc:
-            to_append += f' {np.mean(e)}'
-        to_append += f' {g}'
-        file = open('genre_data.csv', 'a', newline='')
-        with file:
-            writer = csv.writer(file)
-            writer.writerow(to_append.split())
+    # Set up CSV with headers
+    writer.writerow(headers)
+
+    # For each genre, extract features from each audio clip
+    for g in genres:
+        for file_name in os.listdir(os.path.join(MIR_genres_path, g)):
+            song_name = os.path.join(MIR_genres_path, g, file_name)
+            y, sr = librosa.load(song_name, mono=True, duration=30)
+
+            # Different audio features extracted using librosa
+            chroma_stft = librosa.feature.chroma_stft(y=y, sr=sr)
+            rmse = librosa.feature.rmse(y=y, sr=sr)
+            spec_cent = librosa.feature.spectral_centroid(y=y, sr=sr)
+            spec_bw = librosa.feature.spectral_bandwidth(y=y, sr=sr)
+            rolloff = librosa.feature.spectral_rolloff(y=y, sr=sr)
+            zcr = librosa.feature.zero_crossing_rate(y)
+            mfcc = librosa.feature.mfcc(y=y, sr=sr)
+
+            # Add to our data
+            data_row = [file_name, np.mean(chroma_stft), np.mean(rmse), np.mean(spec_cent), np.mean(spec_bw), np.mean(rolloff), np.mean(zcr)]
+            for e in mfcc:
+                data_row += [np.mean(e)]
+            data_row += [g]
+            writer.writerow(data_row)

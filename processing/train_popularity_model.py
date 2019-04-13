@@ -25,8 +25,9 @@ from sklearn.pipeline import Pipeline
 # from sklearn.SVM import SVR
 from sklearn.neural_network import MLPRegressor
 
-data_dir = "../data/lyrics"
-trained_dir = '../data/trained'
+data_dir = "../data"
+data_lyrics_dir = data_dir + "/lyrics"
+trained_dir = data_dir + '/trained'
 data_file = 'song_info.csv'
 
 print('Loading data...')
@@ -41,10 +42,10 @@ data = data.drop("song_popularity", axis=1)
 
 # Join lyrics as stemmed words list for each song
 postprocess_lyrics = None
-if not os.path.isfile(os.path.join(data_dir, 'lyrics_stats.txt')):
-    postprocess_lyrics = lp.preprocess_data(data['lyrics'], os.path.join(data_dir, 'lyrics_stats.txt'))
+if not os.path.isfile(os.path.join(data_lyrics_dir, 'processed_lyrics.txt')):
+    postprocess_lyrics = lp.preprocess_data(data['lyrics'], os.path.join(data_lyrics_dir, 'processed_lyrics.txt'))
 else:
-    with open(os.path.join(data_dir, 'lyrics_stats.txt'), 'r', encoding="ISO-8859-1") as f:
+    with open(os.path.join(data_lyrics_dir, 'processed_lyrics.txt'), 'r', encoding="ISO-8859-1") as f:
         postprocess_lyrics = [line.rstrip() for line in f.readlines()]
 postprocess_lyrics = np.array(postprocess_lyrics)
 data = data.drop("lyrics", axis=1)
@@ -64,7 +65,7 @@ feats_union = FeatureUnion([
 
 data = feats_union.fit_transform(postprocess_lyrics)
 
-with open(os.path.join(trained_dir, 'popularity_feats_union.pkl'), 'wb') as f:
+with open(os.path.join(trained_dir, 'popularity_funion.pkl'), 'wb') as f:
     pickle.dump(feats_union, f)
 
 print('---- data shape before: {}'.format(data.shape))

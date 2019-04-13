@@ -85,12 +85,22 @@ def preprocess_data(x, output_file=None):
                     words_stat[word] = [1,1,i]
         lyrics_list.append(' '.join(postprocess_text))
 
-    # save lyrics bag of words in array
-
+    # save lyrics bag of words
     if output_file:
         with open(output_file, 'w') as f:
             f.writelines([lyrics+"\n" for lyrics in lyrics_list])
-    # if not 
+
+    # Credits to Lab 1 in CS4242 Course NUS
+    if not os.path.isfile('../../lyrics/word_stats.txt'):
+        print("The number of unique words in data set is %i." %len(words_stat.keys()))
+        lowTF_words = set()
+        with open(os.path.join('../../lyrics', 'words_statistics.txt'), 'w') as f:
+            f.write('TF\tDF\tWORD\n')
+            for word, stat in sorted(words_stat.items(), key=lambda i: i[1], reverse=True):
+                f.write('\t'.join([str(m) for m in stat[0:2]]) + '\t' + word +  '\n')
+                if stat[0]<2:
+                    lowTF_words.add(word)
+        print("The number of low frequency words is %d." %len(lowTF_words))
 
     return lyrics_list
 

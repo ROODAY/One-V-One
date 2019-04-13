@@ -15,7 +15,7 @@ import az_lyric_scraper as az_ls
 
 # load in song + hotness dataset
 print("Loading hotness data...")
-orig_df = pd.read_csv("./raw/song_data.csv")
+orig_df = pd.read_csv("../raw/song_data.csv")
 df = orig_df
 
 start_index = 0
@@ -39,7 +39,6 @@ lyrics_list = []
 
 try:
     for index, row in df.iterrows():
-
         print('{}. {} by {}'.format(index+1, row.song_name, row.artist_name))
 
         curr_lyrics = genius_ls.get_lyrics(row.song_name, row.artist_name)
@@ -56,19 +55,12 @@ try:
             lyrics_list.append(curr_lyrics + "\n")
     
     # Save cleaned CSV
-    df.to_csv('./raw/song_data.csv')
+    df.to_csv('../raw/filtered_song_data.csv')
 
-    # Add the aggregated song lyrics to the csv
-    print('\nAdding song lyrics to hotness csv...')
-    print('---- lyrics length ({}) vs. csv length ({})'.format(len(lyrics_list), df.shape[0]))
-    
-    df = df.assign(lyrics=pd.Series(np.array(lyrics_list)).values)
 
     print("PROCESSING complete.")
     print("--- after data shape: " + str(df.shape))
-
-    # Write to disk the list of filtered song hotnesses
-    df.to_csv('./song_info.csv')
+    print("!! If an error occured and songs without lyrics were not filtered, use lyric_process_tools.py to merge/clean the lyrics into the dataset.")
 except Exception as e:
     print("\nError occured: {}".format(e))
 finally:
