@@ -59,7 +59,7 @@ def get_song_info(x):
 
 # count_v = CountVectorizer()
 feats_union = FeatureUnion([ 
-    ('count', CountVectorizer(analyzer="word", ngram_range=(1, 2),strip_accents='unicode', max_features=MAX_FEATURES)),
+    # ('count', CountVectorizer(analyzer="word", ngram_range=(1, 2),strip_accents='unicode', max_features=MAX_FEATURES)),
     # ('tfidf', TfidfVectorizer(analyzer='word', sublinear_tf=True, strip_accents='unicode', ngram_range=(1, 2), max_features=MAX_FEATURES)),
     ('info', FunctionTransformer(get_song_info, validate=False))
 ])
@@ -74,7 +74,7 @@ print('---- data shape before: {}'.format(data.shape))
 # OPTIONAL additional feature selection...
 print("Starting feature selection...")
 f_selector = SelectPercentile(f_classif, percentile=10)
-data = f_selector.fit_transform(data, labels)
+# data = f_selector.fit_transform(data, labels)
 
 print('---- data shape after: {}'.format(data.shape))
 with open(os.path.join(trained_dir, 'popularity_fselector.pkl'), 'wb') as f:
@@ -103,11 +103,11 @@ with open(os.path.join(trained_dir, 'popularity_model.pkl'), 'wb') as f:
     pickle.dump(model, f)
 
 # Start Validation
-# kf = KFold(n_splits=10)
 print("Starting 10-Fold validation...")
 nMSEs = []
 
 # Mimic KFold splits
+# kf = KFold(n_splits=10)
 for fold in range(10):
     X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.3)
     model = regressor.fit(X_train, y_train)
