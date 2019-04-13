@@ -6,9 +6,21 @@ import numpy as np
 import matplotlib
 
 # Preprocessers
-import preprocess.lyrics_preprocesser as lp
+import preprocess.audio_preprocesser as ap
+
+# feature extractoring and preprocessing data
+import librosa
+import csv
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import pathlib
+
+# Graphing
+from PIL import Image
 
 # Sklearn helpers
+from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.feature_selection import SelectPercentile, f_classif
 from sklearn.metrics import mean_squared_error
@@ -19,11 +31,8 @@ from sklearn.preprocessing import FunctionTransformer
 from sklearn.pipeline import FeatureUnion
 from sklearn.pipeline import Pipeline
 
-# Model
-# from sklearn.tree import DecisionTreeRegressor
-# from sklearn.ensemble import AdaBoostRegressor
-# from sklearn.SVM import SVR
-from sklearn.neural_network import MLPRegressor
+#Keras
+import keras
 
 data_dir = "../data/"
 trained_dir = '../data/trained'

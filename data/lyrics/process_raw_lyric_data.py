@@ -56,7 +56,7 @@ try:
             lyrics_list.append(curr_lyrics + "\n")
     
     # Save cleaned CSV
-    df.to_csv('./raw/filtered_song_data.csv')
+    df.to_csv('./raw/song_data.csv')
 
     # Add the aggregated song lyrics to the csv
     print('\nAdding song lyrics to hotness csv...')
