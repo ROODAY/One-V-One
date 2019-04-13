@@ -85,7 +85,7 @@ mlp_state = {
     'early_stopping': True,
     'beta_1': 0.9,
     'beta_2': 0.999,
-    'hidden_layer_sizes':100,
+    'hidden_layer_sizes': (100,),
     'activation':'relu',
     'solver':'adam',
     'alpha':0.0001, 
@@ -95,11 +95,11 @@ mlp_state = {
 regressor = MLPRegressor(mlp_state)
 
 # Saving model trained on data
-X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.3, random_state=7)
+X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.3, random_state=2019)
 model = regressor.fit(X_train, y_train)
 
 # Predict
-y_pred = regressor.predict(X_test)
+y_pred = model.predict(X_test)
 nMSE = mean_squared_error(y_test, y_pred) / np.mean(np.square(y_test))
 print("---- model achieved nMSE of {}".format(nMSE))
 
@@ -122,7 +122,7 @@ for fold in range(10):
     model = regressor.fit(X_train, y_train)
 
     # Predict
-    y_pred = regressor.predict(X_test)
+    y_pred = model.predict(X_test)
     nMSE = mean_squared_error(y_test, y_pred) / np.mean(np.square(y_test))
     nMSEs.append(nMSE)
 
