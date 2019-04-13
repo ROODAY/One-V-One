@@ -91,10 +91,10 @@ def preprocess_data(x, output_file=None):
             f.writelines([lyrics+"\n" for lyrics in lyrics_list])
 
     # Credits to Lab 1 in CS4242 Course NUS
-    if not os.path.isfile('../../lyrics/word_stats.txt'):
+    if not os.path.isfile('../../data/lyrics/word_stats.txt'):
         print("The number of unique words in data set is %i." %len(words_stat.keys()))
         lowTF_words = set()
-        with open(os.path.join('../../lyrics', 'words_statistics.txt'), 'w') as f:
+        with open(os.path.join('../../data/lyrics', 'words_statistics.txt'), 'w') as f:
             f.write('TF\tDF\tWORD\n')
             for word, stat in sorted(words_stat.items(), key=lambda i: i[1], reverse=True):
                 f.write('\t'.join([str(m) for m in stat[0:2]]) + '\t' + word +  '\n')
