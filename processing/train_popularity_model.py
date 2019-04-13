@@ -73,7 +73,7 @@ print('---- data shape before: {}'.format(data.shape))
 
 # OPTIONAL additional feature selection...
 print("Starting feature selection...")
-f_selector = SelectPercentile(f_classif, percentile=10)
+f_selector = SelectPercentile(f_classif, percentile=20)
 data = f_selector.fit_transform(data, labels)
 
 print('---- data shape after: {}'.format(data.shape))
