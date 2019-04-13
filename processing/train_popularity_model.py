@@ -80,18 +80,7 @@ with open(os.path.join(trained_dir, 'selector.pkl'), 'wb') as f:
 
 # Start training
 print("Start training and predict...")
-# mlp_state = {
-#     'random_state': 1998,
-#     'early_stopping': True,
-#     'beta_1': 0.9,
-#     'beta_2': 0.999,
-#     'activation':'relu',
-#     'solver':'adam',
-#     'alpha':0.0001, 
-#     'max_iter':1000, 
-#     'shuffle':True
-# }
-regressor = MLPRegressor(random_state=1998)
+regressor = MLPRegressor(random_state=1998, max_iter=1000, early_stopping=True, learning_rate='constant')
 
 # Saving model trained on data
 X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.3, random_state=2019)
@@ -102,7 +91,7 @@ y_pred = model.predict(X_test)
 nMSE = mean_squared_error(y_test, y_pred) / np.mean(np.square(y_test))
 print("---- model achieved nMSE of {}".format(nMSE))
 
-results = np.concatenate(y_test, y_pred)
+results = np.concatenate((y_test, y_pred), axis=1)
 with open(os.path.join('../data/raw/', 'results.txt'), 'w') as f:
     f.write('------------TRUTH vs. PREDICTS------------\n')
     f.writelines(['{} {}'.format(results[i,0], results[i,1]) for i in range(len(results))])
