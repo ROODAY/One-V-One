@@ -85,7 +85,6 @@ mlp_state = {
     'early_stopping': True,
     'beta_1': 0.9,
     'beta_2': 0.999,
-    'hidden_layer_sizes': (100,),
     'activation':'relu',
     'solver':'adam',
     'alpha':0.0001, 
