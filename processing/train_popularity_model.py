@@ -81,16 +81,16 @@ with open(os.path.join(trained_dir, 'selector.pkl'), 'wb') as f:
 # Start training
 print("Start training and predict...")
 mlp_state = {
-    random_state: 1998,
-    early_stopping: True,
-    beta_1: 0.9,
-    beta_2: 0.999,
-    hidden_layer_sizes:100,
-    activation:'relu',
-    solver:'adam',
-    alpha:0.0001, 
-    max_iter:1000, 
-    shuffle:True
+    'random_state': 1998,
+    'early_stopping': True,
+    'beta_1': 0.9,
+    'beta_2': 0.999,
+    'hidden_layer_sizes':100,
+    'activation':'relu',
+    'solver':'adam',
+    'alpha':0.0001, 
+    'max_iter':1000, 
+    'shuffle':True
 }
 regressor = MLPRegressor(mlp_state)
 
