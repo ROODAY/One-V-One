@@ -17,3 +17,41 @@ Traceback (most recent call last):
   File "/data/anaconda/envs/py35/lib/python3.5/site-packages/pandas/core/generic.py", line 4372, in __getattr__
     return object.__getattribute__(self, name)
 AttributeError: 'DataFrame' object has no attribute 'to_numpy'
+Loading data...
+Starting feature extraction...
+---- data shape before: (13081, 10003)
+Starting feature selection...
+---- data shape after: (13081, 2001)
+Start training and predict...
+---- model achieved nMSE of 0.14517465279980868
+Starting 10-Fold validation...
+Round 1/10 of nMSE is: 0.140805
+Round 2/10 of nMSE is: 0.152595
+Round 3/10 of nMSE is: 0.150711
+Round 4/10 of nMSE is: 0.144756
+Round 5/10 of nMSE is: 0.144617
+Round 6/10 of nMSE is: 0.141673
+Round 7/10 of nMSE is: 0.146528
+Round 8/10 of nMSE is: 0.149363
+Round 9/10 of nMSE is: 0.152218
+Round 10/10 of nMSE is: 0.154785
+Average nMSE is 0.147805
+Loading data...
+Starting feature extraction...
+---- data shape before: (13081, 10003)
+Starting feature selection...
+---- data shape after: (13081, 2001)
+Start training and predict...
+---- model achieved nMSE of 0.16453555702084063
+Starting 10-Fold validation...
+Round 1/10 of nMSE is: 0.167353
+Round 2/10 of nMSE is: 0.155724
+Round 3/10 of nMSE is: 0.154983
+Round 4/10 of nMSE is: 0.162262
+Round 5/10 of nMSE is: 0.160057
+Round 6/10 of nMSE is: 0.155790
+Round 7/10 of nMSE is: 0.156103
+Round 8/10 of nMSE is: 0.152742
+Round 9/10 of nMSE is: 0.155446
+Round 10/10 of nMSE is: 0.154118
+Average nMSE is 0.157458
