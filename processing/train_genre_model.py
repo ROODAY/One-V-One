@@ -20,8 +20,10 @@ from sklearn.pipeline import FeatureUnion
 from sklearn.pipeline import Pipeline
 
 # Model
-from sklearn.tree import DecisionTreeRegressor
-from sklearn.ensemble import AdaBoostRegressor
+# from sklearn.tree import DecisionTreeRegressor
+# from sklearn.ensemble import AdaBoostRegressor
+# from sklearn.SVM import SVR
+from sklearn.neural_network import MLPRegressor
 
 data_dir = "../data/"
 trained_dir = '../data/trained'
@@ -69,7 +71,7 @@ print('---- data shape before: {}'.format(data.shape))
 
 # OPTIONAL additional feature selection...
 print("Starting feature selection...")
-f_selector = SelectPercentile(f_classif, percentile=20)
+f_selector = SelectPercentile(f_classif, percentile=10)
 data = f_selector.fit_transform(data, labels)
 
 print('---- data shape after: {}'.format(data.shape))
@@ -78,7 +80,19 @@ with open(os.path.join(trained_dir, 'selector.pkl'), 'wb') as f:
 
 # Start training
 print("Start training and predict...")
-regressor = AdaBoostRegressor(DecisionTreeRegressor(max_depth=4), n_estimators=300, random_state=111)
+mlp_state = {
+    random_state: 1998,
+    early_stopping: True,
+    beta_1: 0.9,
+    beta_2: 0.999,
+    hidden_layer_sizes:100,
+    activation:'relu',
+    solver:'adam',
+    alpha:0.0001, 
+    max_iter:1000, 
+    shuffle:True
+}
+regressor = MLPRegressor(mlp_state)
 
 # Saving model trained on data
 X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.3, random_state=7)
@@ -89,11 +103,10 @@ y_pred = regressor.predict(X_test)
 nMSE = mean_squared_error(y_test, y_pred) / np.mean(np.square(y_test))
 print("---- model achieved nMSE of {}".format(nMSE))
 
+results = np.concatenate(y_test, y_pred)
 with open(os.path.join('../data/raw/', 'results.txt'), 'w') as f:
-    f.write('TRUTH -------------------------------------\n')
-    f.writelines([str(res)+'\n' for res in y_test])
-    f.write('PREDICTS ----------------------------------\n')
-    f.writelines([str(res)+'\n' for res in y_pred])
+    f.write('------------TRUTH vs. PREDICTS------------\n')
+    f.writelines(['{} {}'.format(results[i,0], results[i,1]) for i in range(len(results))])
 
 with open(os.path.join(trained_dir, 'model.pkl'), 'wb') as f:
     pickle.dump(model, f)

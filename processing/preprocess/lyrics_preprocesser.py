@@ -90,6 +90,7 @@ def preprocess_data(x, output_file=None):
     if output_file:
         with open(output_file, 'w') as f:
             f.writelines([lyrics+"\n" for lyrics in lyrics_list])
+    # if not 
 
     return lyrics_list
 
