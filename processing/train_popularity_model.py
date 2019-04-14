@@ -52,7 +52,7 @@ data = data.drop("lyrics", axis=1)
 
 # Save trained Feature Selector - TFIDF and CountVectorizer
 print("Starting feature extraction...")
-MAX_FEATURES = 10000
+MAX_FEATURES = 5000
 
 def get_song_info(x):
     return data.values
