@@ -8,7 +8,7 @@ from PIL import Image
 from random import shuffle
 
 input_path = './img_data/'
-IMG_SIZE = 128
+IMG_SIZE = 256
 
 data = []
 
@@ -24,10 +24,10 @@ with open('label_map.txt', 'w') as f:
         for file in files:
             file_dir = genre_dir + file
             print("Processing ", file_dir)
-            im = Image.open(file_dir).convert('LA')
-            print(im.size)
-            imr = im.resize((int(IMG_SIZE), int(IMG_SIZE)), resample=Image.ANTIALIAS)
-            imgData = np.asarray(imr, dtype=np.uint8).reshape(imr.size[0], imr.size[1], 1)
+            im = Image.open(file_dir)
+            print(str(im.size) + " " + str(image.mode))
+            # imr = im.resize((int(IMG_SIZE), int(IMG_SIZE)), resample=Image.ANTIALIAS)
+            imgData = np.asarray(imr, dtype=np.uint8).reshape(IMG_SIZE, IMG_SIZE, 1)
             imgData = imgData / 255 # normalize pixels
 
             # Label <-- one hot vector
