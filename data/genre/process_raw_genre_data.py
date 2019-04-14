@@ -48,7 +48,7 @@ with open(genre_data_file, 'a', newline='') as f:
     # 20 Total
     NUM_MFCC = 20
     for i in range(1, 1 + NUM_MFCC):
-        headers += [f'mfcc{i}']
+        headers += ['mfcc{}'.format(i)]
     headers += ['label']
 
     # Set up CSV with headers
