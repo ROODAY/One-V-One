@@ -59,8 +59,8 @@ def get_song_info(x):
 
 # count_v = CountVectorizer()
 feats_union = FeatureUnion([ 
-    # ('count', CountVectorizer(analyzer="word", ngram_range=(1, 2),strip_accents='unicode', max_features=MAX_FEATURES)),
-    ('tfidf', TfidfVectorizer(analyzer='word', sublinear_tf=True, strip_accents='unicode', ngram_range=(1, 3), max_features=MAX_FEATURES)),
+    ('count', CountVectorizer(analyzer="word", ngram_range=(1, 1),strip_accents='unicode', max_features=MAX_FEATURES)),
+    # ('tfidf', TfidfVectorizer(analyzer='word', sublinear_tf=True, strip_accents='unicode', ngram_range=(1, 2), max_features=MAX_FEATURES)),
     ('info', FunctionTransformer(get_song_info, validate=False))
 ])
 
@@ -73,7 +73,7 @@ print('---- data shape before: {}'.format(data.shape))
 
 # OPTIONAL additional feature selection...
 print("Starting feature selection...")
-f_selector = SelectPercentile(f_classif, percentile=15)
+f_selector = SelectPercentile(f_classif, percentile=10)
 data = f_selector.fit_transform(data, labels)
 
 print('---- data shape after: {}'.format(data.shape))
