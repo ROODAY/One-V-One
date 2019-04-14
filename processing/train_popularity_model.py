@@ -21,9 +21,9 @@ from sklearn.pipeline import Pipeline
 
 # Model
 # from sklearn.SVM import SVR
-# from sklearn.kernel_ridge import KernelRidge
+from sklearn.kernel_ridge import KernelRidge
 # from sklearn.neural_network import MLPRegressor
-import xgboost as xgb
+# import xgboost as xgb
 
 data_dir = "../data"
 data_lyrics_dir = data_dir + "/lyrics"
@@ -61,7 +61,7 @@ def get_song_info(x):
 feats_union = FeatureUnion([ 
     ('count_feats', Pipeline([
         ('count', CountVectorizer(analyzer="word", ngram_range=(1,1),strip_accents='unicode', max_features=MAX_FEATURES)),
-        ('feat_sel', SelectPercentile(f_classif, percentile=20))
+        # ('feat_sel', SelectPercentile(f_classif, percentile=20))
     ])),
     # ('tfidf_feats', Pipeline([
         # ('tfidf_v', TfidfVectorizer(analyzer='word', sublinear_tf=True, strip_accents='unicode', ngram_range=(1, 1), max_features=MAX_FEATURES)),
