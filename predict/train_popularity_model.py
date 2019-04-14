@@ -105,17 +105,22 @@ print("Starting 10-Fold validation...")
 nMSEs = []
 
 # Mimic KFold splits
-# kf = KFold(n_splits=10)
-for fold in range(10):
-    X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.3)
-    model = regressor.fit(X_train, y_train)
+kf = KFold(n_splits=10)
+fold = 1
+for train, test in kf.split(labels):
+    # X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.3)
+    # model = regressor.fit(X_train, y_train)
+    model = regressor.fit(data[train], labels[train])
 
     # Predict
-    y_pred = model.predict(X_test)
-    nMSE = mean_squared_error(y_test, y_pred) / np.mean(np.square(y_test))
+    # y_pred = model.predict(X_test)
+    y_pred = model.predict(x[test])
+    # nMSE = mean_squared_error(y_test, y_pred) / np.mean(np.square(y_test))
+    nMSE = mean_squared_error(labels[test], y_pred) / np.mean(np.square(labels[test]))
     nMSEs.append(nMSE)
 
     print("Round %d/10 of nMSE is: %f" %(fold+1, nMSE))
+    fold += 1
     
 print('Average nMSE is %f' %(np.mean(nMSEs)))
 
