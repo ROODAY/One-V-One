@@ -61,8 +61,11 @@ def get_song_info(x):
 # count_v = CountVectorizer()
 feats_union = FeatureUnion([ 
     # ('count', CountVectorizer(analyzer="word", ngram_range=(1,1),strip_accents='unicode', max_features=MAX_FEATURES)),
-    ('tfidf', TfidfVectorizer(analyzer='word', sublinear_tf=True, strip_accents='unicode', ngram_range=(1, 1), max_features=MAX_FEATURES))
-    # ('info', FunctionTransformer(get_song_info, validate=False))
+    ('tfidf', Pipeline([
+        ('tfidf_v', TfidfVectorizer(analyzer='word', sublinear_tf=True, strip_accents='unicode', ngram_range=(1, 3), max_features=MAX_FEATURES)),
+        # ('feat_sel', SelectPercentile(f_classif, percentile=5))
+    ])),
+    ('info', FunctionTransformer(get_song_info, validate=False))
 ])
 
 data = feats_union.fit_transform(postprocess_lyrics)
@@ -70,25 +73,16 @@ data = feats_union.fit_transform(postprocess_lyrics)
 with open(os.path.join(trained_dir, 'popularity_funion.pkl'), 'wb') as f:
     pickle.dump(feats_union, f)
 
-print('---- data shape before: {}'.format(data.shape))
-
-# OPTIONAL additional feature selection...
-print("Starting feature selection...")
-# f_selector = SelectPercentile(f_classif, percentile=5)
-# data = f_selector.fit_transform(data, labels)
-
-print('---- data shape after: {}'.format(data.shape))
-# with open(os.path.join(trained_dir, 'popularity_fselector.pkl'), 'wb') as f:
-    # pickle.dump(f_selector, f)
+print('---- data shape: {}'.format(data.shape))
 
 # Start training
 print("Start training and predict...")
 # regressor = MLPRegressor(random_state=1998, max_iter=1000, early_stopping=True, alpha=0.0001, learning_rate='adaptive')
-regressor = xgb.XGBRegressor(objective="reg:linear", random_state=1998)
+regressor = xgb.XGBRegressor(objective="reg:linear", random_state=42)
 
 
 # Saving model trained on data
-X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.3, random_state=2019)
+X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.3)
 model = regressor.fit(X_train, y_train)
 
 # Predict
