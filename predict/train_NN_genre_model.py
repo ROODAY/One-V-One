@@ -93,7 +93,7 @@ with open(os.path.join('../data/results/', 'results.txt'), 'w') as f:
     f.write(report)
 
 # *** Save TRAINED model ***
-model.save(os.path.join(trained_dir, 'genre_model.h5'))
+model.save(os.path.join(trained_dir, 'nn_genre_model.h5'))
 
 print('Starting 10-Fold validation...')
 kf = KFold(n_splits=10)

@@ -102,21 +102,4 @@ with open(os.path.join('../data/results/', 'results.txt'), 'w') as f:
     f.write(report)
 
 # *** Save TRAINED model ***
-model.save(os.path.join(trained_dir, 'genre_model.h5'))
-
-print('Starting 10-Fold validation...')
-kf = KFold(n_splits=10)
-avg_p = 0
-avg_r = 0
-count = 0
-
-for train, test in kf.split(X):
-    history = model.fit(X[train], y[train], epochs=20, batch_size=128, verbose=0)
-
-    # Predict
-    y_pred_conf = model.predict(X[test])
-    y_pred = [np.argmax(row) for row in y_pred_conf]
-
-    print("Fold {} -----------------------------".format(count))
-    print(classification_report(y[test], y_pred))
-    count+=1
+model.save(os.path.join(trained_dir, 'cnn_genre_model.h5'))
