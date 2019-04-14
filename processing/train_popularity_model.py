@@ -68,7 +68,7 @@ feats_union = FeatureUnion([
     ('info', FunctionTransformer(get_song_info, validate=False))
 ])
 
-data = feats_union.fit_transform(postprocess_lyrics)
+data = feats_union.fit_transform(postprocess_lyrics, labels)
 
 with open(os.path.join(trained_dir, 'popularity_funion.pkl'), 'wb') as f:
     pickle.dump(feats_union, f)
