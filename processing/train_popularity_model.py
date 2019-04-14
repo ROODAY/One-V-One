@@ -23,6 +23,7 @@ from sklearn.pipeline import Pipeline
 # from sklearn.tree import DecisionTreeRegressor
 # from sklearn.ensemble import AdaBoostRegressor
 # from sklearn.SVM import SVR
+# import xgboost as xgb
 from sklearn.neural_network import MLPRegressor
 
 data_dir = "../data"
@@ -59,8 +60,8 @@ def get_song_info(x):
 
 # count_v = CountVectorizer()
 feats_union = FeatureUnion([ 
-    ('count', CountVectorizer(analyzer="word", ngram_range=(1, 3),strip_accents='unicode', max_features=MAX_FEATURES)),
-    # ('tfidf', TfidfVectorizer(analyzer='word', sublinear_tf=True, strip_accents='unicode', ngram_range=(1, 2), max_features=MAX_FEATURES)),
+    # ('count', CountVectorizer(analyzer="word", ngram_range=(1,),strip_accents='unicode', max_features=MAX_FEATURES)),
+    ('tfidf', TfidfVectorizer(analyzer='word', sublinear_tf=True, strip_accents='unicode', ngram_range=(1, 2), max_features=MAX_FEATURES)),
     ('info', FunctionTransformer(get_song_info, validate=False))
 ])
 
@@ -73,7 +74,7 @@ print('---- data shape before: {}'.format(data.shape))
 
 # OPTIONAL additional feature selection...
 print("Starting feature selection...")
-f_selector = SelectPercentile(f_classif, percentile=10)
+f_selector = SelectPercentile(f_classif, percentile=5)
 data = f_selector.fit_transform(data, labels)
 
 print('---- data shape after: {}'.format(data.shape))
@@ -83,6 +84,8 @@ with open(os.path.join(trained_dir, 'popularity_fselector.pkl'), 'wb') as f:
 # Start training
 print("Start training and predict...")
 regressor = MLPRegressor(random_state=1998, max_iter=1000, early_stopping=True, alpha=0.0001, learning_rate='adaptive')
+# regressor = xgb.XGBRegressor(objective="reg:linear", random_state=1998)
+
 
 # Saving model trained on data
 X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.3, random_state=2019)

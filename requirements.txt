@@ -3,3 +3,4 @@ pandas>=0.24.0
 scikit-learn>=0.20.0
 numpy>=1.16
 keras>=2.0
+xgboost
