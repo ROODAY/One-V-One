@@ -72,16 +72,16 @@ feats_union = FeatureUnion([
 
 data = feats_union.fit_transform(postprocess_lyrics, labels)
 
-with open(os.path.join(trained_dir, 'popularity_funion.pkl'), 'wb') as f:
-    pickle.dump(feats_union, f)
+# with open(os.path.join(trained_dir, 'popularity_funion.pkl'), 'wb') as f:
+    # pickle.dump(feats_union, f)
 
 print('---- data shape: {}'.format(data.shape))
 
 # Start training
 print("Start training and predict...")
-# regressor = KernelRidge(alpha=1)
+regressor = KernelRidge(alpha=1)
 # regressor = MLPRegressor(random_state=1998, max_iter=1000, early_stopping=True, alpha=0.0001, learning_rate='adaptive')
-regressor = xgb.XGBRegressor(objective="reg:linear", random_state=1998)
+# regressor = xgb.XGBRegressor(objective="reg:linear", random_state=1998)
 
 
 # Saving model trained on data
@@ -95,12 +95,12 @@ print("---- model achieved nMSE of {}".format(nMSE))
 
 # y_pred = y_pred.tolist()
 y_test = y_test.tolist()
-with open(os.path.join('../data/results/', 'xgb_results.txt'), 'w') as f:
+with open(os.path.join('../data/raw/', 'results.txt'), 'w') as f:
     f.write('------------TRUTH vs. PREDICTS------------\n')
     f.writelines(['{} {}\n'.format(y_test[i], y_pred[i]) for i in range(len(y_test))])
 
-with open(os.path.join(trained_dir, 'popularity_model.pkl'), 'wb') as f:
-    pickle.dump(model, f)
+# with open(os.path.join(trained_dir, 'popularity_model.pkl'), 'wb') as f:
+    # pickle.dump(model, f)
 
 # Start Validation
 print("Starting 10-Fold validation...")
