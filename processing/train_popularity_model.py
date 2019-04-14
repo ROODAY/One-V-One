@@ -21,9 +21,9 @@ from sklearn.pipeline import Pipeline
 
 # Model
 # from sklearn.SVM import SVR
-from sklearn.kernel_ridge import KernelRidge
+# from sklearn.kernel_ridge import KernelRidge
 # from sklearn.neural_network import MLPRegressor
-# import xgboost as xgb
+import xgboost as xgb
 
 data_dir = "../data"
 data_lyrics_dir = data_dir + "/lyrics"
@@ -50,14 +50,12 @@ else:
 postprocess_lyrics = np.array(postprocess_lyrics)
 data = data.drop("lyrics", axis=1)
 
-# Save trained Feature Selector - TFIDF and CountVectorizer
 print("Starting feature extraction...")
 MAX_FEATURES = 10000
 
 def get_song_info(x):
     return data.values
 
-# count_v = CountVectorizer()
 feats_union = FeatureUnion([ 
     # ('count_feats', Pipeline([
         # ('count', CountVectorizer(analyzer="word", ngram_range=(1,1),strip_accents='unicode', max_features=MAX_FEATURES)),
@@ -72,16 +70,15 @@ feats_union = FeatureUnion([
 
 data = feats_union.fit_transform(postprocess_lyrics, labels)
 
-# with open(os.path.join(trained_dir, 'popularity_funion.pkl'), 'wb') as f:
-    # pickle.dump(feats_union, f)
+# *** Save TRAINED Feature Extractor ***
+with open(os.path.join(trained_dir, 'popularity_funion.pkl'), 'wb') as f:
+    pickle.dump(feats_union, f)
 
 print('---- data shape: {}'.format(data.shape))
 
 # Start training
 print("Start training and predict...")
-regressor = KernelRidge(alpha=1)
-# regressor = MLPRegressor(random_state=1998, max_iter=1000, early_stopping=True, alpha=0.0001, learning_rate='adaptive')
-# regressor = xgb.XGBRegressor(objective="reg:linear", random_state=1998)
+regressor = xgb.XGBRegressor(objective="reg:linear", random_state=1998)
 
 
 # Saving model trained on data
@@ -93,14 +90,15 @@ y_pred = model.predict(X_test)
 nMSE = mean_squared_error(y_test, y_pred) / np.mean(np.square(y_test))
 print("---- model achieved nMSE of {}".format(nMSE))
 
-# y_pred = y_pred.tolist()
+y_pred = y_pred.tolist()
 y_test = y_test.tolist()
 with open(os.path.join('../data/results/', 'krr_results.txt'), 'w') as f:
     f.write('------------TRUTH vs. PREDICTS------------\n')
     f.writelines(['{} {}\n'.format(y_test[i], y_pred[i]) for i in range(len(y_test))])
 
-# with open(os.path.join(trained_dir, 'popularity_model.pkl'), 'wb') as f:
-    # pickle.dump(model, f)
+# *** Saved TRAINED model ***
+with open(os.path.join(trained_dir, 'popularity_model.pkl'), 'wb') as f:
+    pickle.dump(model, f)
 
 # Start Validation
 print("Starting 10-Fold validation...")
