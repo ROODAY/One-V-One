@@ -42,7 +42,6 @@ encoder = LabelEncoder()
 
 y = encoder.fit_transform(genre_list)
 print('---- labels: {}'.format(encoder.classes_))
-print(y)
 
 # Scale features to normalize
 scaler = StandardScaler()
@@ -76,22 +75,25 @@ model.compile(optimizer='adam',
 history = model.fit(X_train, y_train, epochs=20, batch_size=128)
 
 # Show results
-y_pred = model.predict(X_test)
+test_loss, test_acc = model.evaluate(X_test, y_test)
 
-y_pred = y_pred.tolist()
-y_test = y_test.tolist()
-with open(os.path.join('../data/results/', 'results.txt'), 'w') as f:
-    f.write('------------TRUTH vs. PREDICTS------------\n')
-    f.writelines(['{} {}\n'.format(y_test[i], y_pred[i])
-                  for i in range(len(y_test))])
+# Get detailed classification scores
+y_pred_conf = model.predict(X_test)
+y_pred = [np.argmax(row) for row in y_pred_conf]
 
 precision = precision_score(y_test, y_pred, average='macro')
 recall = recall_score(y_test, y_pred, average='macro')
 f1_score = 2 * (precision * recall) / (precision + recall)
 
-# test_loss, test_acc = model.evaluate(X_test, y_test)
 print(classification_report(y_test, y_pred))
 print('---- model achieved f1 score of ', f1_score)
+
+y_test = y_test.tolist()
+
+with open(os.path.join('../data/results/', 'results.txt'), 'w') as f:
+    f.write('------------TRUTH vs. PREDICTS------------\n')
+    f.writelines(['{} {}\n'.format(y_test[i], y_pred[i])
+                  for i in range(len(y_test))])
 
 # *** Save TRAINED model ***
 model.save(os.path.join(trained_dir, 'genre_model.h5'))
