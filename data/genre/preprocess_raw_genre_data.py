@@ -19,7 +19,7 @@ import librosa
 
 # Image mapping
 cmap = plt.get_cmap('inferno')
-plt.figure(figsize=(10,10))
+plt.figure(figsize=(2.56,2.56))
 
 # Set of classification genres and labels
 genres = ['blues', 'classical', 'country', 'disco', 'hiphop', 'jazz', 'metal', 'pop', 'reggae', 'rock']
@@ -29,7 +29,7 @@ img_data_path = './img_data/'
 MIR_genres_path = '../raw/genres/'
 genre_data_file = '../genre_info.csv'
 
-# Save each file as a image representation
+# Save each spectrogram --> for use with CNN
 for g in genres:
     pathlib.Path(os.path.join(img_data_path, g)).mkdir(parents=True, exist_ok=True)     
     for file_name in os.listdir(os.path.join(MIR_genres_path, g)):
