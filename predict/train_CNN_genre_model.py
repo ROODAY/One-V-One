@@ -81,7 +81,7 @@ model.compile(loss='categorical_crossentropy',
 
 # Form the model and fit
 print('Fitting model....')
-history = model.fit(X_train, y_train, epochs=20, batch_size=128)
+history = model.fit(X_train, y_train, epochs=20, batch_size=32)
 
 # Show results
 test_loss, test_acc = model.evaluate(X_test, y_test)
