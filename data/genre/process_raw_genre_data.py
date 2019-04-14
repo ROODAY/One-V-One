@@ -25,7 +25,7 @@ genres = ['blues', 'classical', 'country', 'disco', 'hiphop', 'jazz', 'metal', '
 # data paths
 img_data_path = './img_data/'
 MIR_genres_path = '../raw/MIR/genres/'
-genre_data_file = 'genre_data.csv'
+genre_data_file = '../genre_info.csv'
 
 # Save each file as a image representation
 for g in genres:
