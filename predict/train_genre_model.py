@@ -39,9 +39,9 @@ data = data.drop(['filename'], axis=1)
 print('Transforming and normalizing data...')
 genre_list = data.iloc[:, -1]
 encoder = LabelEncoder()
-print('---- labels: {}'.format(encoder.classes_))
 
 y = encoder.fit_transform(genre_list)
+print('---- labels: {}'.format(encoder.classes_))
 
 # Scale features to normalize
 scaler = StandardScaler()
