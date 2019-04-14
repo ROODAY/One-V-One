@@ -51,19 +51,19 @@ postprocess_lyrics = np.array(postprocess_lyrics)
 data = data.drop("lyrics", axis=1)
 
 print("Starting feature extraction...")
-MAX_FEATURES = 5000
+MAX_FEATURES = 10000
 
 def get_song_info(x):
     return data.values
 
 feats_union = FeatureUnion([ 
-    # ('count_feats', Pipeline([
-        # ('count', CountVectorizer(analyzer="word", ngram_range=(1,1),strip_accents='unicode', max_features=MAX_FEATURES)),
-        # ('feat_sel', SelectPercentile(f_classif, percentile=10))
-    # ])),
+    ('count_feats', Pipeline([
+        ('count', CountVectorizer(analyzer="word", ngram_range=(1,1),strip_accents='unicode', max_features=MAX_FEATURES)),
+        ('feat_sel', SelectPercentile(f_classif, percentile=20))
+    ])),
     ('tfidf_feats', Pipeline([
-        ('tfidf_v', TfidfVectorizer(analyzer='word', sublinear_tf=True, strip_accents='unicode', ngram_range=(1, 2), max_features=MAX_FEATURES)),
-        ('feat_sel', SelectPercentile(f_classif, percentile=50))
+        ('tfidf_v', TfidfVectorizer(analyzer='word', sublinear_tf=True, strip_accents='unicode', ngram_range=(1, 1), max_features=MAX_FEATURES)),
+        ('feat_sel', SelectPercentile(f_classif, percentile=20))
     ])),
     ('info', FunctionTransformer(get_song_info, validate=False))
 ])
