@@ -81,12 +81,8 @@ test_loss, test_acc = model.evaluate(X_test, y_test)
 y_pred_conf = model.predict(X_test)
 y_pred = [np.argmax(row) for row in y_pred_conf]
 
-precision = precision_score(y_test, y_pred, average='macro')
-recall = recall_score(y_test, y_pred, average='macro')
-f1_score = 2 * (precision * recall) / (precision + recall)
-
-print(classification_report(y_test, y_pred))
-print('---- model achieved f1 score of ', f1_score)
+report = classification_report(y_test, y_pred)
+print(report)
 
 y_test = y_test.tolist()
 
@@ -94,6 +90,7 @@ with open(os.path.join('../data/results/', 'results.txt'), 'w') as f:
     f.write('------------TRUTH vs. PREDICTS------------\n')
     f.writelines(['{} {}\n'.format(y_test[i], y_pred[i])
                   for i in range(len(y_test))])
+    f.write(report)
 
 # *** Save TRAINED model ***
 model.save(os.path.join(trained_dir, 'genre_model.h5'))
@@ -108,11 +105,12 @@ for train, test in kf.split(X):
     history = model.fit(X[train], y[train], epochs=20, batch_size=128)
 
     # Predict
-    y_pred = model.predict(X[test])
+    y_pred_conf = model.predict(X[test])
+    y_pred = [np.argmax(row) for row in y_pred_conf]
 
     # print(classification_report(y[test], y_pred))
     avg_p += precision_score(y[test], y_pred, average='macro')
     avg_r += recall_score(y[test], y_pred, average='macro')
 
-print('Average Precision is %f.' %(avg_p/10.0))
-print('Average Recall is %f.' %(avg_r/10.0))
+print('Average Precision is %f.' % (avg_p/10.0))
+print('Average Recall is %f.' % (avg_r/10.0))
