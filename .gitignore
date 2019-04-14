@@ -2,8 +2,9 @@
 data/raw/
 data/__pycache__
 data/raw/__pycache__
-processing/__pycache__
-processing/preprocess/__pycache__
+predict/__pycache__
+predict/preprocess/__pycache__
+predict/preprocess/keyedin/__pycache__
 
 # Logs
 logs
