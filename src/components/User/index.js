@@ -10,6 +10,7 @@ import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 import Loader from '../Loader';
 import { withFirebase } from '../Firebase';
+import { withAuthorization } from '../Session';
 
 import {GENRES} from '../../constants/genres';
 
@@ -101,4 +102,5 @@ class User extends Component {
   }
 }
 
-export default withFirebase(User);
+const condition = authUser => !!authUser;
+export default withAuthorization(condition)(withFirebase(User));

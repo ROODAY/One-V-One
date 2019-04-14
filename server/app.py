@@ -12,6 +12,7 @@ import os
 import uuid
 import subprocess
 import json
+import base64
 
 import firebase_admin
 from firebase_admin import credentials, db
@@ -19,6 +20,9 @@ from firebase_admin import credentials, db
 load_dotenv(dotenv_path='../.env')
 
 apiKey = os.environ['REACT_APP_SERVER_KEY']
+spotifyAuthString = '{}:{}'.format(os.environ['REACT_APP_SPOTIFY_ID'], os.environ['REACT_APP_SPOTIFY_SECRET'])
+spotifyAuthBytes = spotifyAuthString.encode('ascii')
+spotifyAuthHeader = base64.b64encode(spotifyAuthBytes).decode('ascii')
 
 jsonFirebaseCreds = json.loads(os.environ['FIREBASE_CREDENTIALS'])
 firebaseCredentials = credentials.Certificate(jsonFirebaseCreds)
@@ -117,5 +121,34 @@ def runPredictions():
   else:
     return 'Invalid API key: {}'.format(key),401
 
+@app.route('/api/getGenres')
+def getGenres():
+  headers = {
+    'Authorization': 'Bearer {}'.format(getSpotifyOAuthToken())
+  }
+  res = requests.get('https://api.spotify.com/v1/recommendations/available-genre-seeds', headers=headers)
+  return jsonify(res.json())
+
+@app.route('/api/getArtists')
+def getArtists():
+  query = request.args.get('q')
+  headers = {
+    'Authorization': 'Bearer {}'.format(getSpotifyOAuthToken())
+  }
+  res = requests.get('https://api.spotify.com/v1/search?q={}&type=artist'.format(query), headers=headers)
+  return jsonify(res.json())
+
+def getSpotifyOAuthToken():
+  data = {
+    'grant_type': 'client_credentials'
+  }
+  headers = {
+    'Authorization': 'Basic {}'.format(spotifyAuthHeader)
+  }
+  res = requests.post('https://accounts.spotify.com/api/token', data=data, headers=headers)
+  return res.json()['access_token']
+
 if __name__ == "__main__":
   app.run(host='0.0.0.0')
+
+getSpotifyOAuthToken()
