@@ -13,7 +13,7 @@ import pandas as pd
 import numpy as np
 
 # Sklearn helpers
-from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.preprocessing import LabelBinarizer, StandardScaler
 from sklearn.model_selection import KFold
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import FeatureUnion, Pipeline
@@ -38,7 +38,7 @@ data = data.drop(['filename'], axis=1)
 # **One hot encoding
 print('Transforming and normalizing data...')
 genre_list = data.iloc[:, -1]
-encoder = LabelEncoder()
+encoder = LabelBinarizer()
 
 y = encoder.fit_transform(genre_list)
 print('---- labels: {}'.format(encoder.classes_))
@@ -48,12 +48,12 @@ scaler = StandardScaler()
 X = scaler.fit_transform(np.array(data.iloc[:, :-1], dtype=float))
 
 # *** Save TRAINED Feature Extractor ***
-if not os.path.isfile(os.path.join(trained_dir, 'genre_encoder.pkl')):
-    with open(os.path.join(trained_dir, 'genre_encoder.pkl'), 'wb') as f:
-        pickle.dump(encoder, f)
-if not os.path.isfile(os.path.join(trained_dir, 'genre_scaler.pkl')):
-    with open(os.path.join(trained_dir, 'genre_encoder.pkl'), 'wb') as f:
-        pickle.dump(scaler, f)
+# if not os.path.isfile(os.path.join(trained_dir, 'genre_encoder.pkl')):
+with open(os.path.join(trained_dir, 'genre_encoder.pkl'), 'wb') as f:
+    pickle.dump(encoder, f)
+# if not os.path.isfile(os.path.join(trained_dir, 'genre_scaler.pkl')):
+with open(os.path.join(trained_dir, 'genre_encoder.pkl'), 'wb') as f:
+    pickle.dump(scaler, f)
 
 # Set up Data
 X_train, X_test, y_train, y_test = train_test_split(
