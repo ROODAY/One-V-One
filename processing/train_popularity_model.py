@@ -78,8 +78,8 @@ print("Starting feature selection...")
 # data = f_selector.fit_transform(data, labels)
 
 print('---- data shape after: {}'.format(data.shape))
-with open(os.path.join(trained_dir, 'popularity_fselector.pkl'), 'wb') as f:
-    pickle.dump(f_selector, f)
+# with open(os.path.join(trained_dir, 'popularity_fselector.pkl'), 'wb') as f:
+    # pickle.dump(f_selector, f)
 
 # Start training
 print("Start training and predict...")
