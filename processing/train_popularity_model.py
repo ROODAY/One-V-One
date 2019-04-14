@@ -63,11 +63,11 @@ feats_union = FeatureUnion([
         # ('count', CountVectorizer(analyzer="word", ngram_range=(1,1),strip_accents='unicode', max_features=MAX_FEATURES)),
         # ('feat_sel', SelectPercentile(f_classif, percentile=20))
     # ])),
-    ('tfidf_feats', Pipeline([
-        ('tfidf_v', TfidfVectorizer(analyzer='word', sublinear_tf=True, strip_accents='unicode', ngram_range=(1, 1), max_features=MAX_FEATURES)),
+    # ('tfidf_feats', Pipeline([
+        # ('tfidf_v', TfidfVectorizer(analyzer='word', sublinear_tf=True, strip_accents='unicode', ngram_range=(1, 1), max_features=MAX_FEATURES)),
         # ('feat_sel', SelectPercentile(f_classif, percentile=60))
-    ])),
-    # ('info', FunctionTransformer(get_song_info, validate=False))
+    # ])),
+    ('info', FunctionTransformer(get_song_info, validate=False))
 ])
 
 data = feats_union.fit_transform(postprocess_lyrics, labels)
