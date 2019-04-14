@@ -1,12 +1,12 @@
 # SoundBooth
 
-The premier social media platform for indie vocalists to share and discover.
+The premier social media platform for indie vocalists to share and discover easy-to-digest soundclips.
 
 ## Installation
 
-SoundBooth is built on top of React (front-end) and Flask (back-end), and so has two sets dependencies, as well as requiring [ffmpeg](http://ffmpeg.org/download.html) and various environment variables. For a simpler installation/deployment, consider this one-click deploy to Heroku: [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+SoundBooth is built on top of React (front-end) and Flask (back-end), and so has two sets of dependencies. SoundBooth also requires [ffmpeg](http://ffmpeg.org/download.html) and various environment variables. For a simpler installation/deployment, consider this one-click deploy to Heroku: [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-To handle the front-end dependencies, make sure you have both [Node.js](https://nodejs.org/en/download/) and [Yarn](https://yarnpkg.com/lang/en/docs/install) installed. Then run the following in the root folder:
+To handle the front-end dependencies, make sure you have both [Node.js](https://nodejs.org/en/download/) and [Yarn](https://yarnpkg.com/lang/en/docs/install) installed. Then run the following in the root directory:
 
 ```bash
 yarn install
@@ -31,7 +31,7 @@ You can exit the environment by running `deactivate` at any time. Now install th
 pip install -r requirements.txt
 ```
 
-SoundBooth also uses [ffmpeg](http://ffmpeg.org/download.html), so make sure it is installed and available in your system path.
+SoundBooth also requires [ffmpeg](http://ffmpeg.org/download.html), so make sure it is installed and available in your system path.
 
 Finally, SoundBooth requires the following environment variables to be set:
 
@@ -58,12 +58,16 @@ GOOGLE_CREDENTIALS={"type":"service_account",...}
 
 ## Running
 
-To simply run the app for use, run the following from the root directory:
+To use SoundBooth, run the following from the root directory:
 
 ```bash
 yarn build # compile React front-end
 gunicorn --chdir server -w 4 app:app # run a WSGI server in front of the Flask application
 ```
+
+The app should then be available on http://localhost:8000.
+
+For front-end development, run `yarn start`, which starts a development server on http://localhost:3000. This server has hot-reloading enabled, so you can focus on making changes. However, it won't start the Flask server, and so you won't be able to test any changes to the classifiers or server. To see those changes, have a gunicorn server running in one terminal and use another terminal to run `yarn build` whenever you have changes to the front-end. You'll have to restart the gunicorn server if changes are made to the back-end as hot-reloading is not configured for it, but feel free to submit a pull request!
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
