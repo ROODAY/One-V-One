@@ -24,7 +24,7 @@ with open('label_map.txt', 'w') as f:
         for file in files:
             file_dir = genre_dir + file
             print("Processing ", file_dir)
-            im = Image.open(file_dir)
+            im = Image.open(file_dir).convert('LA')
             print(str(im.size) + " " + str(im.mode))
             # imr = im.resize((int(IMG_SIZE), int(IMG_SIZE)), resample=Image.ANTIALIAS)
             imgData = np.asarray(im, dtype=np.uint8).reshape(IMG_SIZE, IMG_SIZE, 1)
