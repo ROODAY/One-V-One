@@ -79,7 +79,7 @@ print('---- data shape: {}'.format(data.shape))
 
 # Start training
 print("Start training and predict...")
-regressor = KernelRidge(alpha=2)
+regressor = KernelRidge(alpha=1)
 # regressor = MLPRegressor(random_state=1998, max_iter=1000, early_stopping=True, alpha=0.0001, learning_rate='adaptive')
 # regressor = xgb.XGBRegressor(objective="reg:linear", random_state=1998)
 
