@@ -60,9 +60,9 @@ def get_song_info(x):
 
 # count_v = CountVectorizer()
 feats_union = FeatureUnion([ 
-    # ('count', CountVectorizer(analyzer="word", ngram_range=(1,1),strip_accents='unicode', max_features=MAX_FEATURES)),
     ('tfidf', Pipeline([
-        ('tfidf_v', TfidfVectorizer(analyzer='word', sublinear_tf=True, strip_accents='unicode', ngram_range=(1, 2), max_features=MAX_FEATURES)),
+        ('count', CountVectorizer(analyzer="word", ngram_range=(1,1),strip_accents='unicode', max_features=MAX_FEATURES)),
+        # ('tfidf_v', TfidfVectorizer(analyzer='word', sublinear_tf=True, strip_accents='unicode', ngram_range=(1, 2), max_features=MAX_FEATURES)),
         ('feat_sel', SelectPercentile(f_classif, percentile=5))
     ])),
     ('info', FunctionTransformer(get_song_info, validate=False))
@@ -78,7 +78,7 @@ print('---- data shape: {}'.format(data.shape))
 # Start training
 print("Start training and predict...")
 # regressor = MLPRegressor(random_state=1998, max_iter=1000, early_stopping=True, alpha=0.0001, learning_rate='adaptive')
-regressor = xgb.XGBRegressor(objective="reg:linear", random_state=42)
+regressor = xgb.XGBRegressor(objective="reg:linear", random_state=1998)
 
 
 # Saving model trained on data
