@@ -15,23 +15,24 @@ data = []
 # genre folders
 genres = os.listdir(input_path)
 
-for i, genre in enumerate(genres):
+with open('label_map.txt', 'w') as f:
+    for i, genre in enumerate(genres):
+        f.write('{} - {}'.format(i, genre))
+        genre_dir = input_path + genre +'/'
+        
+        files = os.listdir(genre_dir)
+        for file in files:
+            file_dir = genre_dir + file
+            print("Processing ", file_dir)
+            im = Image.open(file_dir)
+            imr = im.resize((int(IMG_SIZE), int(IMG_SIZE)), resample=Image.ANTIALIAS)
+            imgData = np.asarray(imr, dtype=np.uint8).reshape(int(IMG_SIZE), int(IMG_SIZE), 1)
+            imgData = imgData / 255 # normalize pixels
 
-    genre_dir = input_path + genre +'/'
-    
-    files = os.listdir(genre_dir)
-    for file in files:
-        file_dir = genre_dir + file
-        print("Processing ", file_dir)
-        im = Image.open(file_dir)
-        imr = im.resize((int(IMG_SIZE), int(IMG_SIZE)), resample=Image.ANTIALIAS)
-        imgData = np.asarray(imr, dtype=np.uint8).reshape(int(IMG_SIZE), int(IMG_SIZE), 1)
-        imgData = imgData / 255 # normalize pixels
-
-        # Label <-- one hot vector
-        label = [0 for genre in range(len(genres))]
-        label[i] = 1
-        data.append((imgData, label))
+            # Label <-- one hot vector
+            label = [0 for genre in range(len(genres))]
+            label[i] = 1
+            data.append((imgData, label))
 
 shuffle(data)
 x, y = zip(*data)
