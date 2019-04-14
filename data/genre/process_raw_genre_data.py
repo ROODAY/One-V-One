@@ -17,7 +17,6 @@ import matplotlib.pyplot as plt
 # Our Audio processing library
 import librosa
 
-
 # Image mapping
 cmap = plt.get_cmap('inferno')
 plt.figure(figsize=(10,10))
@@ -38,7 +37,7 @@ for g in genres:
         y, sr = librosa.load(song_name, mono=True, duration=5)
         plt.specgram(y, NFFT=2048, Fs=2, Fc=0, noverlap=128, cmap=cmap, sides='default', mode='default', scale='dB')
         plt.axis('off')
-        plt.savefig(os.path.join(img_data_path, g, file_name[:-3].replace(".", ""), '.png'))
+        plt.savefig(os.path.join(img_data_path, g, file_name[:-3].replace(".", "")+'.png'))
         plt.clf()
 
 with open(genre_data_file, 'a', newline='') as f:
