@@ -6,6 +6,7 @@ import os
 import csv
 import pandas as pd
 import numpy as np
+import matplotlib
 import matplotlib.pyplot as plt
 import pathlib
 
@@ -14,10 +15,11 @@ import librosa
 
 # Image library
 from PIL import Image
+matplotlib.use('Agg') # don't use Xwindows = no DISPLAY
 
 # Image mapping
 cmap = plt.get_cmap('inferno')
-# plt.figure(figsize=(10,10))
+plt.figure(figsize=(10,10))
 
 # Set of classification genres and labels
 genres = ['blues', 'classical', 'country', 'disco', 'hiphop', 'jazz', 'metal', 'pop', 'reggae', 'rock']
