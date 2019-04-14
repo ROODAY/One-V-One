@@ -3,7 +3,7 @@
 Class PitchDistribution represents proportion of musical sample made up of each note A, A#, B, ..., G, G#.
 """
 
-import audioprocessing as ap
+from . import audioprocessing as ap
 import numpy as np
 
 

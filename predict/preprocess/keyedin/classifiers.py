@@ -3,7 +3,7 @@
 Classifiers for guessing key of pitch distribution.
 """
 
-import pitchdistribution as pd
+from . import pitchdistribution as pd
 import numpy as np
 
 
