@@ -27,8 +27,9 @@ from keras.layers import Conv2D, MaxPooling2D
 from keras.optimizers import rmsprop
 from tools import f1
 
-data_dir = "../data/"
-data_file = 'genre_info.csv'
+data_dir = "../data/genre"
+X_file = 'genre_data.p'
+y_file = 'genre_labels.p'
 trained_dir = '../data/trained'
 
 # Use CNN spectrogram model
@@ -36,32 +37,12 @@ IMG_SIZE = 256
 NUM_CLASSES = 10
 
 print('Loading data...')
-data = pd.read_csv(os.path.join(data_dir, data_file), encoding="ISO-8859-1")
-print('---- orig data shape: {}'.format(data.shape))
+with open(os.path.join(data_dir, X_file), 'rb') as f:    
+    X = pickle.load(f)
+with open(os.path.join(data_dir, y_file), 'rb') as f:
+    y = pickle.load(f)
 
-# Drop unnecessary columns
-data = data.drop(['filename'], axis=1)
-
-# Encode each genre with a corresponding label
-# **One hot encoding
-print('Transforming and normalizing data...')
-genre_list = data.iloc[:, -1]
-encoder = LabelEncoder()
-
-y = encoder.fit_transform(genre_list)
-print('---- labels: {}'.format(encoder.classes_))
-
-# Scale features to normalize
-scaler = StandardScaler()
-X = scaler.fit_transform(np.array(data.iloc[:, :-1], dtype=float))
-
-# *** Save TRAINED Feature Extractor ***
-if not os.path.isfile(os.path.join(trained_dir, 'genre_encoder.pkl')):
-    with open(os.path.join(trained_dir, 'genre_encoder.pkl'), 'wb') as f:
-        pickle.dump(encoder, f)
-if not os.path.isfile(os.path.join(trained_dir, 'genre_scaler.pkl')):
-    with open(os.path.join(trained_dir, 'genre_encoder.pkl'), 'wb') as f:
-        pickle.dump(scaler, f)
+print('---- orig data shape: {}'.format(X.shape))
 
 # Set up Data
 X_train, X_test, y_train, y_test = train_test_split(
