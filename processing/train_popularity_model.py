@@ -52,7 +52,7 @@ data = data.drop("lyrics", axis=1)
 
 # Save trained Feature Selector - TFIDF and CountVectorizer
 print("Starting feature extraction...")
-MAX_FEATURES = 5000
+MAX_FEATURES = 10000
 
 def get_song_info(x):
     return data.values
@@ -61,7 +61,7 @@ def get_song_info(x):
 feats_union = FeatureUnion([ 
     ('count_feats', Pipeline([
         ('count', CountVectorizer(analyzer="word", ngram_range=(1,1),strip_accents='unicode', max_features=MAX_FEATURES)),
-        ('feat_sel', SelectPercentile(f_classif, percentile=40))
+        ('feat_sel', SelectPercentile(f_classif, percentile=20))
     ])),
     # ('tfidf_feats', Pipeline([
         # ('tfidf_v', TfidfVectorizer(analyzer='word', sublinear_tf=True, strip_accents='unicode', ngram_range=(1, 1), max_features=MAX_FEATURES)),
@@ -95,7 +95,7 @@ print("---- model achieved nMSE of {}".format(nMSE))
 
 # y_pred = y_pred.tolist()
 y_test = y_test.tolist()
-with open(os.path.join('../data/raw/', 'results.txt'), 'w') as f:
+with open(os.path.join('../data/results/', 'xgb_results.txt'), 'w') as f:
     f.write('------------TRUTH vs. PREDICTS------------\n')
     f.writelines(['{} {}\n'.format(y_test[i], y_pred[i]) for i in range(len(y_test))])
 
