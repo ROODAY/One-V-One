@@ -63,7 +63,7 @@ feats_union = FeatureUnion([
     # ('count', CountVectorizer(analyzer="word", ngram_range=(1,1),strip_accents='unicode', max_features=MAX_FEATURES)),
     ('tfidf', Pipeline([
         ('tfidf_v', TfidfVectorizer(analyzer='word', sublinear_tf=True, strip_accents='unicode', ngram_range=(1, 3), max_features=MAX_FEATURES)),
-        # ('feat_sel', SelectPercentile(f_classif, percentile=5))
+        ('feat_sel', SelectPercentile(f_classif, percentile=5))
     ])),
     ('info', FunctionTransformer(get_song_info, validate=False))
 ])
