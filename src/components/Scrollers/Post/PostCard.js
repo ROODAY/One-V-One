@@ -29,8 +29,10 @@ class PostCard extends Component {
     this.audioplayer.current.onplaying = event => {
       const listens = this.state.listens + 1;
       this.setState({listens});
-      this.props.firebase.post(this.props.id).update({
-        listens
+      this.props.firebase
+      .postListens(this.props.id)
+      .transaction((currentListens) => {
+        return (currentListens || 0) + 1
       });
     }
   }

@@ -123,20 +123,28 @@ def runPredictions():
 
 @app.route('/api/getGenres')
 def getGenres():
-  headers = {
-    'Authorization': 'Bearer {}'.format(getSpotifyOAuthToken())
-  }
-  res = requests.get('https://api.spotify.com/v1/recommendations/available-genre-seeds', headers=headers)
-  return jsonify(res.json())
+  key = request.args.get('key')
+  if key == apiKey:
+    headers = {
+      'Authorization': 'Bearer {}'.format(getSpotifyOAuthToken())
+    }
+    res = requests.get('https://api.spotify.com/v1/recommendations/available-genre-seeds', headers=headers)
+    return jsonify(res.json())
+  else:
+    return 'Invalid API key: {}'.format(key),401
 
 @app.route('/api/getArtists')
 def getArtists():
-  query = request.args.get('q')
-  headers = {
-    'Authorization': 'Bearer {}'.format(getSpotifyOAuthToken())
-  }
-  res = requests.get('https://api.spotify.com/v1/search?q={}&type=artist'.format(query), headers=headers)
-  return jsonify(res.json())
+  key = request.args.get('key')
+  if key == apiKey:
+    query = request.args.get('q')
+    headers = {
+      'Authorization': 'Bearer {}'.format(getSpotifyOAuthToken())
+    }
+    res = requests.get('https://api.spotify.com/v1/search?q={}&type=artist'.format(query), headers=headers)
+    return jsonify(res.json())
+  else:
+    return 'Invalid API key: {}'.format(key),401
 
 def getSpotifyOAuthToken():
   data = {
@@ -150,5 +158,3 @@ def getSpotifyOAuthToken():
 
 if __name__ == "__main__":
   app.run(host='0.0.0.0')
-
-getSpotifyOAuthToken()

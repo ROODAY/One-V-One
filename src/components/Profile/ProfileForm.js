@@ -101,7 +101,7 @@ class ProfileForm extends Component {
             }}
             onSearch={query => {
               this.setState({artistsLoading: true});
-              axios.get(`/api/getArtists?q=${query}`)
+              axios.get(`/api/getArtists?q=${query}&key=${process.env.REACT_APP_SERVER_KEY}`)
               .then(resp => {
                 this.setState({
                   artistsLoading: false,
@@ -125,7 +125,7 @@ class ProfileForm extends Component {
             }}
             onSearch={query => {
               this.setState({genresLoading: true});
-              axios.get('/api/getGenres')
+              axios.get(`/api/getGenres?key=${process.env.REACT_APP_SERVER_KEY}`)
               .then(resp => {
                 this.setState({
                   genresLoading: false,

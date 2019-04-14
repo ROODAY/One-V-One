@@ -44,10 +44,11 @@ class Firebase {
 
   post = uid => this.db.ref(`posts/${uid}`);
   postRating = uid => this.db.ref(`posts/${uid}/rating`);
+  postListens = uid => this.db.ref(`posts/${uid}/listens`);
   posts = () => this.db.ref('posts');
 
-  song = uid => this.storage.ref().child(`audio/${uid}`);
-  songs = () => this.storage.ref().child('audio');
+  song = uid => this.storage.ref(`audio/${uid}`);
+  songs = () => this.storage.ref('audio');
 }
 
 export default Firebase;
