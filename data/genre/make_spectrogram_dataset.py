@@ -8,7 +8,7 @@ from PIL import Image
 from random import shuffle
 
 input_path = './img_data/'
-IMG_SIZE = 256
+IMG_SIZE = 128
 
 data = []
 
