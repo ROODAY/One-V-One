@@ -60,9 +60,9 @@ def get_song_info(x):
 
 # count_v = CountVectorizer()
 feats_union = FeatureUnion([ 
-    # ('count', CountVectorizer(analyzer="word", ngram_range=(1,),strip_accents='unicode', max_features=MAX_FEATURES)),
-    ('tfidf', TfidfVectorizer(analyzer='word', sublinear_tf=True, strip_accents='unicode', ngram_range=(1, 3), max_features=MAX_FEATURES)),
-    ('info', FunctionTransformer(get_song_info, validate=False))
+    # ('count', CountVectorizer(analyzer="word", ngram_range=(1,1),strip_accents='unicode', max_features=MAX_FEATURES)),
+    ('tfidf', TfidfVectorizer(analyzer='word', sublinear_tf=True, strip_accents='unicode', ngram_range=(1, 1), max_features=MAX_FEATURES))
+    # ('info', FunctionTransformer(get_song_info, validate=False))
 ])
 
 data = feats_union.fit_transform(postprocess_lyrics)
