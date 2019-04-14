@@ -1,0 +1,62 @@
+{
+  "name": "SoundBooth",
+  "description": "The indie vocalist social network",
+  "keywords": [
+    "audio",
+    "social network",
+    "machine learning",
+    "React",
+    "Flask"
+  ],
+  "website": "https://onevone.club/",
+  "logo": "https://onevone.club/logo.png",
+  "repository": "https://github.com/ROODAY/One-V-One",
+  "env": {
+    "REACT_APP_API_KEY": {
+      "description": "Value generated from Firebase project."
+    },
+    "REACT_APP_AUTH_DOMAIN": {
+      "description": "Value generated from Firebase project."
+    },
+    "REACT_APP_DATABASE_URL": {
+      "description": "Value generated from Firebase project."
+    },
+    "REACT_APP_MESSAGING_SENDER_ID": {
+      "description": "Value generated from Firebase project."
+    },
+    "REACT_APP_PROJECT_ID": {
+      "description": "Value generated from Firebase project."
+    },
+    "REACT_APP_STORAGE_BUCKET": {
+      "description": "Value generated from Firebase project."
+    },
+    "FIREBASE_CREDENTIALS": {
+      "description": "JSON object of Firebase project service account."
+    },
+    "GOOGLE_CREDENTIALS": {
+      "description": "JSON object of Google Cloud project service account."
+    },
+    "REACT_APP_SPOTIFY_ID": {
+      "description": "Value generated from Spotify project."
+    },
+    "REACT_APP_SPOTIFY_SECRET": {
+      "description": "Value generated from Spotify project."
+    },
+    "REACT_APP_SERVER_KEY": {
+      "description": "Unique key for your instance.",
+      "generator": "secret"
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    },
+    {
+      "url": "heroku/python"
+    },
+    {
+      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git"
+    }
+  ],
+  "success_url": "/"
+}

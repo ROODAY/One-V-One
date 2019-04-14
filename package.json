@@ -1,6 +1,6 @@
 {
-  "name": "onevone",
-  "version": "0.1.0",
+  "name": "soundbooth",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@google-cloud/speech": "^2.3.1",

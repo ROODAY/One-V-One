@@ -60,6 +60,10 @@ def favicon():
 def manifest():
   return send_from_directory(app.template_folder, 'manifest.json', mimetype='application/json')
 
+@app.route('/logo.png') 
+def logo():
+  return send_from_directory(app.template_folder, 'logo.png', mimetype='image/png')
+
 @app.errorhandler(404)
 def page_not_found(e):
     return redirect('/404')
