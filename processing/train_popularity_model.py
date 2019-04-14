@@ -20,10 +20,9 @@ from sklearn.pipeline import FeatureUnion
 from sklearn.pipeline import Pipeline
 
 # Model
-# from sklearn.tree import DecisionTreeRegressor
-# from sklearn.ensemble import AdaBoostRegressor
 # from sklearn.SVM import SVR
-from sklearn.neural_network import MLPRegressor
+from sklearn.kernel_ridge import KernelRidge
+# from sklearn.neural_network import MLPRegressor
 # import xgboost as xgb
 
 data_dir = "../data"
@@ -80,7 +79,8 @@ print('---- data shape: {}'.format(data.shape))
 
 # Start training
 print("Start training and predict...")
-regressor = MLPRegressor(random_state=1998, max_iter=1000, early_stopping=True, alpha=0.0001, learning_rate='adaptive')
+regressor = KernelRidge(alpha=1)
+# regressor = MLPRegressor(random_state=1998, max_iter=1000, early_stopping=True, alpha=0.0001, learning_rate='adaptive')
 # regressor = xgb.XGBRegressor(objective="reg:linear", random_state=1998)
 
 
@@ -93,9 +93,9 @@ y_pred = model.predict(X_test)
 nMSE = mean_squared_error(y_test, y_pred) / np.mean(np.square(y_test))
 print("---- model achieved nMSE of {}".format(nMSE))
 
-y_pred = y_pred.tolist()
+# y_pred = y_pred.tolist()
 y_test = y_test.tolist()
-with open(os.path.join('../data/results/', 'nn_results.txt'), 'w') as f:
+with open(os.path.join('../data/raw/', 'results.txt'), 'w') as f:
     f.write('------------TRUTH vs. PREDICTS------------\n')
     f.writelines(['{} {}\n'.format(y_test[i], y_pred[i]) for i in range(len(y_test))])
 
