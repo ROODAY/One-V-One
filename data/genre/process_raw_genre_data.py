@@ -4,18 +4,19 @@
 
 import os
 import csv
+import pathlib
 import pandas as pd
 import numpy as np
+
+# Image library and plotting
+from PIL import Image
 import matplotlib
+matplotlib.use('Agg') # don't use Xwindows = no DISPLAY
 import matplotlib.pyplot as plt
-import pathlib
 
 # Our Audio processing library
 import librosa
 
-# Image library
-from PIL import Image
-matplotlib.use('Agg') # don't use Xwindows = no DISPLAY
 
 # Image mapping
 cmap = plt.get_cmap('inferno')
