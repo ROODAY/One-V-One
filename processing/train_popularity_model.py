@@ -62,11 +62,11 @@ def get_song_info(x):
 feats_union = FeatureUnion([ 
     ('count_feats', Pipeline([
         ('count', CountVectorizer(analyzer="word", ngram_range=(1,2),strip_accents='unicode', max_features=MAX_FEATURES)),
-        ('feat_sel', SelectPercentile(f_classif, percentile=5))
+        ('feat_sel', SelectPercentile(f_classif, percentile=10))
     ])),
     ('tfidf_feats', Pipeline([
         ('tfidf_v', TfidfVectorizer(analyzer='word', sublinear_tf=True, strip_accents='unicode', ngram_range=(1, 2), max_features=MAX_FEATURES)),
-        ('feat_sel', SelectPercentile(f_classif, percentile=5))
+        ('feat_sel', SelectPercentile(f_classif, percentile=10))
     ])),
     ('info', FunctionTransformer(get_song_info, validate=False))
 ])
