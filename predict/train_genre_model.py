@@ -134,15 +134,12 @@ avg_r = 0
 count = 0
 
 for train, test in kf.split(X):
-    history = model.fit(X[train], y[train], epochs=20, batch_size=128)
+    history = model.fit(X[train], y[train], epochs=20, batch_size=128, verbose=0)
 
     # Predict
     y_pred_conf = model.predict(X[test])
     y_pred = [np.argmax(row) for row in y_pred_conf]
 
-    # print(classification_report(y[test], y_pred))
-    avg_p += precision_score(y[test], y_pred, average='macro')
-    avg_r += recall_score(y[test], y_pred, average='macro')
-
-print('Average Precision is %f.' % (avg_p/10.0))
-print('Average Recall is %f.' % (avg_r/10.0))
+    print("Fold ", count)
+    print(classification_report(y[test], y_pred))
+    count+=1
