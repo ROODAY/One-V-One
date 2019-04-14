@@ -26,7 +26,7 @@ with open('label_map.txt', 'w') as f:
             print("Processing ", file_dir)
             im = Image.open(file_dir)
             imr = im.resize((int(IMG_SIZE), int(IMG_SIZE)), resample=Image.ANTIALIAS)
-            imgData = np.asarray(imr, dtype=np.uint8).reshape(int(IMG_SIZE), int(IMG_SIZE), 1)
+            imgData = np.asarray(imr, dtype=np.uint8).reshape(imr.size[0], imr.size[1], 1)
             imgData = imgData / 255 # normalize pixels
 
             # Label <-- one hot vector
