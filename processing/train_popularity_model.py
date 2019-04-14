@@ -23,8 +23,8 @@ from sklearn.pipeline import Pipeline
 # from sklearn.tree import DecisionTreeRegressor
 # from sklearn.ensemble import AdaBoostRegressor
 # from sklearn.SVM import SVR
-from sklearn.neural_network import MLPRegressor
-# import xgboost as xgb
+# from sklearn.neural_network import MLPRegressor
+import xgboost as xgb
 
 data_dir = "../data"
 data_lyrics_dir = data_dir + "/lyrics"
@@ -60,14 +60,14 @@ def get_song_info(x):
 
 # count_v = CountVectorizer()
 feats_union = FeatureUnion([ 
-    # ('count_feats', Pipeline([
-        # ('count', CountVectorizer(analyzer="word", ngram_range=(1,2),strip_accents='unicode', max_features=MAX_FEATURES)),
-        # ('feat_sel', SelectPercentile(f_classif, percentile=10))
-    # ])),
-    ('tfidf_feats', Pipeline([
-        ('tfidf_v', TfidfVectorizer(analyzer='word', sublinear_tf=True, strip_accents='unicode', ngram_range=(1, 2), max_features=MAX_FEATURES)),
+    ('count_feats', Pipeline([
+        ('count', CountVectorizer(analyzer="word", ngram_range=(1,2),strip_accents='unicode', max_features=MAX_FEATURES)),
         ('feat_sel', SelectPercentile(f_classif, percentile=10))
     ])),
+    # ('tfidf_feats', Pipeline([
+        # ('tfidf_v', TfidfVectorizer(analyzer='word', sublinear_tf=True, strip_accents='unicode', ngram_range=(1, 2), max_features=MAX_FEATURES)),
+        # ('feat_sel', SelectPercentile(f_classif, percentile=10))
+    # ])),
     ('info', FunctionTransformer(get_song_info, validate=False))
 ])
 
@@ -80,12 +80,12 @@ print('---- data shape: {}'.format(data.shape))
 
 # Start training
 print("Start training and predict...")
-regressor = MLPRegressor(random_state=1998, max_iter=1000, early_stopping=True, alpha=0.0001, learning_rate='adaptive')
-# regressor = xgb.XGBRegressor(objective="reg:linear", random_state=1998)
+# regressor = MLPRegressor(random_state=1998, max_iter=1000, early_stopping=True, alpha=0.0001, learning_rate='adaptive')
+regressor = xgb.XGBRegressor(objective="reg:linear", random_state=1998)
 
 
 # Saving model trained on data
-X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.3)
+X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.3, random_state=2019)
 model = regressor.fit(X_train, y_train)
 
 # Predict
@@ -95,7 +95,7 @@ print("---- model achieved nMSE of {}".format(nMSE))
 
 y_pred = y_pred.tolist()
 y_test = y_test.tolist()
-with open(os.path.join('../data/results/', 'nn_results.txt'), 'w') as f:
+with open(os.path.join('../data/results/', 'xgb_results.txt'), 'w') as f:
     f.write('------------TRUTH vs. PREDICTS------------\n')
     f.writelines(['{} {}\n'.format(y_test[i], y_pred[i]) for i in range(len(y_test))])
 
