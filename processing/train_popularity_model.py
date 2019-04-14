@@ -23,8 +23,8 @@ from sklearn.pipeline import Pipeline
 # from sklearn.tree import DecisionTreeRegressor
 # from sklearn.ensemble import AdaBoostRegressor
 # from sklearn.SVM import SVR
-# import xgboost as xgb
-from sklearn.neural_network import MLPRegressor
+# from sklearn.neural_network import MLPRegressor
+import xgboost as xgb
 
 data_dir = "../data"
 data_lyrics_dir = data_dir + "/lyrics"
@@ -83,8 +83,8 @@ with open(os.path.join(trained_dir, 'popularity_fselector.pkl'), 'wb') as f:
 
 # Start training
 print("Start training and predict...")
-regressor = MLPRegressor(random_state=1998, max_iter=1000, early_stopping=True, alpha=0.0001, learning_rate='adaptive')
-# regressor = xgb.XGBRegressor(objective="reg:linear", random_state=1998)
+# regressor = MLPRegressor(random_state=1998, max_iter=1000, early_stopping=True, alpha=0.0001, learning_rate='adaptive')
+regressor = xgb.XGBRegressor(objective="reg:linear", random_state=1998)
 
 
 # Saving model trained on data
