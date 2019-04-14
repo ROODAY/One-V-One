@@ -71,8 +71,8 @@ feats_union = FeatureUnion([
 data = feats_union.fit_transform(postprocess_lyrics, labels)
 
 # *** Save TRAINED Feature Extractor ***
-with open(os.path.join(trained_dir, 'popularity_funion.pkl'), 'wb') as f:
-    pickle.dump(feats_union, f)
+# with open(os.path.join(trained_dir, 'popularity_funion.pkl'), 'wb') as f:
+    # pickle.dump(feats_union, f)
 
 print('---- data shape: {}'.format(data.shape))
 
