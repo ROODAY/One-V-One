@@ -1,7 +1,7 @@
 # For more details about audio processing see https://github.com/zwaltman/keyedin
 
 import librosa
-from keyedin import pitchdistribution as pd, classifiers
+from .keyedin import pitchdistribution as pd, classifiers
 
 def preprocess(audio_file, use):
     if use == 'popularity':
