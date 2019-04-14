@@ -92,8 +92,7 @@ with open(os.path.join('../data/results/', 'results.txt'), 'w') as f:
                   for i in range(len(y_test))])
 
 # *** Save TRAINED model ***
-with open(os.path.join(trained_dir, 'genre_model.pkl'), 'wb') as f:
-    pickle.dump(model, f)
+model.save(os.path.join(trained_dir, 'genre_model.h5'))
 
 print('Starting 10-Fold validation...')
 kf = KFold(n_splits=10)
