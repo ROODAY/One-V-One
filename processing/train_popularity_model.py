@@ -95,7 +95,7 @@ print("---- model achieved nMSE of {}".format(nMSE))
 
 # y_pred = y_pred.tolist()
 y_test = y_test.tolist()
-with open(os.path.join('../data/results/', 'xgb_results.txt'), 'w') as f:
+with open(os.path.join('../data/raw/', 'results.txt'), 'w') as f:
     f.write('------------TRUTH vs. PREDICTS------------\n')
     f.writelines(['{} {}\n'.format(y_test[i], y_pred[i]) for i in range(len(y_test))])
 
