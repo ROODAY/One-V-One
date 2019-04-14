@@ -24,8 +24,10 @@ with open('label_map.txt', 'w') as f:
         for file in files:
             file_dir = genre_dir + file
             print("Processing ", file_dir)
-            im = Image.open(file_dir)
-            imgData = np.asarray(imr, dtype=np.uint8).reshape(IMG_SIZE, IMG_SIZE, 4)
+            im = Image.open(file_dir).convert('L')
+
+            # 2D Array --> Future can try 3D with RGB colors in spectrogram
+            imgData = np.asarray(im, dtype=np.uint8).reshape(IMG_SIZE, IMG_SIZE, 1)
             imgData = imgData / 255 # normalize pixels
 
             # Label <-- one hot vector
