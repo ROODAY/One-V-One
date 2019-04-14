@@ -31,8 +31,9 @@ genre_data_file = '../genre_info.csv'
 
 
 # Save each spectrogram --> for use with CNN
-print('Starting audio conversion into spectrograms')
+print('Starting audio conversion into spectrograms...')
 for g in genres:
+    print('{} ...'.format(g))
     pathlib.Path(os.path.join(img_data_path, g)).mkdir(parents=True, exist_ok=True)     
     for file_name in os.listdir(os.path.join(MIR_genres_path, g)):
         song_name = os.path.join(MIR_genres_path, g, file_name)
@@ -41,6 +42,7 @@ for g in genres:
         plt.axis('off')
         plt.savefig(os.path.join(img_data_path, g, file_name[:-3].replace(".", "")+'.png'))
         plt.clf()
+print('Done constructing spectrograms.')
 
 if not os.path.isfile(genre_data_file):
     with open(genre_data_file, 'a', newline='') as f:
