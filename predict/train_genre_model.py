@@ -105,7 +105,7 @@ for train, test in kf.split(X):
     history = model.fit(X[train], y[train], epochs=20, batch_size=128)
 
     # Predict
-    y_pred = fitted_model.predict(X[test])
+    y_pred = model.predict(X[test])
 
     # print(classification_report(y[test], y_pred))
     avg_p += precision_score(y[test], y_pred, average='macro')
