@@ -5,6 +5,7 @@ data/raw/__pycache__
 predict/__pycache__
 predict/preprocess/__pycache__
 predict/preprocess/keyedin/__pycache__
+data/genre/img_data
 
 # Logs
 logs
