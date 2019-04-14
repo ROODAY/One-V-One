@@ -51,7 +51,7 @@ postprocess_lyrics = np.array(postprocess_lyrics)
 data = data.drop("lyrics", axis=1)
 
 print("Starting feature extraction...")
-MAX_FEATURES = 10000
+MAX_FEATURES = 5000
 
 def get_song_info(x):
     return data.values
@@ -62,8 +62,8 @@ feats_union = FeatureUnion([
         # ('feat_sel', SelectPercentile(f_classif, percentile=10))
     # ])),
     ('tfidf_feats', Pipeline([
-        ('tfidf_v', TfidfVectorizer(analyzer='word', sublinear_tf=True, strip_accents='unicode', ngram_range=(1, 3), max_features=MAX_FEATURES)),
-        ('feat_sel', SelectPercentile(f_classif, percentile=10))
+        ('tfidf_v', TfidfVectorizer(analyzer='word', sublinear_tf=True, strip_accents='unicode', ngram_range=(1, 1), max_features=MAX_FEATURES)),
+        ('feat_sel', SelectPercentile(f_classif, percentile=60))
     ])),
     ('info', FunctionTransformer(get_song_info, validate=False))
 ])
@@ -92,13 +92,13 @@ print("---- model achieved nMSE of {}".format(nMSE))
 
 y_pred = y_pred.tolist()
 y_test = y_test.tolist()
-with open(os.path.join('../data/results/', 'krr_results.txt'), 'w') as f:
+with open(os.path.join('../data/raw/', 'results.txt'), 'w') as f:
     f.write('------------TRUTH vs. PREDICTS------------\n')
     f.writelines(['{} {}\n'.format(y_test[i], y_pred[i]) for i in range(len(y_test))])
 
 # *** Saved TRAINED model ***
-with open(os.path.join(trained_dir, 'popularity_model.pkl'), 'wb') as f:
-    pickle.dump(model, f)
+# with open(os.path.join(trained_dir, 'popularity_model.pkl'), 'wb') as f:
+    # pickle.dump(model, f)
 
 # Start Validation
 print("Starting 10-Fold validation...")
