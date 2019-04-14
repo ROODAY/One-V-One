@@ -58,8 +58,8 @@ def get_song_info(x):
 
 feats_union = FeatureUnion([ 
     ('count_feats', Pipeline([
-        ('count', CountVectorizer(analyzer="word", ngram_range=(1,3),strip_accents='unicode', max_features=MAX_FEATURES)),
-        ('feat_sel', SelectPercentile(f_classif, percentile=50))
+        ('count', CountVectorizer(analyzer="word", ngram_range=(1,1),strip_accents='unicode', max_features=MAX_FEATURES)),
+        ('feat_sel', SelectPercentile(f_classif, percentile=20))
     ])),
     # ('tfidf_feats', Pipeline([
         # ('tfidf_v', TfidfVectorizer(analyzer='word', sublinear_tf=True, strip_accents='unicode', ngram_range=(1, 1), max_features=MAX_FEATURES)),
@@ -71,8 +71,8 @@ feats_union = FeatureUnion([
 data = feats_union.fit_transform(postprocess_lyrics, labels)
 
 # *** Save TRAINED Feature Extractor ***
-# with open(os.path.join(trained_dir, 'popularity_funion.pkl'), 'wb') as f:
-    # pickle.dump(feats_union, f)
+with open(os.path.join(trained_dir, 'popularity_funion.pkl'), 'wb') as f:
+    pickle.dump(feats_union, f)
 
 print('---- data shape: {}'.format(data.shape))
 
@@ -92,13 +92,13 @@ print("---- model achieved nMSE of {}".format(nMSE))
 
 y_pred = y_pred.tolist()
 y_test = y_test.tolist()
-with open(os.path.join('../data/raw/', 'results.txt'), 'w') as f:
+with open(os.path.join('../data/results/', 'results.txt'), 'w') as f:
     f.write('------------TRUTH vs. PREDICTS------------\n')
     f.writelines(['{} {}\n'.format(y_test[i], y_pred[i]) for i in range(len(y_test))])
 
 # *** Saved TRAINED model ***
-# with open(os.path.join(trained_dir, 'popularity_model.pkl'), 'wb') as f:
-    # pickle.dump(model, f)
+with open(os.path.join(trained_dir, 'popularity_model.pkl'), 'wb') as f:
+    pickle.dump(model, f)
 
 # Start Validation
 print("Starting 10-Fold validation...")
