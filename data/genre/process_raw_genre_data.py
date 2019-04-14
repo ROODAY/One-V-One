@@ -64,7 +64,7 @@ with open(genre_data_file, 'a', newline='') as f:
 
             # Different audio features extracted using librosa
             chroma_stft = librosa.feature.chroma_stft(y=y, sr=sr)
-            rmse = librosa.feature.rmse(y=y, sr=sr)
+            rmse = librosa.feature.rmse(y=y)
             spec_cent = librosa.feature.spectral_centroid(y=y, sr=sr)
             spec_bw = librosa.feature.spectral_bandwidth(y=y, sr=sr)
             rolloff = librosa.feature.spectral_rolloff(y=y, sr=sr)
