@@ -76,7 +76,7 @@ data = feats_union.fit_transform(postprocess_lyrics, labels)
     # pickle.dump(feats_union, f)
 
 selector = SelectPercentile(f_classif, percentile=10)
-selector.fit_transform(data)
+selector.fit_transform(data, labels)
 
 print('---- data shape: {}'.format(data.shape))
 
