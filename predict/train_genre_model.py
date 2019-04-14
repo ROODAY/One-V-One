@@ -72,10 +72,10 @@ print('Fitting model....')
 model.compile(optimizer='adam',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
-fitted_model = model.fit(X_train, y_train, epochs=20, batch_size=128)
+history = model.fit(X_train, y_train, epochs=20, batch_size=128)
 
 # Show results
-y_pred = fitted_model.predict(X_test)
+y_pred = model.predict(X_test)
 precision = precision_score(y_test, y_pred, average='macro')
 recall = recall_score(y_test, y_pred, average='macro')
 f1_score = 2 * (precision * recall) / (precision + recall)
@@ -102,7 +102,7 @@ avg_r = 0
 count = 0
 
 for train, test in kf.split(X):
-    fitted_model = model.fit(X[train], y[train], epochs=20, batch_size=128)
+    history = model.fit(X[train], y[train], epochs=20, batch_size=128)
 
     # Predict
     y_pred = fitted_model.predict(X[test])
