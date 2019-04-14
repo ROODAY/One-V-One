@@ -140,6 +140,6 @@ for train, test in kf.split(X):
     y_pred_conf = model.predict(X[test])
     y_pred = [np.argmax(row) for row in y_pred_conf]
 
-    print("Fold ", count)
+    print("Fold {} -----------------------------".format(count))
     print(classification_report(y[test], y_pred))
     count+=1
