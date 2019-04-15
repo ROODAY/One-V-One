@@ -111,7 +111,7 @@ def getPrediction():
     return 'Invalid API key: {}'.format(key),401
 
 @app.route('/api/repredict', methods=['POST'])
-def runPredictions():
+def rePredict():
   key = request.args.get('key')
   if key == apiKey:
     postsRef = db.reference('posts')
@@ -167,4 +167,4 @@ def getSpotifyOAuthToken():
 if __name__ == "__main__":
   app.run(host='0.0.0.0')
   
-print("we alive")
+print("SoundBooth is running")

@@ -6,7 +6,7 @@ def get_song_info(x):
     return [row[:-1] for row in x]
 
 def process_lyrics_col(x):
-    print(x)
+    #print(x)
     postprocess_lyrics = lp.preprocess_data([row[-1] for row in x])
     postprocess_lyrics = np.array(postprocess_lyrics)
     return postprocess_lyrics

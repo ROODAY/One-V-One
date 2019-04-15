@@ -105,8 +105,7 @@ def preprocess_data(x, output_file=None):
     # Credits to Lab 1 in CS4242 Course NUS
     try:
         if not os.path.isfile('../data/lyrics/word_stats.txt'):
-            print("The number of unique words in data set is %i." %
-                len(words_stat.keys()))
+            #print("The number of unique words in data set is %i." % len(words_stat.keys()))
             lowTF_words = set()
             with open(os.path.join('../data/lyrics', 'words_stats.txt'), 'w') as f:
                 f.write('TF\tDF\tWORD\n')
@@ -115,7 +114,7 @@ def preprocess_data(x, output_file=None):
                                     for m in stat[0:2]]) + '\t' + word + '\n')
                     if stat[0] < 2:
                         lowTF_words.add(word)
-            print("The number of low frequency words is %d." % len(lowTF_words))
+            #print("The number of low frequency words is %d." % len(lowTF_words))
     except Exception as e:
         print(e)
     return lyrics_list

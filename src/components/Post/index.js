@@ -14,7 +14,7 @@ import { withAuthorization } from '../Session';
 
 import './Post.css'
 
-const timer = 5 * 1000;
+const timer = 10 * 1000;
 
 const INITIAL_STATE = {
   title: '',
