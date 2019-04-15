@@ -71,6 +71,6 @@ typings/
 
 # Python
 venv/
-__pycache__/
+**/__pycache__/
 *.tmp.webm
 *.tmp.wav

@@ -4,7 +4,8 @@ The premier social media platform for indie vocalists to share and discover easy
 
 ## Installation
 
-SoundBooth is built on top of React (front-end) and Flask (back-end), and so has two sets of dependencies. SoundBooth also requires [ffmpeg](http://ffmpeg.org/download.html) and various environment variables. For a simpler installation/deployment, consider this one-click deploy to Heroku: [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+SoundBooth is built on top of React (front-end) and Flask (back-end), and so has two sets of dependencies. SoundBooth also requires [ffmpeg](http://ffmpeg.org/download.html) and various environment variables. For a simpler installation/deployment, consider this one-click deploy to Heroku:  
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 Regardless of your choice, you'll need to get API credentials for Firebase, Google Cloud, and Spotify. Create a [Firebase](https://console.firebase.google.com) project, then save the config information and download a service account JSON key. Then create a [Google Cloud](https://console.developers.google.com) project, enable the Speech to Text API, and download a service account JSON key. Finally, create a [Spotify](https://developer.spotify.com/dashboard) project and keep track of your Client ID and Secret. You'll need all these values later to fill out environment variables.
 

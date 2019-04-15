@@ -32,10 +32,15 @@ class PostScroller extends Component {
         if (snapshot.val()) {
           posts = Object.values(snapshot.val())
                   .filter(post => post.genre === this.props.genre)
-                  .sort((a, b) => {
-                    const aScore = a.hotness * Math.max(Math.log10(a.rating || 1), 1)
-                    const bScore = b.hotness * Math.max(Math.log10(b.rating || 1), 1)
-                    return (aScore > bScore) ? 1 : -1
+                  .map(post => {
+                    const adjustmentFactor = Math.max(Math.log10(Math.abs(post.rating) || 1), 1);
+                    return {
+                      ...post,
+                      hotness: post.rating > 0 ? Math.round(post.hotness*adjustmentFactor) : Math.round(post.hotness/adjustmentFactor)
+                    }
+                  })
+                  .sort((a,b) => {
+                    return a.hotness < b.hotness ? 1 : -1
                   });
         }
 
