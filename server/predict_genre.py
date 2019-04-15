@@ -30,7 +30,6 @@ with open(os.path.join(trained_dir, encoder_file), 'rb') as f:
 with open(os.path.join(trained_dir, scaler_file), 'rb') as f:   
     scaler = pickle.load(f)
 
-print(os.path.join(trained_dir, model_file))
 model = load_model(os.path.join(trained_dir, model_file), {'f1': f1})
 
 def predict(audio_file):
