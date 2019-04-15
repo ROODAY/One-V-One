@@ -34,7 +34,7 @@ print('---- orig data shape: {}'.format(X.shape))
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.3, random_state=1998)
 
-model = models.load_model(os.path.join(trained_dir, 'cnn_genre_model.h5'))
+model = models.load_model(os.path.join(trained_dir, 'cnn_genre_model.h5'), custom_objects={'f1': f1})
 # Get detailed classification scores
 y_pred_conf = model.predict(X_test)
 y_pred = np.argmax(y_pred_conf, axis=1)
