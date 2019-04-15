@@ -59,13 +59,37 @@ REACT_APP_SPOTIFY_SECRET=<GET_FROM_SPOTIFY>
 GOOGLE_CREDENTIALS={"type":"service_account",...}
 ```
 
-## Train Classifiers
+## Train Popularity Predictor
 
-To extract features yourself:
-1. Download MXM_lyrics_dataset
-> https://labrosa.ee.columbia.edu/millionsong/musixmatch
-2. Download Genre dataset...
-Place into data/raw/ folder.
+1. Download song_info.csv and place into data/raw/
+> https://www.kaggle.com/edalrami/19000-spotify-songs#song_info.csv
+2. Start lyrics preprocessing
+```
+$ python data/lyrics/preprocess_lyric_data.py
+```
+3. Start XGBoost training
+```
+$ python server/train_popularity_model.py
+```
+4. Models are saved in data/trained
+
+## Train Genre Classifier
+
+1. Download genres.tar.gz and place into data/raw/
+> http://opihi.cs.uvic.ca/sound/genres.tar.gz
+2. Unzip the tar.gz file inside data/raw/ 
+```
+$ tar xvzf file.tar.gz
+```
+2. Start genre audio preprocessing
+```
+$ python data/genre/preprocess_genre_data.py
+```
+3. Start Neural Network Training
+```
+$ python server/train_NN_genre_model.py
+```
+4. Models are saved in data/trained
 
 ## Running
 
@@ -79,6 +103,11 @@ gunicorn --chdir server -w 4 app:app # run a WSGI server in front of the Flask a
 The app should then be available on http://localhost:8000.
 
 For front-end development, run `yarn start`, which starts a development server on http://localhost:3000. This server has hot-reloading enabled, so you can focus on making changes. However, it won't start the Flask server, and so you won't be able to test any changes to the classifiers or server. To see those changes, have a gunicorn server running in one terminal and use another terminal to run `yarn build` whenever you have changes to the front-end. You'll have to restart the gunicorn server if changes are made to the back-end as hot-reloading is not configured for it, but feel free to submit a pull request!
+
+## References
+1. https://towardsdatascience.com/music-genre-classification-with-python-c714d032f0d8
+2. https://towardsdatascience.com/song-popularity-predictor-1ef69735e380
+3. https://github.com/carl03q/AudioClassifier/blob/master
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
