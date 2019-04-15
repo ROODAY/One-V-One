@@ -42,6 +42,8 @@ with open(os.path.join(data_dir, X_file), 'rb') as f:
 with open(os.path.join(data_dir, y_file), 'rb') as f:
     y = pickle.load(f)
 
+print(y[:10])
+
 print('---- orig data shape: {}'.format(X.shape))
 
 # Set up Data
@@ -88,8 +90,8 @@ test_loss, test_acc = model.evaluate(X_test, y_test)
 
 # Get detailed classification scores
 y_pred_conf = model.predict(X_test)
-y_pred = [np.argmax(row) for row in y_pred_conf]
-y_test = y_test.tolist()
+y_pred = np.argmax(y_pred_conf, axis=1)
+y_test = np.argmax(y_test, axis=1)
 
 with open(os.path.join('../data/results/', 'results.txt'), 'w') as f:
     f.write('------------TRUTH vs. PREDICTS------------\n')
