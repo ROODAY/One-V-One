@@ -1,11 +1,7 @@
 # Raw data
-data/raw/
-data/__pycache__
-data/raw/__pycache__
-predict/__pycache__
-predict/preprocess/__pycache__
-predict/preprocess/keyedin/__pycache__
-data/genre/img_data
+data/**/*.csv
+data/**/*.txt
+data/**/*.png
 
 # Credentials
 *.cred.json
@@ -75,6 +71,6 @@ typings/
 
 # Python
 venv/
-__pycache__/
+**/__pycache__/
 *.tmp.webm
 *.tmp.wav

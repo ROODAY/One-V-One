@@ -15,3 +15,7 @@ with open(os.path.join(trained_dir, encoder_file), 'rb') as f:
 with open(os.path.join(trained_dir, scaler_file), 'rb') as f:   
     scaler = pickle.load(f)
 model = load_model(os.path.join(trained_dir, model_file))
+
+def predict(audio_file):
+    features = audio_preprocesser.preprocess_for_genre(audio_file)
+    X = scaler.transform(np.array(features), dtype=float)

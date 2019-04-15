@@ -7,6 +7,7 @@ import matplotlib
 
 # Preprocessers
 import preprocess.lyrics_preprocesser as lp
+from tools import get_song_info, process_lyrics_col
 
 # Sklearn helpers
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
@@ -45,13 +46,7 @@ data = data.values.tolist()
 print("Starting feature extraction...")
 MAX_FEATURES = 10000
 
-def get_song_info(x):
-    return [row[:-1] for row in x]
 
-def process_lyrics_col(x):
-    postprocess_lyrics = lp.preprocess_data([row[-1] for row in x])
-    postprocess_lyrics = np.array(postprocess_lyrics)
-    return postprocess_lyrics
 
 feats_union = FeatureUnion([ 
     ('count_feats', Pipeline([
