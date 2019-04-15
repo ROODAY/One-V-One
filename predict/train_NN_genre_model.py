@@ -86,7 +86,7 @@ print(report)
 
 y_test = y_test.tolist()
 
-with open(os.path.join('../data/results/', 'results.txt'), 'w') as f:
+with open(os.path.join('../data/results/', 'nn_results.txt'), 'w') as f:
     f.write('------------TRUTH vs. PREDICTS------------\n')
     f.writelines(['{} {}\n'.format(y_test[i], y_pred[i])
                   for i in range(len(y_test))])

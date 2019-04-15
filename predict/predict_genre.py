@@ -40,7 +40,7 @@ y_pred_conf = model.predict(X_test)
 y_pred = np.argmax(y_pred_conf, axis=1)
 y_test = np.argmax(y_test, axis=1)
 
-with open(os.path.join('../data/results/', 'results.txt'), 'w') as f:
+with open(os.path.join('../data/results/', 'cnn_results.txt'), 'w') as f:
     f.write('------------TRUTH vs. PREDICTS------------\n')
     f.writelines(['{} {}\n'.format(y_test[i], y_pred[i])
                   for i in range(len(y_test))])
