@@ -13,10 +13,8 @@ import pandas as pd
 import numpy as np
 
 # Sklearn helpers
-from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.model_selection import KFold
 from sklearn.model_selection import train_test_split
-from sklearn.pipeline import FeatureUnion, Pipeline
 from sklearn.metrics import classification_report, precision_score, recall_score
 
 # Keras
