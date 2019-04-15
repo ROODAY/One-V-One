@@ -50,7 +50,8 @@ def get_song_info(x):
     return x[:][:-1]
 
 def process_lyrics_col(x):
-    print(x[:][-1])
+    print('lyrics')
+    print(x)
     postprocess_lyrics = lp.preprocess_data(x[:][-1])
     postprocess_lyrics = np.array(postprocess_lyrics)
     return postprocess_lyrics
