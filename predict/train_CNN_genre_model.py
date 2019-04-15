@@ -42,8 +42,6 @@ with open(os.path.join(data_dir, X_file), 'rb') as f:
 with open(os.path.join(data_dir, y_file), 'rb') as f:
     y = pickle.load(f)
 
-print(y[:10])
-
 print('---- orig data shape: {}'.format(X.shape))
 
 # Set up Data
