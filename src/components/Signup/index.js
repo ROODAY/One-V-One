@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Loader from '../Loader'
+import {
+  Form,
+  Button,
+  Container,
+  Row,
+  Col
+} from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
-import { withFirebase } from '../Firebase';
 import { compose } from 'recompose';
 
-import './Signup.css';
 import * as ROUTES from '../../constants/routes';
+import Loader from '../Loader'
+import { withFirebase } from '../Firebase';
+
+import './Signup.css';
 
 const INITIAL_STATE = {
   username: '',
@@ -56,7 +59,7 @@ class SignupBase extends Component {
             ...userFields,
             username,
             email,
-          })
+          });
       })
       .then(() => {
         return this.props.firebase.doSignOut()
@@ -95,7 +98,7 @@ class SignupBase extends Component {
     return (
       <Container>
         <Loader visible={this.state.showLoader} />
-        <Row className="justify-content-md-center">
+        <Row className="justify-content-center">
           <Col md="auto">
             <Form onSubmit={this.onSubmit}>
               <h1>Sign up</h1>

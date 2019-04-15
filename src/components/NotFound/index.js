@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Nav from 'react-bootstrap/Nav'
+import {Nav} from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap';
-import * as ROUTES from '../../constants/routes';
 
+import * as ROUTES from '../../constants/routes';
 import './NotFound.css'
 
 class NotFound extends Component {

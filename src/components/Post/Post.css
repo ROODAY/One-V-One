@@ -1,0 +1,7 @@
+#rec {
+  width: 16px;
+  height: 16px;
+  background: red;
+  display: inline-block;
+  border-radius: 100%;
+}

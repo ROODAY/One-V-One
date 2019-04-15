@@ -1,0 +1,20 @@
+.landing-wrapper {
+  position: absolute;
+  width: 100%;
+}
+
+.padded-testimony {
+  padding: 15px;
+  max-width: 20em;
+  display: flex;
+  align-items: flex-start;
+}
+
+.margin-heading {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.grow-card {
+  flex-grow: 1;
+}

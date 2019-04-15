@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import {Typeahead} from 'react-bootstrap-typeahead';
-import Loader from '../Loader';
+import {AsyncTypeahead} from 'react-bootstrap-typeahead';
+import axios from 'axios';
 
+import Loader from '../Loader';
 import { withFirebase } from '../Firebase';
+
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 const INITIAL_STATE = {
   bio: '',
   artists: [],
+  artistsLoading: false,
+  artistsOptions: [],
+  genresLoading: false,
+  genresOptions: [],
   genres: [],
   error: null,
   success: false,
@@ -58,7 +64,17 @@ class ProfileForm extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
   render() {
-    const { bio, artists, genres, error, success } = this.state;
+    const { 
+      bio, 
+      artistsLoading, 
+      artistsOptions,
+      artists, 
+      genresLoading, 
+      genresOptions,
+      genres, 
+      error, 
+      success 
+    } = this.state;
 
     return (
       <Form onSubmit={this.onSubmit}>
@@ -74,7 +90,8 @@ class ProfileForm extends Component {
         </Form.Group>
         <Form.Group controlId="artists">
           <Form.Label>Favorite Artists</Form.Label>
-          <Typeahead
+          <AsyncTypeahead
+            isLoading={artistsLoading}
             id="artists"
             multiple
             name="artists"
@@ -82,12 +99,23 @@ class ProfileForm extends Component {
             onChange={(selected) =>{
               this.setState({artists: selected});
             }}
-            options={["john", "elton", "candy", "man", "ooga", "booga"]}
+            onSearch={query => {
+              this.setState({artistsLoading: true});
+              axios.get(`/api/getArtists?q=${query}&key=${process.env.REACT_APP_SERVER_KEY}`)
+              .then(resp => {
+                this.setState({
+                  artistsLoading: false,
+                  artistsOptions: resp.data.artists.items.map(artist => artist.name),
+                });
+              })
+            }}
+            options={artistsOptions}
           />
         </Form.Group>
         <Form.Group controlId="genres">
           <Form.Label>Favorite Genres</Form.Label>
-          <Typeahead
+          <AsyncTypeahead
+            isLoading={genresLoading}
             id="genres"
             multiple
             name="genres"
@@ -95,7 +123,17 @@ class ProfileForm extends Component {
             onChange={(selected) =>{
               this.setState({genres: selected});
             }}
-            options={["john", "elton", "candy", "man", "ooga", "booga"]}
+            onSearch={query => {
+              this.setState({genresLoading: true});
+              axios.get(`/api/getGenres?key=${process.env.REACT_APP_SERVER_KEY}`)
+              .then(resp => {
+                this.setState({
+                  genresLoading: false,
+                  genresOptions: resp.data.genres.map(genre => genre.charAt(0).toUpperCase() + genre.slice(1)),
+                });
+              })
+            }}
+            options={genresOptions}
           />
         </Form.Group>
 
