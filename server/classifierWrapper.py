@@ -1,5 +1,7 @@
 import random
 
+from predict_popularity import predict as P_Predict
+
 GENRES = [
   "Blues", 
   "Classical", 
@@ -13,8 +15,8 @@ GENRES = [
   "Pop"
 ]
 
-def predictHotness(audioFileName, transcripts):
+def runPrediction(audioFileName, transcripts):
   return {
-    'hotness': random.randint(1,101),
+    'hotness': P_Predict(audioFileName, transcripts[0]['text'] or ''),
     'genre': random.choice(GENRES)
   }

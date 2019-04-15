@@ -4,7 +4,7 @@ from google.cloud.speech import enums, types
 from google.oauth2 import service_account
 from dotenv import load_dotenv
 
-from ml import predictHotness
+from classifierWrapper import runPrediction
 
 import requests
 import io
@@ -64,6 +64,10 @@ def manifest():
 def logo():
   return send_from_directory(app.template_folder, 'logo.png', mimetype='image/png')
 
+@app.route('/Writeup.pdf') 
+def writeup():
+  return send_from_directory(app.template_folder, 'Writeup.pdf', mimetype='application/pdf')
+
 @app.errorhandler(404)
 def page_not_found(e):
     return redirect('/404')
@@ -91,7 +95,7 @@ def scorePost(audioUrl, transcripts=None):
       res['transcripts'] = [{'text': alternative.transcript, 'conf': alternative.confidence} for result in response.results for alternative in result.alternatives]
       transcripts = res['transcripts']
 
-  res['prediction'] = predictHotness(fileID + '.tmp.wav', transcripts)
+  res['prediction'] = runPrediction(fileID + '.tmp.wav', transcripts)
 
   os.remove(fileID + '.tmp.wav')
   os.remove(fileID + '.tmp.webm')
@@ -162,3 +166,4 @@ def getSpotifyOAuthToken():
 
 if __name__ == "__main__":
   app.run(host='0.0.0.0')
+  print("we alive")

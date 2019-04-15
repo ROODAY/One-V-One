@@ -112,8 +112,8 @@ class Landing extends Component {
             </Contributor>
         </Flex>
         <Flex is="footer" alignItems="center" p={3}>
-            <NavLink children="Source Code" href="#"/>
-            <NavLink children="Writeup" href="#"/>
+            <NavLink children="Source Code" href="https://github.com/ROODAY/One-V-One"/>
+            <NavLink children="Writeup" href="/Writeup.pdf"/>
             <Small color="grey" ml="auto">© NUS Ventures, 2019</Small>
         </Flex>
       </Provider>

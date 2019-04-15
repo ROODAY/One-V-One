@@ -17,37 +17,40 @@ class PostScroller extends Component {
       posts: [],
       postScores: {},
       hasMoreItems: true,
+      loading: false,
       nextHref: null
     };
   }
 
   loadItems(page) {
-    this.props.firebase.user(this.props.firebase.auth.currentUser.uid).on('value', snapshot => {
-      this.setState({
-        postScores: snapshot.val().postScores || {}
-      });
+    if (!this.state.loading) {
+      this.setState({loading: true});
+      this.props.firebase.user(this.props.firebase.auth.currentUser.uid).on('value', snapshot => {
+        this.setState({
+          postScores: snapshot.val().postScores || {}
+        });
 
-      this.props.firebase.posts().on('value', snapshot => {
-        var posts = [];
-        if (snapshot.val()) {
-          posts = Object.values(snapshot.val())
-                  .filter(post => post.genre === this.props.genre)
-                  .map(post => {
-                    const adjustmentFactor = Math.max(Math.log10(Math.abs(post.rating) || 1), 1);
-                    return {
-                      ...post,
-                      hotness: post.rating > 0 ? Math.round(post.hotness*adjustmentFactor) : Math.round(post.hotness/adjustmentFactor)
-                    }
-                  })
-                  .sort((a,b) => {
-                    return a.hotness < b.hotness ? 1 : -1
-                  });
-        }
+        this.props.firebase.posts().on('value', snapshot => {
+          var posts = [];
+          if (snapshot.val()) {
+            posts = Object.values(snapshot.val())
+                    .filter(post => post.genre === this.props.genre)
+                    .map(post => {
+                      const adjustmentFactor = Math.max(Math.log10(Math.abs(post.rating) || 1), 1);
+                      return {
+                        ...post,
+                        hotness: post.rating > 0 ? Math.round(post.hotness*adjustmentFactor) : Math.round(post.hotness/adjustmentFactor)
+                      }
+                    })
+                    .sort((a,b) => {
+                      return a.hotness < b.hotness ? 1 : -1
+                    });
+          }
 
-        this.setState({posts});
+          this.setState({posts, hasMoreItems: false, loading: false});
+        });
       });
-    })
-    this.setState({ hasMoreItems: false});
+    }
   }
 
   render() {
