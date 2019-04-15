@@ -10,4 +10,6 @@ funion_file = 'popularity_funion.pkl'
 model = pickle.load(os.path.join())
 
 def predict(audio_file, lyrics):
-    pass
+    audio_mode, key, tempo = audio_preprocesser.preprocess_for_popularity(audio_file)
+    lyrics = 
+    model.predict()

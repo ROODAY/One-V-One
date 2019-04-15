@@ -39,25 +39,23 @@ data = data.dropna(axis=0, how='any')
 y = copy.deepcopy(data.song_popularity)
 
 data = data.drop("song_popularity", axis=1)
+data = data.values.tolist()
 
 # Join lyrics as stemmed words list for each song
-postprocess_lyrics = None
-if not os.path.isfile(os.path.join(data_lyrics_dir, 'processed_lyrics.txt')):
-    postprocess_lyrics = lp.preprocess_data(data['lyrics'], os.path.join(data_lyrics_dir, 'processed_lyrics.txt'))
-else:
-    with open(os.path.join(data_lyrics_dir, 'processed_lyrics.txt'), 'r', encoding="ISO-8859-1") as f:
-        postprocess_lyrics = [line.rstrip() for line in f.readlines()]
-postprocess_lyrics = np.array(postprocess_lyrics)
-data = data.drop("lyrics", axis=1)
-
 print("Starting feature extraction...")
 MAX_FEATURES = 10000
 
 def get_song_info(x):
-    return data.values
+    return x[:][:-1]
+
+def process_lyrics_col(x):
+    postprocess_lyrics = lp.preprocess_data(x[:][-1])
+    postprocess_lyrics = np.array(postprocess_lyrics)
+    return postprocess_lyrics
 
 feats_union = FeatureUnion([ 
     ('count_feats', Pipeline([
+        ('process_lyrics', FunctionTransformer(process_lyrics_col, validate=False)),
         ('count', CountVectorizer(analyzer="word", ngram_range=(1,1),strip_accents='unicode', max_features=MAX_FEATURES)),
         ('feat_sel', SelectPercentile(f_classif, percentile=20))
     ])),
@@ -68,10 +66,10 @@ feats_union = FeatureUnion([
     ('info', FunctionTransformer(get_song_info, validate=False))
 ])
 
-X = feats_union.fit_transform(postprocess_lyrics, y)
+X = feats_union.fit_transform(data, y)
 
 # *** Save TRAINED Feature Extractor ***
-with open(os.path.join(trained_dir, 'popularity_funion.pkl'), 'wb') as f:
+with open(os.path.join(trained_dir, 'xgb_popularity_funion.pkl'), 'wb') as f:
     pickle.dump(feats_union, f)
 
 print('---- data shape: {}'.format(X.shape))
@@ -97,7 +95,7 @@ with open(os.path.join('../data/results/', 'results.txt'), 'w') as f:
     f.writelines(['{} {}\n'.format(y_test[i], y_pred[i]) for i in range(len(y_test))])
 
 # *** Save TRAINED model ***
-with open(os.path.join(trained_dir, 'popularity_model.pkl'), 'wb') as f:
+with open(os.path.join(trained_dir, 'xgb_popularity_model.pkl'), 'wb') as f:
     pickle.dump(model, f)
 
 # Start Validation
