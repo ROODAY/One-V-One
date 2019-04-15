@@ -7,7 +7,7 @@ trained_dir = '../data/trained'
 model_file = 'xgb_popularity_model.pkl'
 funion_file = 'xgb_popularity_funion.pkl'
 
-with open(os.path.join(trained_dir, funion_file), 'rb') as f
+with open(os.path.join(trained_dir, funion_file), 'rb') as f:
     funion = pickle.load(f)
 with open(os.path.join(trained_dir, model_file), 'rb') as f:
     model = pickle.load(f)
