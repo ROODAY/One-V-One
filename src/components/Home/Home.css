@@ -1,7 +1,41 @@
-.battles {
+.battles,.posts {
   text-align: left;
+}
+
+.posts .btn-toolbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.posts .btn-toolbar .listens {
+  align-self: flex-end;
+  position: absolute;
 }
 
 .card {
   margin: 10px auto;
+}
+
+.post-wrapper {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  width: fit-content;
+  padding: 10px;
+  margin: 5px auto;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+}
+
+.post-wrapper p {
+  margin: 0;
+}
+
+.post-wrapper > * {
+  margin: 10px;
+}
+
+.userlink {
+  cursor: pointer;
 }

@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import InfiniteScroll from 'react-infinite-scroller'
-import BattleCard from './BattleCard'
+import {
+  Container,
+  Row,
+  Col
+} from 'react-bootstrap';
+import InfiniteScroll from 'react-infinite-scroller';
+
+import BattleCard from './BattleCard';
 
 function makeid(length) {
   var text = "";
@@ -20,7 +23,7 @@ class BattleScroller extends Component {
     super(props);
 
     this.state = {
-      battles: [],
+      battles: ["first"],
       hasMoreItems: true,
       nextHref: null
     };
@@ -30,7 +33,7 @@ class BattleScroller extends Component {
     const self = this;
     var battles = this.state.battles;
     for (var i = 0; i < 10; i++) {
-      battles.push(1)
+      battles.push(makeid(6))
     }
     setTimeout(function(){
       if (battles.length < 100) {
@@ -38,14 +41,14 @@ class BattleScroller extends Component {
       } else {
         self.setState({ battles, hasMoreItems: false});
       }
-    }, 1500);
+    }, 750);
   }
 
   render() {
     const loader = <div key="loader">Loading...</div>;
     return (
       <Container>
-        <Row className="justify-content-md-center">
+        <Row className="justify-content-center">
           <Col md="auto">
             <InfiniteScroll
                 pageStart={0}
@@ -53,7 +56,7 @@ class BattleScroller extends Component {
                 hasMore={this.state.hasMoreItems}
                 loader={loader}>
                 <div className="battles">
-                    {this.state.battles.map((battle, i) => <BattleCard key={i} battleId={makeid(6)}/>)}
+                    {this.state.battles.map((battle, i) => <BattleCard key={i} battleId={battle}/>)}
                 </div>
             </InfiniteScroll>
           </Col>

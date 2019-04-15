@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import {
+  Form,
+  Button
+} from 'react-bootstrap';
 
 import { withFirebase } from '../Firebase';
 
@@ -21,17 +23,24 @@ class DisplayNameForm extends Component {
     event.preventDefault();
     this.setState({ error: null, success: false });
     const { displayName } = this.state;
-
-    this.props.firebase.auth.currentUser
-      .updateProfile({
-        displayName: displayName
-      })
-      .then(() => {
-        this.setState({ ...INITIAL_STATE, success: true });
-      })
-      .catch(error => {
-        this.setState({ error });
-      });
+    const currentUser = this.props.firebase.auth.currentUser;
+    
+    currentUser.updateProfile({
+      displayName: displayName
+    })
+    .then(() => {
+      return this.props.firebase
+        .user(currentUser.uid)
+        .update({
+          username: displayName
+        });
+    })
+    .then(() => {
+      this.setState({ ...INITIAL_STATE, success: true });
+    })
+    .catch(error => {
+      this.setState({ error });
+    });
   };
 
   onChange = event => {

@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Loader from '../Loader'
-import Nav from 'react-bootstrap/Nav'
+import {
+  Form,
+  Button,
+  Container,
+  Row,
+  Col,
+  Nav
+} from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { withRouter } from 'react-router-dom';
-import { withFirebase } from '../Firebase';
 import { compose } from 'recompose';
 
-import './Signin.css'
 import * as ROUTES from '../../constants/routes';
+import Loader from '../Loader'
+import { withFirebase } from '../Firebase';
+
+import './Signin.css'
 
 const INITIAL_STATE = {
   email: '',
@@ -57,7 +60,7 @@ class SigninBase extends Component {
     return (
       <Container>
         <Loader visible={this.state.showLoader} />
-        <Row className="justify-content-md-center">
+        <Row className="justify-content-center">
           <Col md="auto">
             <Form onSubmit={this.onSubmit}>
               <h1>Sign in</h1>

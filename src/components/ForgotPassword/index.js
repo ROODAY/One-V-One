@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
+import {
+  Form,
+  Button,
+  Container,
+  Row,
+  Col
+} from 'react-bootstrap';
 
 import { withFirebase } from '../Firebase';
 
@@ -46,7 +48,7 @@ class ForgotPassword extends Component {
 
     return (
       <Container>
-        <Row className="justify-content-md-center">
+        <Row className="justify-content-center">
           <Col md="auto">
             <Form onSubmit={this.onSubmit}>
               <h1>Reset Password</h1>
