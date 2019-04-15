@@ -1,6 +1,7 @@
 import os
 import pickle
 import pandas
+import numpy as np
 from preprocess import audio_preprocesser
 from keras.models import load_model
 
@@ -18,4 +19,5 @@ model = load_model(os.path.join(trained_dir, model_file))
 
 def predict(audio_file):
     features = audio_preprocesser.preprocess_for_genre(audio_file)
-    X = scaler.transform(np.array(features), dtype=float)
+    x = scaler.transform(np.array(features), dtype=float)
+    return encoder.inverse_transform(model.predict(x))
