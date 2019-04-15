@@ -24,8 +24,17 @@ class Classifier(object):
         for tonic in pd.NOTES:
             for scale in pd.SCALES:
                 key = pd.Key(tonic, scale)
-                profiles[key] = key.get_key_profile()
+                profiles[str(key)] = key.get_key_profile()
         return profiles
+
+    @staticmethod
+    def get_keys():
+        keys = {}
+        for tonic in pd.NOTES:
+            for scale in pd.SCALES:
+                key = pd.Key(tonic, scale)
+                keys[str(key)] = key
+        return keys
 
     def get_key(self, dist):
         """
@@ -40,12 +49,13 @@ class KrumhanslSchmuckler(Classifier):
     """
     def __init__(self):
         self.key_profiles = self.get_key_profiles()
+        self.keys = self.get_keys()
 
     def correlation(self, key, dist):
         """
         Given key KEY and pitch distribution DIST, return correlation coefficient of DIST and KEY's pitch profile
         """
-        key_profile = self.key_profiles[key].to_array()
+        key_profile = self.key_profiles[str(key)].to_array()
         data = np.array([dist, key_profile])
         return np.corrcoef(data)[1, 0]
 
@@ -56,7 +66,7 @@ class KrumhanslSchmuckler(Classifier):
         assert len(dist.distribution) == pd.NUM_NOTES, "Distribution must have %d notes, %d provided" % (pd.NUM_NOTES, len(dist.distribution))
         dist = dist.to_array()
         correlations = {k: self.correlation(k, dist) for k in self.key_profiles}
-        return max(correlations, key=correlations.get)
+        return self.keys[max(correlations, key=correlations.get)]
 
 
 class NaiveBayes(Classifier):
