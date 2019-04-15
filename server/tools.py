@@ -3,9 +3,12 @@ import numpy as np
 import preprocess.lyrics_preprocesser as lp
 
 def get_song_info(x):
+    x = [x]
     return [row[:-1] for row in x]
 
 def process_lyrics_col(x):
+    x = [x]
+    print(x)
     postprocess_lyrics = lp.preprocess_data([row[-1] for row in x])
     postprocess_lyrics = np.array(postprocess_lyrics)
     return postprocess_lyrics
