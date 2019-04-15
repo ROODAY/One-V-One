@@ -89,10 +89,6 @@ test_loss, test_acc = model.evaluate(X_test, y_test)
 # Get detailed classification scores
 y_pred_conf = model.predict(X_test)
 y_pred = [np.argmax(row) for row in y_pred_conf]
-
-report = classification_report(y_test, y_pred)
-print(report)
-
 y_test = y_test.tolist()
 
 with open(os.path.join('../data/results/', 'results.txt'), 'w') as f:
@@ -100,6 +96,10 @@ with open(os.path.join('../data/results/', 'results.txt'), 'w') as f:
     f.writelines(['{} {}\n'.format(y_test[i], y_pred[i])
                   for i in range(len(y_test))])
     f.write(report)
+
+report = classification_report(y_test, y_pred)
+print(report)
+
 
 # *** Save TRAINED model ***
 model.save(os.path.join(trained_dir, 'cnn_genre_model.h5'))
