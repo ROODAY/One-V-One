@@ -49,12 +49,12 @@ scaler = StandardScaler()
 X = scaler.fit_transform(np.array(data.iloc[:, :-1], dtype=float))
 
 # *** Save TRAINED Feature Extractor ***
-# if not os.path.isfile(os.path.join(trained_dir, 'genre_encoder.pkl')):
-with open(os.path.join(trained_dir, 'genre_encoder.pkl'), 'wb') as f:
-    pickle.dump(encoder, f)
-# if not os.path.isfile(os.path.join(trained_dir, 'genre_scaler.pkl')):
-with open(os.path.join(trained_dir, 'genre_scaler.pkl'), 'wb') as f:
-    pickle.dump(scaler, f)
+if not os.path.isfile(os.path.join(trained_dir, 'genre_encoder.pkl')):
+    with open(os.path.join(trained_dir, 'genre_encoder.pkl'), 'wb') as f:
+        pickle.dump(encoder, f)
+if not os.path.isfile(os.path.join(trained_dir, 'genre_scaler.pkl')):
+    with open(os.path.join(trained_dir, 'genre_scaler.pkl'), 'wb') as f:
+        pickle.dump(scaler, f)
 
 # Set up Data
 X_train, X_test, y_train, y_test = train_test_split(
