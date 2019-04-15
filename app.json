@@ -10,7 +10,7 @@
   ],
   "website": "https://onevone.club/",
   "logo": "https://onevone.club/logo.png",
-  "repository": "https://github.com/ROODAY/One-V-One",
+  "repository": "https://github.com/ROODAY/SoundBooth",
   "env": {
     "REACT_APP_API_KEY": {
       "description": "Value generated from Firebase project."
