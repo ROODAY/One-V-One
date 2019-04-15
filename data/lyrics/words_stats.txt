@@ -1,4 +1,0 @@
-TF	DF	WORD
-2	1	r
-1	1	w
-1	1	l
