@@ -46,9 +46,11 @@ print("Starting feature extraction...")
 MAX_FEATURES = 10000
 
 def get_song_info(x):
+    print(x[:][:-1])
     return x[:][:-1]
 
 def process_lyrics_col(x):
+    print(x[:][-1])
     postprocess_lyrics = lp.preprocess_data(x[:][-1])
     postprocess_lyrics = np.array(postprocess_lyrics)
     return postprocess_lyrics
