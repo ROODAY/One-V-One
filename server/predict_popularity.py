@@ -21,4 +21,4 @@ def predict(audio_file, lyrics):
 
     features = [[audio_mode, key, tempo, lyrics]]
     x = funion.transform(features)
-    return model.predict(x)[0]
+    return model.predict(x)
