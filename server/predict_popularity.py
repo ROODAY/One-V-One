@@ -15,5 +15,5 @@ with open(os.path.join(trained_dir, model_file), 'rb') as f:
 def predict(audio_file, lyrics):
     audio_mode, key, tempo = audio_preprocesser.preprocess_for_popularity(audio_file)
     features = [audio_mode, key, tempo, lyrics]
-    x = funion.transform(features)
-    return model.predict(x)
+    [x] = funion.transform(features)
+    return model.predict(x)[0]
