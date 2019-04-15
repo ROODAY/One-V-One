@@ -6,7 +6,6 @@ import numpy as np
 import matplotlib
 
 # Preprocessers
-import preprocess.lyrics_preprocesser as lp
 from tools import get_song_info, process_lyrics_col
 
 # Sklearn helpers

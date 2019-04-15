@@ -1,4 +1,6 @@
 from keras import backend as K
+import numpy as np
+import preprocess.lyrics_preprocesser as lp
 
 def get_song_info(x):
     return [row[:-1] for row in x]
