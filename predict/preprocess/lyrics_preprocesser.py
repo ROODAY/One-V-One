@@ -107,7 +107,7 @@ def preprocess_data(x, output_file=None):
         print("The number of unique words in data set is %i." %
               len(words_stat.keys()))
         lowTF_words = set()
-        with open(os.path.join('../../data/lyrics', 'words_statistics.txt'), 'w') as f:
+        with open(os.path.join('../../data/lyrics', 'words_stats.txt'), 'w') as f:
             f.write('TF\tDF\tWORD\n')
             for word, stat in sorted(words_stat.items(), key=lambda i: i[1], reverse=True):
                 f.write('\t'.join([str(m)
