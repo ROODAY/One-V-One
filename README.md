@@ -58,6 +58,14 @@ REACT_APP_SPOTIFY_SECRET=<GET_FROM_SPOTIFY>
 GOOGLE_CREDENTIALS={"type":"service_account",...}
 ```
 
+## Train Classifiers
+
+To extract features yourself:
+1. Download MXM_lyrics_dataset
+> https://labrosa.ee.columbia.edu/millionsong/musixmatch
+2. Download Genre dataset...
+Place into data/raw/ folder.
+
 ## Running
 
 To use SoundBooth, run the following from the root directory:
