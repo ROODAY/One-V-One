@@ -1,6 +1,7 @@
 # For more details about audio processing see https://github.com/zwaltman/keyedin
 
 import librosa
+import numpy as np
 from .keyedin import pitchdistribution as pd, classifiers
 
 def preprocess(audio_file, use):
@@ -42,4 +43,19 @@ def preprocess_for_popularity(audio_file, classifier='ks'):
 
 # ...
 def preprocess_for_genre(audio_file):
-    pass
+    y, sr = librosa.load(audio_file, mono=True, duration=15)
+
+    # Different audio features extracted using librosa
+    chroma_stft = librosa.feature.chroma_stft(y=y, sr=sr)
+    rmse = librosa.feature.rmse(y=y)
+    spec_cent = librosa.feature.spectral_centroid(y=y, sr=sr)
+    spec_bw = librosa.feature.spectral_bandwidth(y=y, sr=sr)
+    rolloff = librosa.feature.spectral_rolloff(y=y, sr=sr)
+    zcr = librosa.feature.zero_crossing_rate(y)
+    mfcc = librosa.feature.mfcc(y=y, sr=sr)
+
+    # Add to our data
+    data_row = [np.mean(chroma_stft), np.mean(rmse), np.mean(spec_cent), np.mean(spec_bw), np.mean(rolloff), np.mean(zcr)]
+    for e in mfcc:
+        data_row += [np.mean(e)]
+    return data_row
