@@ -61,7 +61,7 @@ feats_union = FeatureUnion([
 X = feats_union.fit_transform(data, y)
 
 # *** Save TRAINED Feature Extractor ***
-with open(os.path.join(trained_dir, 'popularity_funion.pkl'), 'wb') as f:
+with open(os.path.join(trained_dir, 'xgb_popularity_funion.pkl'), 'wb') as f:
     pickle.dump(feats_union, f)
 
 print('---- data shape: {}'.format(X.shape))
@@ -87,7 +87,7 @@ with open(os.path.join('../data/results/', 'results.txt'), 'w') as f:
     f.writelines(['{} {}\n'.format(y_test[i], y_pred[i]) for i in range(len(y_test))])
 
 # *** Save TRAINED model ***
-with open(os.path.join(trained_dir, 'popularity_model.pkl'), 'wb') as f:
+with open(os.path.join(trained_dir, 'xgb_popularity_model.pkl'), 'wb') as f:
     pickle.dump(model, f)
 
 # Start Validation
