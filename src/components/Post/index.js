@@ -8,8 +8,10 @@ import {
 } from 'react-bootstrap';
 import axios from 'axios';
 
+import * as ROUTES from '../../constants/routes';
 import Loader from '../Loader';
 import { withFirebase } from '../Firebase';
+import { withRouter } from 'react-router-dom';
 import { withAuthorization } from '../Session';
 
 import './Post.css'
@@ -109,6 +111,7 @@ class Post extends Component {
       this.setState({loadingMessage: "Saving metadata..."});
       const {audioPath, transcripts, hotness, genre} = data;
       const timestamp = (new Date()).toISOString();
+      localStorage.setItem('active-tab', genre);
       return this.props.firebase.post(id).set({
         username,
         userId,
@@ -124,6 +127,7 @@ class Post extends Component {
     })
     .then(() => {
       this.setState({ ...INITIAL_STATE, success: true, showLoader: false });
+      this.props.history.push(ROUTES.HOME);
     })
     .catch(error => {
       this.setState({ error, showLoader: false });
@@ -197,4 +201,4 @@ class Post extends Component {
 }
 
 const condition = authUser => !!authUser;
-export default withAuthorization(condition)(withFirebase(Post));
+export default withAuthorization(condition)(withFirebase(withRouter(Post)));

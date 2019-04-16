@@ -5,6 +5,8 @@ def runPrediction(audioFileName, transcripts):
   text = ''
   if len(transcripts) > 0:
     text = transcripts[0]['text'] or ''
+  print("I got these transcripts")
+  print(transcripts)
   return {
     'hotness': P_Predict(audioFileName, text).tolist()[0],
     'genre': G_Predict(audioFileName)

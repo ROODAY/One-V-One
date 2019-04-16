@@ -52,4 +52,5 @@ def predict(audio_file):
     features = audio_preprocesser.preprocess_for_genre(audio_file)
     x = scaler.transform(np.array(features).reshape(1, -1))
     predict = model.predict(x)
+    print([(GENRES[ind], conf) for ind, conf in enumerate(predict[0])])
     return GENRES[np.argmax(predict)]
