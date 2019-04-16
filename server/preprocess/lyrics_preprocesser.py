@@ -69,7 +69,7 @@ def preprocess_text(str):
     try:
         str = rm_punctuation(str)
         str = nltk.tokenize.word_tokenize(str)
-        str = [porter.stem(t) for t in str]
+        # str = [porter.stem(t) for t in str]
     except:
         print(str)
 
@@ -103,21 +103,17 @@ def preprocess_data(x, output_file=None):
             f.writelines([lyrics+"\n" for lyrics in lyrics_list])
 
     # Credits to Lab 1 in CS4242 Course NUS
-    try:
-        if not os.path.isfile('../data/lyrics/word_stats.txt'):
-            print("The number of unique words in data set is %i." %
-                len(words_stat.keys()))
-            lowTF_words = set()
-            with open(os.path.join('../data/lyrics', 'words_stats.txt'), 'w') as f:
-                f.write('TF\tDF\tWORD\n')
-                for word, stat in sorted(words_stat.items(), key=lambda i: i[1], reverse=True):
-                    f.write('\t'.join([str(m)
-                                    for m in stat[0:2]]) + '\t' + word + '\n')
-                    if stat[0] < 2:
-                        lowTF_words.add(word)
-            print("The number of low frequency words is %d." % len(lowTF_words))
-    except Exception as e:
-        print(e)
+    print("The number of unique words in data set is %i." %
+        len(words_stat.keys()))
+    lowTF_words = set()
+    with open(os.path.join('../data/lyrics', 'words_stats.txt'), 'w') as f:
+        f.write('TF\tDF\tWORD\n')
+        for word, stat in sorted(words_stat.items(), key=lambda i: i[1], reverse=True):
+            f.write('\t'.join([str(m)
+                            for m in stat[0:2]]) + '\t' + word + '\n')
+            if stat[0] < 2:
+                lowTF_words.add(word)
+    print("The number of low frequency words is %d." % len(lowTF_words))
     return lyrics_list
 
 
